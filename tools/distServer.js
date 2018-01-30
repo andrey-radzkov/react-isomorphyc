@@ -10,7 +10,7 @@ import config from "../webpack/webpack.config.prod";
 import https from 'https';
 const compiler = webpack(config);
 const app = new Express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 let options = {
   key: fs.readFileSync( './tools/certificates/localhost_3000.key' ),
