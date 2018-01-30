@@ -1,0 +1,44 @@
+let options = {
+  body: 'Hello this is a Hello world alert with web API',
+  tag: new Date().getTime(),
+  icon: 'https://banana.by/uploads/posts/2018-01/1515748685_01.jpg',
+  lang: 'en-US',
+  dir: 'ltr'
+//    actions: [
+//      {action: 'like', title: 'Like'},
+//      {action: 'reply', title: 'Reply'}]
+};
+let key = 'AAAA4Qf9ZfU:APA91bHRg0dm5lSb7jNPFWnOrC2qU_T5uBfq2MfpphaFBREkrA1_AAJkx_kt3kJshZGcOcj-6ryQv1M2qj8BTwf0joYC9SO7wIZcHwA2-qCard_vZOD3DZXGvc8m3bHL7Mddptcb6TJ-';
+  options.tag = new Date().getTime();
+  let notification = options;
+
+
+ // fetch('https://fcm.googleapis.com/fcm/send', {
+    //   'method': 'POST',
+    //   'headers': {
+    //     'Authorization': 'key=' + key,
+    //     'Content-Type': 'application/json'
+    //   },
+    //   'body': JSON.stringify({
+    //     'notification': notification,
+    //     'to': token
+    //   })
+    // });
+
+    fetch('https://fcm.googleapis.com/fcm/send', {
+           'method': 'POST',
+           'headers': {
+             'Authorization': 'key=' + key,
+             'Content-Type': 'application/json'
+           },
+           'body': JSON.stringify({
+             'notification': {
+      type: "rich",
+      title: "Primary Title",
+      message: "Primary message to display",
+      icon: "https://s3-us-west-2.amazonaws.com/api-playfab-com-craft-files/DocImages/Android-Push-Getting-Started-24.png",
+      image: "https://s3-us-west-2.amazonaws.com/api-playfab-com-craft-files/DocImages/Android-Push-Getting-Started-24.png"
+    },
+             'to': token
+           })
+         });

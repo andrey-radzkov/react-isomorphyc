@@ -40,7 +40,7 @@ Unfortunately, scripts in package.json can't be commented inline because the JSO
 │   ├── containers            # Top-level React components that interact with Redux
 │   ├── favicon.ico           # favicon to keep your browser from throwing a 404 during dev. Not actually used in prod build.
 │   ├── index.ejs             # Template for homepage
-│   ├── index.js              # Entry point for your app
+│   ├── client.js              # Entry point for your app
 │   ├── reducers              # Redux reducers. Your state is altered here based on actions
 │   ├── store                 # Redux store configuration
 │   ├── styles                # CSS Styles, typically written in Sass
@@ -155,7 +155,7 @@ Nope. Redux is useful for applications with more complex data flows. If your app
  1. Run `npm run remove-demo`
  2. Uninstall Redux related packages: `npm uninstall redux react-redux redux-thunk`
  3. Create a new empty component in /components.
- 4. Call render on the new top level component you created in step 3 in src/index.js.
+ 4. Call render on the new top level component you created in step 3 in src/client.js.
 
 ### How do I remove React Router?
  1. Uninstall React Router and routing related packages: `npm uninstall --save react-router`

@@ -1,20 +1,26 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import React from "react";
+import {Route, Switch} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import InfiniteScrollPage from "./pages/InfiniteScrollPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ReduxFormDemoPage from "./pages/ReduxFormDemoPage";
+import Oauth2Login from "./pages/Oauth2Login";
+import {PrivateRoute} from "./PrivateRoute";
+import PushNotificationsPage from "./pages/PushNotificationsPage";
 
-import App from './pages/App';
-import HomePage from './pages/HomePage';
-import FuelSavingsPage from './pages/FuelSavingsPage'; // eslint-disable-line import/no-named-as-default
-import AboutPage from './pages/AboutPage';
-import NotFoundPage from './pages/NotFoundPage';
-import ReduxFormDemoPage from './pages/ReduxFormDemoPage';
+const Routes = () => (
+  <div>
+    <Switch>
+      <Route exact path="/" component={HomePage}/>
+      <PrivateRoute exact path="/push" component={PushNotificationsPage}/>
+      <PrivateRoute exact path="/redux-form" component={ReduxFormDemoPage}/>
+      <PrivateRoute path="/redux-form/:id" component={ReduxFormDemoPage}/>
+      <Route path="/infinite-scroll" component={InfiniteScrollPage}/>
+      <Route path="/login" component={Oauth2Login}/>
+      <Route path="*" component={NotFoundPage}/>
+    </Switch>
+  </div>
 
-export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={HomePage}/>
-    <Route path="fuel-savings" component={FuelSavingsPage}/>
-    <Route path="redux-form" component={ReduxFormDemoPage}/>
-    <Route path="redux-form/:id" component={ReduxFormDemoPage}/>
-    <Route path="about" component={AboutPage}/>
-    <Route path="*" component={NotFoundPage}/>
-  </Route>
 );
+
+export default Routes;

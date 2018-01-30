@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Col from "react-bootstrap/lib/Col";
 import ControlLabel from "react-bootstrap/lib/ControlLabel";
 import FormControl from "react-bootstrap/lib/FormControl";
@@ -7,7 +8,8 @@ import FormGroup from "react-bootstrap/lib/FormGroup";
 
 export const TextInputRedux = ({input, label, type, placeholder, meta: {dirty, visited, pristine, touched, error, warning}}) => (
 
-  <FormGroup validationState={touched ? ( error ? "error" : (warning ? "warning" : "success")) : null}>
+  <FormGroup validationState={touched ? ( error ? "error" : (warning ? "warning"
+    : "success")) : null}>
     <Col componentClass={ControlLabel} sm={4}>{label}</Col>
     <Col sm={8}>
       <FormControl
@@ -25,7 +27,13 @@ export const TextInputRedux = ({input, label, type, placeholder, meta: {dirty, v
       </Popover> : ''}
     </Col>
   </FormGroup>
-
-
 );
+
+TextInputRedux.propTypes = {
+  input: PropTypes.object,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  meta: PropTypes.object,
+};
 

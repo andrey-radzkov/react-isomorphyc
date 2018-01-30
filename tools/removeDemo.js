@@ -16,7 +16,7 @@ const pathsToRemove = [
   './src/store/store.spec.js',
   './src/styles',
   './src/routes.js',
-  './src/index.js',
+  './src/client.js',
   './tools/removeDemo.js'
 ];
 
@@ -26,7 +26,7 @@ const filesToCreate = [
     content: '// Must have at least one test file in this directory or Mocha will throw an error.'
   },
   {
-    path: './src/index.js',
+    path: './src/client.js',
     content: '// Set up your application entry point here...'
   },
   {

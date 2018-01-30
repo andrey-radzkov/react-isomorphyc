@@ -1,31 +1,19 @@
-import React, { PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
-import '../styles/css/bootstrap.css';
-import '../styles/styles.scss'; // Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
+import React from "react";
+import PropTypes from "prop-types";
+import Routes from "../routes";
+import Header from "../components/Header";
 
-// This is a class-based component because the current
-// version of hot reloading won't hot reload a stateless
-// component at the top-level.
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <IndexLink to="/">Home</IndexLink>
-        {' | '}
-        <Link to="/fuel-savings">Demo App</Link>
-        {' | '}
-        <Link to="/about">About</Link>
-        {' | '}
-        <Link to="/redux-form">Redux form</Link>
-        <br/>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div>
+    <Header path="curr"/>
+    <Routes/>
+  </div>
+);
+
 
 App.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  location: PropTypes.object
 };
 
 export default App;

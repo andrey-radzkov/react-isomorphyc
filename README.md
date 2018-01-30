@@ -6,7 +6,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/coryhouse/react-slingshot/master.svg?style=flat-square)](https://coveralls.io/github/coryhouse/react-slingshot?branch=master)
 
 React Slingshot is a comprehensive starter kit for rapid application development using React. 
-
+See app [here](https://andrey-radzkov.github.io/react-isomorphyc/)
 Why Slingshot?
 
 1. **One command to get started** - Type `npm start` to start development in your default browser.
