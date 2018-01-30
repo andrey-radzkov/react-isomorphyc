@@ -27,7 +27,7 @@ new WebpackDevServer(bundler, {
   },
   compress: true,
   historyApiFallback: true,
-}).listen(process.env.PORT, 'localhost', (err, res) => {
+}).listen(3000, 'localhost', (err, res) => {
   if (err) {
     return console.log(err);
   }
