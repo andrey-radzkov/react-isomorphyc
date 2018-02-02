@@ -82,6 +82,7 @@ export default {
     new CopyWebpackPlugin([
       {from: './static/manifest.json', to: 'manifest.json'},
       {from: './static/offline-page.html', to: 'offline-page.html'},
+      {from: './static/notificationSound.mp3', to: 'notificationSound.mp3'},
       {from: './static/service-worker.js', to: 'service-worker.js'},
       {from: './static/firebase-messaging-sw.js', to: 'firebase-messaging-sw.js'},
       ]),
