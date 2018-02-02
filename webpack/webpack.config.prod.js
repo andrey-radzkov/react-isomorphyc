@@ -7,14 +7,14 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin"; //TODO: use https://github.com/webpack-contrib/copy-webpack-plugin
 import path from "path";
-
+//tODO: compress prod css
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.BROWSER': JSON.stringify('true'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.PORT': JSON.stringify('3000'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.API_URL': JSON.stringify("/api"),
-  'process.env.LOGIN_URL': JSON.stringify("https://localhost:3000/login"),
-  'process.env.AUTH_SERVER_URL': JSON.stringify("http://localhost:9999"),
+  'process.env.LOGIN_URL': JSON.stringify("https://temp-react-for-heroku.herokuapp.com/login"),
+  'process.env.AUTH_SERVER_URL': JSON.stringify("https://backend-for-react-authserver.herokuapp.com"),
 
   __DEV__: false
 };

@@ -1,5 +1,6 @@
 const OFFLINE_URL = 'offline-page.html';
-
+//TODO: copy images
+//TODO: prod urls
 self.addEventListener('install', function (event) {
   event.waitUntil(
     //TODO: production mode
