@@ -31,10 +31,14 @@ function appendMessage(payload) {
 }
 
 export const sendNotification = () => {
-  //TODO: on token refresh
+  //TODO: on token refresh, get token on subscribe, store on backend
   messaging.getToken().then(token => {
-    securedGet(process.env.API_URL + '/resource/sendPushMessage/' + token);
+    securedGet(process.env.API_URL + '/resource/send-push-message/' + token);
   });
+};
+
+export const sendNotificationToAll = () => {
+  securedGet(process.env.API_URL + '/resource/send-push-message-to-all/');
 };
 
 

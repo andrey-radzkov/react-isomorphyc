@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/lib/Button";
 
-import {messaging, sendNotification, subscribe} from "../push/firebasePushMessagesActions";
+import {messaging, sendNotification, sendNotificationToAll, subscribe} from "../push/firebasePushMessagesActions";
 import ButtonToolbar from "react-bootstrap/lib/ButtonToolbar";
 
 class PushNotificationsPage extends React.Component {
@@ -43,8 +43,10 @@ class PushNotificationsPage extends React.Component {
             <span className="glyphicon glyphicon-bell bell" aria-hidden="true"/>
             }
             {subscribeText}</Button>
-          <Button onClick={sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send
-            notification</Button>
+          <Button onClick={sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send to
+            current</Button>
+          <Button onClick={sendNotificationToAll} bsStyle="primary" disabled={!this.state.subscribed}>Send to
+            all</Button>
         </ButtonToolbar>
         <div id="messages"/>
 
