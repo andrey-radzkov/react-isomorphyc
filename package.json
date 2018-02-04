@@ -108,6 +108,7 @@
     "webpack-hot-middleware": "2.21.0",
     "copy-webpack-plugin": "4.3.1",
     "express": "4.13.4",
+    "enzyme": "3.3.0",
     "webpack-md5-hash": "0.0.6",
     "compression-webpack-plugin": "1.1.3"
   },
