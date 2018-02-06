@@ -1,6 +1,7 @@
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ScriptExtHtmlWebpackPlugin from "script-ext-html-webpack-plugin";
+import path from "path";
 
 export default {
   resolve: {
@@ -42,7 +43,10 @@ export default {
         collapseWhitespace: true
       },
       inject: true
-    })
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'async'
+    }),
   ],
   module: {
     rules: [

@@ -6,8 +6,9 @@ import WebpackMd5Hash from "webpack-md5-hash";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin"; //TODO: use https://github.com/webpack-contrib/copy-webpack-plugin
+import ScriptExtHtmlWebpackPlugin from "script-ext-html-webpack-plugin";
+
 import path from "path";
-//tODO: compress prod css
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.BROWSER': JSON.stringify('true'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
@@ -23,7 +24,7 @@ export default {
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
-  devtool: 'cheap-source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+  devtool: 'source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
   entry: path.resolve(__dirname, '../src/client.js'),
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   output: {
@@ -61,12 +62,16 @@ export default {
       },
       inject: true
     }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'async'
+    }),
 
     // Optimize the order that items are bundled. This assures the hash is deterministic.
     new webpack.optimize.OccurrenceOrderPlugin(),
     // Minify JS
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
+      sourceMap: true,
       compress: {
         warnings: false, // Suppress uglification warnings
         pure_getters: true,
@@ -80,12 +85,9 @@ export default {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new CopyWebpackPlugin([
-      {from: './static/manifest.json', to: 'manifest.json'},
-      {from: './static/offline-page.html', to: 'offline-page.html'},
-      {from: './static/notificationSound.mp3', to: 'notificationSound.mp3'},
-      {from: './static/service-worker.js', to: 'service-worker.js'},
-      {from: './static/firebase-messaging-sw.js', to: 'firebase-messaging-sw.js'},
-      ]),
+      {from: './static', to: ''},
+      {from: './src/styles/fonts', to: 'fonts/bootstrap'},
+    ]),
     new CompressionPlugin({
       asset: "[path].gz[query]",
       algorithm: "gzip",
@@ -110,7 +112,27 @@ export default {
       {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
       {
         test: /(\.css|\.scss)$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap!sass-loader?sourceMap?sourceMappingURL')
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+// If you are having trouble with urls not resolving add this setting.
+// See https://github.com/webpack-contrib/css-loader#url
+                url: false,
+                minimize: true,
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
       },
       {test: /\.json$/, loader: "json"}
     ]

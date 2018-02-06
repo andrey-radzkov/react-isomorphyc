@@ -4,7 +4,12 @@ import FieldLevelValidationForm from "../components/FieldLevelValidationForm";
 import {connect} from "react-redux";
 import Modal from "react-bootstrap/lib/Modal";
 import Button from "react-bootstrap/lib/Button";
-import {closeSupplierModal, loadSupplier, loadSuppliers, openModal} from "../actions/supplierActions";
+import {
+  closeSupplierModal,
+  loadSupplier,
+  loadSuppliers,
+  openModal
+} from "../actions/supplierActions";
 import {SupplierList} from "../components/SupplierList";
 
 class ReduxFormDemoPage extends React.Component {
@@ -15,6 +20,11 @@ class ReduxFormDemoPage extends React.Component {
 
   componentWillMount() {
     document.title = "Redux form";
+
+  }
+
+  componentDidMount() {
+
     this.loadSupplier(this.props);
     if (this.props.id) {
       this.props.openModal("supplierModal");
@@ -29,7 +39,8 @@ class ReduxFormDemoPage extends React.Component {
       this.loadSupplier(nextProps);
       this.props.openModal("supplierModal");
     } else if (!nextProps.id && this.props.id) {
-      this.props.closeSupplierModal("supplierModal", this.props.id, this.getHistory(nextProps));
+      this.props.closeSupplierModal("supplierModal", this.props.id,
+        this.getHistory(nextProps));
       this.loadSuppliers(nextProps);
     }
   }
@@ -79,13 +90,15 @@ class ReduxFormDemoPage extends React.Component {
             <FieldLevelValidationForm onSubmit={this.submit}/>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => this.props.closeSupplierModal("supplierModal",
-              this.props.id, this.getHistory(this.props))}>Close</Button>
+            <Button
+              onClick={() => this.props.closeSupplierModal("supplierModal",
+                this.props.id, this.getHistory(this.props))}>Close</Button>
           </Modal.Footer>
         </Modal>
 
         <h1>Supplier List</h1>
-        <SupplierList suppliers={this.getSuppliers()} showWaiting={this.props.supplierLayer}/>
+        <SupplierList suppliers={this.getSuppliers()}
+                      showWaiting={this.props.supplierLayer}/>
 
       </div>
     );
@@ -117,7 +130,8 @@ const mapDispatchToProps = dispatch => {
     loadSupplier: id => dispatch(loadSupplier(id)),
     loadSuppliers: () => dispatch(loadSuppliers()),
     openModal: modalId => dispatch(openModal(modalId)),
-    closeSupplierModal: (modalId, id, history) => dispatch(closeSupplierModal(id, history))
+    closeSupplierModal: (modalId, id, history) => dispatch(
+      closeSupplierModal(id, history))
   };
 };
 
