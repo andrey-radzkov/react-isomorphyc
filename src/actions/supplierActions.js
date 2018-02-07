@@ -7,7 +7,8 @@ import {
 import {securedGet} from "../oauth2/xhr";
 
 export const loadSupplier = (id) => (dispatch) => {
-  securedGet(process.env.API_URL + '/resource/get-supplier/' + id).then(
+  dispatch(
+    securedGet(process.env.API_URL + '/resource/get-supplier/' + id)).then(
     response => {
       dispatch({type: LOAD_SUPPLIER, data: response.data});
     }).catch(error => {
@@ -16,8 +17,8 @@ export const loadSupplier = (id) => (dispatch) => {
 };
 
 export const loadSuppliers = () => (dispatch) => {
-  securedGet(process.env.API_URL + '/resource/get-suppliers/', dispatch,
-    "supplierLayer").then(res => {
+  dispatch(securedGet(process.env.API_URL + '/resource/get-suppliers/',
+    "supplierLayer")).then(res => {
     dispatch({type: LOAD_SUPPLIERS, suppliers: res.data});
   }).catch(error => {
     return error;
