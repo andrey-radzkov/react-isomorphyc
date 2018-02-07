@@ -1,10 +1,10 @@
 import {TIMEOUT} from "./Oauth";
-import {HIDE_WAITING, SHOW_WAITING} from "../constants/actionTypes";
 import {
   getAccessToken,
   validateAndUpdateTokenIfNecessary
 } from "./TokenService";
 import axios from "axios";
+import {hideWaiting, showWaiting} from "../actions/supplierActions";
 
 export const securedGet = (url, waitingLayerId) => (dispatch) => {
   return dispatch(request(url,
@@ -18,7 +18,7 @@ export const securedPost = (url, data, waitingLayerId) => (dispatch) => {
 const request = (url, config) => (dispatch) => {
   //TODO: create growls
   if (config.waitingLayerId) {
-    dispatch({type: SHOW_WAITING, waitingId: config.waitingLayerId});
+    dispatch(showWaiting(config.waitingLayerId));
   }
   return validateAndUpdateTokenIfNecessary().then(() => {
     let request = axios.create({
@@ -28,15 +28,18 @@ const request = (url, config) => (dispatch) => {
         "Authorization": 'Bearer ' + getAccessToken()
       }
     });
-    return request(url, config)
-      .then(response => {
-        if (config.waitingLayerId) {
-          dispatch({type: HIDE_WAITING, waitingId: config.waitingLayerId});
-        }
-        return response;
-      }).catch(error => {
-        dispatch({type: HIDE_WAITING, waitingId: config.waitingLayerId});
-        console.debug("server.request.error", error);
-      });
+    return request(url, config).then(response => {
+      dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+      return response;
+    }).catch(error => {
+      dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+      console.debug("server.request.error", error);
+    });
   });
+};
+
+const hideWaitingIfEnabled = (waitingLayerId) => (dispatch) => {
+  if (waitingLayerId) {
+    dispatch(hideWaiting(waitingLayerId));
+  }
 };

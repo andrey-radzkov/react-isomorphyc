@@ -1,8 +1,10 @@
 import {
   CLOSE_MODAL,
+  HIDE_WAITING,
   LOAD_SUPPLIER,
   LOAD_SUPPLIERS,
-  OPEN_MODAL
+  OPEN_MODAL,
+  SHOW_WAITING
 } from "../constants/actionTypes";
 import {securedGet} from "../oauth2/xhr";
 
@@ -11,17 +13,13 @@ export const loadSupplier = (id) => (dispatch) => {
     securedGet(process.env.API_URL + '/resource/get-supplier/' + id)).then(
     response => {
       dispatch({type: LOAD_SUPPLIER, data: response.data});
-    }).catch(error => {
-    return error;
-  });
+    });
 };
 
 export const loadSuppliers = () => (dispatch) => {
   dispatch(securedGet(process.env.API_URL + '/resource/get-suppliers/',
     "supplierLayer")).then(res => {
     dispatch({type: LOAD_SUPPLIERS, suppliers: res.data});
-  }).catch(error => {
-    return error;
   });
 };
 
@@ -36,6 +34,13 @@ export const openModal = (modalId) => {
 
 export const closeModal = (modalId) => {
   return {type: CLOSE_MODAL, modalId};
+};
+
+export const showWaiting = (waitingId) => {
+  return {type: SHOW_WAITING, waitingId: waitingId};
+};
+export const hideWaiting = (waitingId) => {
+  return {type: HIDE_WAITING, waitingId: waitingId};
 };
 
 export const closeSupplierModal = (id, history) => (dispatch) => {
