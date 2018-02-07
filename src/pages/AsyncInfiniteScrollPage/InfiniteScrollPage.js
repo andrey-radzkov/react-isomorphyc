@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import '../styles/infinite-scroll.scss';
+import '../../styles/infinite-scroll.scss';
 
 // Since this component is simple and static, there's no parent container for it.
 const InfiniteScrollPage = () => {

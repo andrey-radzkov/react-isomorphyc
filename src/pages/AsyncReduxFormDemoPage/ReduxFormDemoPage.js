@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FieldLevelValidationForm from "../components/FieldLevelValidationForm";
+import FieldLevelValidationForm from "../../components/FieldLevelValidationForm";
 import {connect} from "react-redux";
 import Modal from "react-bootstrap/lib/Modal";
 import Button from "react-bootstrap/lib/Button";
@@ -9,8 +9,8 @@ import {
   loadSupplier,
   loadSuppliers,
   openModal
-} from "../actions/supplierActions";
-import {SupplierList} from "../components/SupplierList";
+} from "../../actions/supplierActions";
+import {SupplierList} from "../../components/SupplierList";
 
 class ReduxFormDemoPage extends React.Component {
 
