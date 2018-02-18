@@ -6,7 +6,8 @@ import App from "./pages/App";
 import {BrowserRouter} from "react-router-dom";
 import configureStore from "./store/configureStore";
 import {isClient} from "./utils/ssr-util";
-
+const preloadedState = window.__PRELOADED_STATE__;
+delete window.__PRELOADED_STATE__;
 if (isClient()) {
   require('bootstrap-sass/assets/stylesheets/_bootstrap.scss');
   require('./styles/styles.scss');
@@ -14,7 +15,7 @@ if (isClient()) {
   require('./service-worker-register.js');
 }
 
-const store = configureStore();
+const store = configureStore(preloadedState);
 
 hydrate(
   <Provider store={store}>

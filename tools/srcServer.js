@@ -11,7 +11,6 @@ import Express from "express";
 import path from "path";
 import ReactDOMServer from "react-dom/server";
 import React from "react";
-import http from "http";
 import fs from "fs";
 import {Provider} from "react-redux";
 import rootReducer from "../src/reducers";
@@ -32,8 +31,18 @@ const compiler = webpack(config);
 const app = new Express();
 const port = 3000;
 
-//TODO: impl const preloadedState = window.__PRELOADED_STATE__
-let initialState = {supplierListReducer: {suppliers: {content: [{companyName: "ololo", email: "ololo@email.com"}]}}};
+//TODO: load real suppliers async
+let initialState = {
+  supplierListReducer: {
+    suppliers: {
+      content: [{
+        companyName: "ololo",
+        email: "ololo@email.com",
+        id: "1"
+      }]
+    }
+  }
+};
 const store = createStore(rootReducer, initialState);
 
 app.use(webpackDevMiddleware(compiler,
@@ -69,7 +78,12 @@ app.use("*", (req, res) => {
   readFileSync = readFileSync.replace('<div id="app"></div>', '<div id="app">' + html + '</div>');
   //TODO: temp solution
   readFileSync = readFileSync.replace("</noscript>",
-    "</noscript><script type=\"text/javascript\" src=\"/bundle.js\" async=\"\"></script>");
+    "</noscript>" +
+    "<script>" +
+
+    "window.__PRELOADED_STATE__ =" + JSON.stringify(initialState).replace(/</g, '\\u003c') + ";" +
+    "</script>" +
+    "<script type=\"text/javascript\" src=\"/bundle.js\" async=\"\"></script>");
   res.send(readFileSync);
 
   res.end();
