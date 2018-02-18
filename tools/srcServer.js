@@ -11,7 +11,7 @@ import Express from "express";
 import path from "path";
 import ReactDOMServer from "react-dom/server";
 import React from "react";
-import http from "http";
+import https from "https";
 import fs from "fs";
 import {Provider} from "react-redux";
 import rootReducer from "../src/reducers";
@@ -20,10 +20,10 @@ import {createStore} from "redux";
 import StaticRouter from "react-router-dom/StaticRouter";
 import App from "../src/pages/App";
 import proxy from "express-http-proxy";
-
+global.__SERVER__ = true;
 let options = {
-  key: fs.readFileSync('./tools/certificates/server-key.pem'),
-  cert: fs.readFileSync('./tools/certificates/server-csr.pem'),
+  key: fs.readFileSync('./tools/certificates/localhost_3000.key'),
+  cert: fs.readFileSync('./tools/certificates/localhost_3000.cert'),
   requestCert: false,
   rejectUnauthorized: false
 };
@@ -43,10 +43,10 @@ app.use(webpackDevMiddleware(compiler,
   }));
 app.use(webpackHotMiddleware(compiler));
 
-const apiProxy = proxy('http://localhost:9100', {preserveHostHdr: true});
+const apiProxy = proxy('http://localhost:9000', {preserveHostHdr: true});
 app.use("/api", apiProxy);
 
-const authProxy = proxy('http://localhost:19979', {
+const authProxy = proxy('http://localhost:9999', {
   preserveHostHdr: true, proxyReqPathResolver: function (req) {
     return "/uaa" + require('url').parse(req.url).path;
   }
@@ -77,11 +77,11 @@ app.use("*", (req, res) => {
 
 //TODO: enable https, import correct certificates
 //TODO: create proxy
-//let server = https.createServer(options, app);
+let server = https.createServer(options, app);
 //TODO: sign ceritficate
-let server = http.createServer(app);
-// server.listen(port, function (error) {
-app.listen(port, function (error) {
+// let server = http.createServer(app);
+server.listen(port, function (error) {
+// app.listen(port, function (error) {
   if (error) {
     console.error(error);
   } else {
