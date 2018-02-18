@@ -3,7 +3,9 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ScriptExtHtmlWebpackPlugin from "script-ext-html-webpack-plugin";
 import path from "path";
 
-export default {
+
+let config = {
+
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
@@ -11,7 +13,7 @@ export default {
   entry: [
     // must be first entry to properly set public path
     './src/webpack-public-path',
-    'webpack-dev-server/client?http://localhost:3000/',
+    'webpack-hot-middleware/client?http://localhost:3000/',
     "webpack/hot/dev-server",
     path.resolve(__dirname, '../src/client.js') // Defining path seems necessary for this to work consistently on Windows machines.
   ],
@@ -29,6 +31,7 @@ export default {
       'process.env.API_URL': JSON.stringify("/api"),
       'process.env.LOGIN_URL': JSON.stringify("https://localhost:3000/login"),
       'process.env.AUTH_SERVER_URL': JSON.stringify("http://localhost:9999"),
+      __SERVER__: false,
       __DEV__: true
     }),
     new webpack.LoaderOptionsPlugin({
@@ -50,7 +53,10 @@ export default {
   ],
   module: {
     rules: [
-      {test: /\.jsx?$/, exclude: /node_modules/, loader: ['babel-loader']},
+      {
+        test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'
+
+      },
       {test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'file-loader'},
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -74,3 +80,6 @@ export default {
     ]
   }
 };
+
+
+export default config;

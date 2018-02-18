@@ -1,5 +1,5 @@
 import React from "react";
-import {hydrate} from "react-dom";
+import {render} from "react-dom";
 import {Provider} from "react-redux";
 import {browserHistory} from "react-router";
 import App from "./pages/App";
@@ -11,10 +11,10 @@ if (process.env.BROWSER) {
   require('../static/favicon.ico');
   require('./service-worker-register.js');
 }
-
+//TDOO: refactor from srcServer
 const store = configureStore();
 
-hydrate(
+render(
   <Provider store={store}>
     <BrowserRouter>
       <App/>

@@ -9,7 +9,7 @@ class Oauth2Login extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let getParameters = queryString.parse(this.props.location.search);
     requestToken(getParameters.code, this.props.history);
   }

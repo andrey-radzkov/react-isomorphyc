@@ -13,14 +13,18 @@ import {
 import {SupplierList} from "../components/SupplierList";
 
 class ReduxFormDemoPage extends React.Component {
-
+//tODO: migrate to reactstrap
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
-    document.title = "Redux form";
+    try {
+      //TODO: temp for SSR. not to did miunt because should be rendered on server
+      document.title = "Redux form";
+    }catch (err){
 
+    }
   }
 
   componentDidMount() {

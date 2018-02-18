@@ -6,13 +6,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ReduxFormDemoPage from "./pages/ReduxFormDemoPage";
 import Oauth2Login from "./pages/Oauth2Login";
 import {PrivateRoute} from "./PrivateRoute";
-import PushNotificationsPage from "./pages/PushNotificationsPage";
+// import PushNotificationsPage from "./pages/PushNotificationsPage";
 
 const Routes = () => (
   <div>
     <Switch>
       <Route exact path="/" component={HomePage}/>
-      <PrivateRoute exact path="/push" component={PushNotificationsPage}/>
+      {/*<PrivateRoute exact path="/push" component={PushNotificationsPage}/>*/}
       <PrivateRoute exact path="/redux-form" component={ReduxFormDemoPage}/>
       <PrivateRoute path="/redux-form/:id" component={ReduxFormDemoPage}/>
       <Route path="/infinite-scroll" component={InfiniteScrollPage}/>

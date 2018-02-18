@@ -9,7 +9,8 @@ const REFRESH_TOKEN = "refresh_token";
 let createTokenRequest = function () {
   return axios.create({
     headers: {
-      "Authorization": 'Basic ' + btoa(decodeURIComponent(encodeURIComponent(CLIENT_ID + ":" + CLIENT_SECRET))),
+      "Authorization": 'Basic ' + btoa(decodeURIComponent(
+        encodeURIComponent(CLIENT_ID + ":" + CLIENT_SECRET))),
       "Content-Type": 'application/x-www-form-urlencoded'
     }
   });
@@ -32,22 +33,36 @@ export const requestToken = (code, history) => {
 
   }).catch(error => {
     if (error) {
+      console.log('//TODO: redirect to error page');
       redirectToAuthService();
     }
   });
 };
 
 export const redirectToAuthService = () => {
-  window.location.href = process.env.AUTH_SERVER_URL + '/uaa/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri=' + process.env.LOGIN_URL + '&response_type=code&scope=resource-read';
+  try {
+    window.location.href = process.env.AUTH_SERVER_URL
+      + '/uaa/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri='
+      + process.env.LOGIN_URL + '&response_type=code&scope=resource-read';
+  } catch (err) {
+    console.log("SSR");
+  }
 };
 export const rememberTargetUrl = (url) => {
-  localStorage.targetUrl = url.pathname;
+  getLocalStorage().targetUrl = url.pathname;
 };
 export const getTargetUrl = () => {
-  return localStorage.targetUrl;
+  return getLocalStorage().targetUrl;
 };
 export const isAuthed = () => {
-  return !(isAccessTokenExpired(getAccessToken()) && isRefreshTokenExpired(getRefreshToken()));
+  try {
+    //TODO: temp fix for SSR
+    let item = localStorage.getItem("temp");
+  } catch (err) {
+    return true;
+  }
+  return !(isAccessTokenExpired(getAccessToken()) && isRefreshTokenExpired(
+    getRefreshToken()));
 };
 export const authenticate = (url) => {
   rememberTargetUrl(url);
@@ -57,19 +72,36 @@ export const authenticate = (url) => {
 export const logout = () => {
   //tODO: location from parameters
   removeTokens();
-  window.location.href = "/";
+  try {
+    window.location.href = "/";
+  } catch (err) {
+    console.log("SSR");
+  }
 };
 
-export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
+function getLocalStorage() {
+  try {
+    return localStorage;
+  } catch (err) {
+    return {
+      getItem: (string) => string,
+      setItem: (string, string2) => {
+      }
+    };
+  }
+}
 
-export const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN);
+export const getAccessToken = () => getLocalStorage().getItem(
+  ACCESS_TOKEN);
+
+export const getRefreshToken = () => getLocalStorage().getItem(REFRESH_TOKEN);
 
 export const setAccessToken = access_token => {
-  localStorage.setItem(ACCESS_TOKEN, access_token);
+  getLocalStorage().setItem(ACCESS_TOKEN, access_token);
 };
 
 export const setRefreshToken = refresh_token => {
-  localStorage.setItem(REFRESH_TOKEN, refresh_token);
+  getLocalStorage().setItem(REFRESH_TOKEN, refresh_token);
 };
 
 export const setTokens = (access_token, refersh_token) => {
@@ -78,11 +110,11 @@ export const setTokens = (access_token, refersh_token) => {
 };
 
 export const removeAccessToken = () => {
-  localStorage.removeItem(ACCESS_TOKEN);
+  getLocalStorage().removeItem(ACCESS_TOKEN);
 };
 
 export const removeRefreshToken = () => {
-  localStorage.removeItem(REFRESH_TOKEN);
+  getLocalStorage().removeItem(REFRESH_TOKEN);
 };
 
 export const removeTokens = () => {
@@ -137,7 +169,11 @@ export const validateAndUpdateTokenIfNecessary = () => {
       isAccessTokenExpired(access_token) &&
       isRefreshTokenExpired(refresh_token)) {
       console.log("All tokens expired");
-      authenticate({pathname: window.location.pathname});
+      try {
+        authenticate({pathname: window.location.pathname});
+      } catch (err) {
+        console.log("SSR");
+      }
     } else {
       resolve();
     }
