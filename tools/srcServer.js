@@ -11,7 +11,7 @@ import Express from "express";
 import path from "path";
 import ReactDOMServer from "react-dom/server";
 import React from "react";
-import https from "https";
+import http from "http";
 import fs from "fs";
 import {Provider} from "react-redux";
 import rootReducer from "../src/reducers";
@@ -77,11 +77,11 @@ app.use("*", (req, res) => {
 
 //TODO: enable https, import correct certificates
 //TODO: create proxy
-let server = https.createServer(options, app);
+// let server = https.createServer(options, app);
 //TODO: sign ceritficate
 // let server = http.createServer(app);
-server.listen(port, function (error) {
-// app.listen(port, function (error) {
+// server.listen(port, function (error) {
+app.listen(port, function (error) {
   if (error) {
     console.error(error);
   } else {

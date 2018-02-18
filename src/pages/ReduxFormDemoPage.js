@@ -11,6 +11,7 @@ import {
   openModal
 } from "../actions/supplierActions";
 import {SupplierList} from "../components/SupplierList";
+import {isClient} from "../utils/ssr-util";
 
 class ReduxFormDemoPage extends React.Component {
 //tODO: migrate to reactstrap
@@ -19,11 +20,9 @@ class ReduxFormDemoPage extends React.Component {
   }
 
   componentWillMount() {
-    try {
+    if (isClient()) {
       //TODO: temp for SSR. not to did miunt because should be rendered on server
       document.title = "Redux form";
-    }catch (err){
-
     }
   }
 

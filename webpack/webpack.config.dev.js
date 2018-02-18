@@ -33,7 +33,6 @@ let config = {
       'process.env.LOGIN_URL': JSON.stringify("https://localhost:3000/login"),
       'process.env.AUTH_SERVER_URL': JSON.stringify("http://localhost:9999"),
       __SERVER__: false,
-      __DEV__: true
     }),
     new webpack.LoaderOptionsPlugin({
       debug: true

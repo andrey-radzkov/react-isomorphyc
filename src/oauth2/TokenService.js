@@ -2,6 +2,7 @@ import jwtDecode from "jwt-decode";
 import {CLIENT_ID, CLIENT_SECRET, TIMEOUT} from "./Oauth";
 import axios from "axios";
 import {backoff} from "../utils/backoff";
+import {isClient, isSSR} from "../utils/ssr-util";
 
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
@@ -40,12 +41,10 @@ export const requestToken = (code, history) => {
 };
 
 export const redirectToAuthService = () => {
-  try {
+  if (isClient()) {
     window.location.href = process.env.AUTH_SERVER_URL
       + '/uaa/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri='
       + process.env.LOGIN_URL + '&response_type=code&scope=resource-read';
-  } catch (err) {
-    console.log("SSR");
   }
 };
 export const rememberTargetUrl = (url) => {
@@ -55,10 +54,7 @@ export const getTargetUrl = () => {
   return getLocalStorage().targetUrl;
 };
 export const isAuthed = () => {
-  try {
-    //TODO: temp fix for SSR
-    let item = localStorage.getItem("temp");
-  } catch (err) {
+  if (isSSR()) {
     return true;
   }
   return !(isAccessTokenExpired(getAccessToken()) && isRefreshTokenExpired(
@@ -72,17 +68,15 @@ export const authenticate = (url) => {
 export const logout = () => {
   //tODO: location from parameters
   removeTokens();
-  try {
+  if (isClient()) {
     window.location.href = "/";
-  } catch (err) {
-    console.log("SSR");
   }
 };
 
 function getLocalStorage() {
-  try {
+  if (isClient()) {
     return localStorage;
-  } catch (err) {
+  } else {
     return {
       getItem: (string) => string,
       setItem: (string, string2) => {
@@ -130,12 +124,12 @@ export const isTokenExpired = token => {
   if (!token) {
     return true;
   }
-  try {
+  if (isClient()) {
     const {exp} = jwtDecode(token);
     // exp in seconds
     // token is expired if lifetime smaller then connection timeout
     return (exp * 1000 - Date.now()) < TIMEOUT;
-  } catch (e) {
+  } else {
     return true;
   }
 };
@@ -169,10 +163,8 @@ export const validateAndUpdateTokenIfNecessary = () => {
       isAccessTokenExpired(access_token) &&
       isRefreshTokenExpired(refresh_token)) {
       console.log("All tokens expired");
-      try {
+      if (isClient()) {
         authenticate({pathname: window.location.pathname});
-      } catch (err) {
-        console.log("SSR");
       }
     } else {
       resolve();
