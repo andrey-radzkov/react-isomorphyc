@@ -1,25 +1,33 @@
 import React from "react";
 import Button from "react-bootstrap/lib/Button";
 
-import {messaging, sendNotification, sendNotificationToAll, subscribe} from "../push/firebasePushMessagesActions";
+import FirebaseMessaging from "../push/FirebaseMessaging";
 import ButtonToolbar from "react-bootstrap/lib/ButtonToolbar";
+import {isClient} from "../utils/ssr-util";
 
 class PushNotificationsPage extends React.Component {
   constructor(props) {
     super(props);
+    this.firebaseMessaging = {};
+    if (isClient()) {
+      this.firebaseMessaging = new FirebaseMessaging();
+    }
   }
 
   componentWillMount() {
     this.setState({subscribed: null});
-    messaging.getToken().then(token => {
-      if (token) {
-        this.subscribed(true);
-      } else {
-        this.subscribed(false);
-      }
-    }).catch((err) => {
-      this.subscribed(null);
-    });
+    if (isClient()) {
+
+      this.firebaseMessaging.getMessaging().getToken().then(token => {
+        if (token) {
+          this.subscribed(true);
+        } else {
+          this.subscribed(false);
+        }
+      }).catch((err) => {
+        this.subscribed(null);
+      });
+    }
   }
 
   subscribed = (subcsribed) => {
@@ -27,7 +35,7 @@ class PushNotificationsPage extends React.Component {
   };
 
   subscribeAction = () => {
-    subscribe(this.subscribed);
+    this.firebaseMessaging.subscribe(this.subscribed);
   };
 
 
@@ -43,9 +51,11 @@ class PushNotificationsPage extends React.Component {
             <span className="glyphicon glyphicon-bell bell" aria-hidden="true"/>
             }
             {subscribeText}</Button>
-          <Button onClick={sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send to
+          <Button onClick={this.firebaseMessaging.sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send
+            to
             current</Button>
-          <Button onClick={sendNotificationToAll} bsStyle="primary" disabled={!this.state.subscribed}>Send to
+          <Button onClick={this.firebaseMessaging.sendNotificationToAll} bsStyle="primary"
+                  disabled={!this.state.subscribed}>Send to
             all</Button>
         </ButtonToolbar>
         <div id="messages"/>
