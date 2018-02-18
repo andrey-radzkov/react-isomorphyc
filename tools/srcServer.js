@@ -41,7 +41,7 @@ app.use(webpackDevMiddleware(compiler,
     noInfo: true, publicPath: config.output.publicPath, hot: true, inline: true,
     lazy: false
   }));
-app.use(webpackHotMiddleware(compiler, {path: '/__webpack_hmr'}));
+app.use(webpackHotMiddleware(compiler));
 
 const apiProxy = proxy('http://localhost:9100', {preserveHostHdr: true});
 app.use("/api", apiProxy);
