@@ -13,7 +13,7 @@ let config = {
   entry: [
     // must be first entry to properly set public path
     './src/webpack-public-path',
-    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr&reload=true',
+    'webpack-hot-middleware/client?path=https://localhost:3000/__webpack_hmr&reload=true',
     'babel-polyfill',
     "webpack/hot/dev-server",
     path.resolve(__dirname, '../src/client.js') // Defining path seems necessary for this to work consistently on Windows machines.

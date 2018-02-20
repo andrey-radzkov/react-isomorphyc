@@ -14,17 +14,18 @@ import React from "react";
 import fs from "fs";
 import {Provider} from "react-redux";
 import rootReducer from "../src/reducers";
-
+import https from "https";
 import {createStore} from "redux";
 import StaticRouter from "react-router-dom/StaticRouter";
 import App from "../src/pages/App";
 import proxy from "express-http-proxy";
 global.__SERVER__ = true;
 let options = {
-  key: fs.readFileSync('./tools/certificates/localhost_3000.key'),
-  cert: fs.readFileSync('./tools/certificates/localhost_3000.cert'),
+  key: fs.readFileSync('./tools/certificates/server-key.pem'),
+  cert: fs.readFileSync('./tools/certificates/server-csr.pem'),
   requestCert: false,
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
+  passphrase: 'test'
 };
 
 const compiler = webpack(config);
@@ -91,11 +92,11 @@ app.use("*", (req, res) => {
 
 //TODO: enable https, import correct certificates
 //TODO: create proxy
-// let server = https.createServer(options, app);
+let server = https.createServer(options, app);
 //TODO: sign ceritficate
 // let server = http.createServer(app);
-// server.listen(port, function (error) {
-app.listen(port, function (error) {
+server.listen(port, function (error) {
+// app.listen(port, function (error) {
   if (error) {
     console.error(error);
   } else {
