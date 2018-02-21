@@ -3,21 +3,30 @@ import {render} from "react-dom";
 import {Provider} from "react-redux";
 import {browserHistory} from "react-router";
 import App from "./pages/App";
-import {BrowserRouter} from "react-router-dom";
-import configureStore from "./store/configureStore";
-if (process.env.BROWSER) {
-  require('bootstrap-sass/assets/stylesheets/_bootstrap.scss');
-  require('./styles/styles.scss');
-  require('../static/favicon.ico');
-  require('./service-worker-register.js');
-}
-//TDOO: refactor from srcServer
-const store = configureStore();
+import StaticRouter from "react-router-dom/StaticRouter";
+import PropTypes from "prop-types";
 
-render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App/>
-    </BrowserRouter>
-  </Provider>, document.getElementById('app')
-);
+class ServerSideRender extends React.Component {
+  constructor(props) {
+    super(props);
+    this.context = {store: {}};
+  }
+
+  render() {
+    return (
+      <Provider store={this.props.store}>
+        <StaticRouter location={this.props.location} context={this.context}>
+          <App/>
+        </StaticRouter>
+      </Provider>
+    );
+  }
+}
+
+ServerSideRender.propTypes = {
+  location: PropTypes.string,
+  store: PropTypes.object,
+};
+
+export default ServerSideRender;
+
