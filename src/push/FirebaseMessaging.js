@@ -13,7 +13,9 @@ export default class FirebaseMessaging {
       storageBucket: "",
       messagingSenderId: "966501688821"
     };
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
     this.messaging = firebase.messaging();
     this.messaging.onMessage(payload => {
       FirebaseMessaging.appendMessage(payload);
