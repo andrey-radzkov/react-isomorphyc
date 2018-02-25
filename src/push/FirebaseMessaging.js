@@ -1,10 +1,13 @@
 import * as firebase from "firebase/app";
 import {securedGet} from "../oauth2/xhr";
+import React from "react";
+
 require("firebase/messaging");
 
-export default class FirebaseMessaging {
+export default class FirebaseMessaging extends React.Component {
 
   constructor() {
+    super();
     let config = {
       apiKey: "AIzaSyAxmz11DjcnHcMWkOHhzRxUGx4CR9cyNzg",
       authDomain: "react-test-project-1a086.firebaseapp.com",
@@ -18,14 +21,14 @@ export default class FirebaseMessaging {
     }
     this.messaging = firebase.messaging();
     this.messaging.onMessage(payload => {
-      FirebaseMessaging.appendMessage(payload);
+      this.appendMessage(payload);
       new Notification(payload.notification.title, payload.notification);
     });
   }
 
 
 // TODO: Add a message to the messages element. Just for test purposes. rewrite to react component
-  static appendMessage(payload) {
+  appendMessage(payload) {
     const messagesElement = document.querySelector('#messages');
     const dataHeaderELement = document.createElement('h5');
     const dataElement = document.createElement('pre');
@@ -40,15 +43,15 @@ export default class FirebaseMessaging {
     return this.messaging;
   };
 
-  sendNotification = () => {
+  sendNotification = () => (dispatch) => {
     //TODO: on token refresh, get token on subscribe, store on backend
     this.getMessaging().getToken().then(token => {
-      securedGet(process.env.API_URL + '/resource/send-push-message/' + token);
+      dispatch(securedGet(process.env.API_URL + '/resource/send-push-message/' + token));
     });
   };
 
-  sendNotificationToAll = () => {
-    securedGet(process.env.API_URL + '/resource/send-push-message-to-all/');
+  sendNotificationToAll = () => (dispatch) => {
+    dispatch(securedGet(process.env.API_URL + '/resource/send-push-message-to-all/'));
   };
 
   subscribe = (callback) => {

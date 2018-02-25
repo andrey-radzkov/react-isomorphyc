@@ -1,5 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/lib/Button";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import ButtonToolbar from "react-bootstrap/lib/ButtonToolbar";
@@ -38,6 +40,12 @@ class PushNotificationsPage extends React.Component {
     this.firebaseMessaging.subscribe(this.subscribed);
   };
 
+  sendNotification = () => {
+    this.props.dispatch(this.firebaseMessaging.sendNotification());
+  };
+  sendNotificationToAll = () => {
+    this.props.dispatch(this.firebaseMessaging.sendNotificationToAll());
+  };
 
   render() {
     let subscribeText = this.state.subscribed === true ? 'You are already subscribed' : this.state.subscribed === false ? 'Subscribe' : 'You blocked subscription';
@@ -51,10 +59,10 @@ class PushNotificationsPage extends React.Component {
             <span className="glyphicon glyphicon-bell bell" aria-hidden="true"/>
             }
             {subscribeText}</Button>
-          <Button onClick={this.firebaseMessaging.sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send
+          <Button onClick={this.sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send
             to
             current</Button>
-          <Button onClick={this.firebaseMessaging.sendNotificationToAll} bsStyle="primary"
+          <Button onClick={this.sendNotificationToAll} bsStyle="primary"
                   disabled={!this.state.subscribed}>Send to
             all</Button>
         </ButtonToolbar>
@@ -65,5 +73,10 @@ class PushNotificationsPage extends React.Component {
   }
 }
 
+PushNotificationsPage.propTypes = {
+  dispatch: PropTypes.object
+};
 
-export default PushNotificationsPage;
+export default connect(
+  state => ({})
+)(PushNotificationsPage);
