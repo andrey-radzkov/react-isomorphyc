@@ -1,11 +1,17 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import '../styles/infinite-scroll.scss';
+import React from "react";
+import {Link} from "react-router-dom";
+import Helmet from "react-helmet";
+import {isClient} from "../utils/ssr-util";
+if (isClient()) {
+  require('../styles/infinite-scroll.scss');
+}
 
 // Since this component is simple and static, there's no parent container for it.
 const InfiniteScrollPage = () => {
   return (
     <div className="container">
+      <Helmet title="Infinite scroll Page"/>
+
       <h2 className="alt-header">Infinite scroll</h2>
       <p>
         This example app for demos. This page is for infinite scroll.

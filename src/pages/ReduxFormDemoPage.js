@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/lib/Modal";
 import Button from "react-bootstrap/lib/Button";
 import {closeSupplierModal, loadSupplier, loadSuppliers, openModal} from "../actions/supplierActions";
 import {SupplierList} from "../components/SupplierList";
-import {isClient} from "../utils/ssr-util";
+import Helmet from "react-helmet";
 
 class ReduxFormDemoPage extends React.Component {
 //tODO: migrate to reactstrap
@@ -15,10 +15,7 @@ class ReduxFormDemoPage extends React.Component {
   }
 
   componentWillMount() {
-    if (isClient()) {
-      //TODO: temp for SSR. not to did miunt because should be rendered on server
-      document.title = "Redux form";
-    }
+
   }
 
   componentDidMount() {
@@ -75,6 +72,7 @@ class ReduxFormDemoPage extends React.Component {
   render() {
     return (
       <div className="container">
+        <Helmet title={"Redux form Page " + this.props.id}/>
         <Button bsStyle="default" type="button"
                 onClick={() => this.props.openModal("supplierModal")}>Create
           new</Button>

@@ -63,8 +63,9 @@ app.use("*", (req, res) => {
   let html = ReactDOMServer.renderToString(
     <ServerSideRender location={req.originalUrl} store={store}/>
   );
-  let readFileSync = fs.readFileSync(
-    path.resolve(__dirname, '../src/index.ejs'), {encoding: "utf8"});
+  // let readFileSync = fs.readFileSync(
+  //   path.resolve(__dirname, '../src/index.ejs'), {encoding: "utf8"});
+  let readFileSync = html;
   readFileSync = readFileSync.replace('<div id="app"></div>', '<div id="app">' + html + '</div>');
   //TODO: temp solution
   readFileSync = readFileSync.replace("</noscript>",
@@ -74,7 +75,7 @@ app.use("*", (req, res) => {
     "window.__PRELOADED_STATE__ =" + JSON.stringify(initialState).replace(/</g, '\\u003c') + ";" +
     "</script>" +
     "<script type=\"text/javascript\" src=\"/bundle.js\" async=\"\"></script>");
-  res.send(readFileSync);
+  res.send('<!DOCTYPE html>' + readFileSync);
 
   res.end();
 });

@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/lib/Button";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import Helmet from "react-helmet";
 
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import ButtonToolbar from "react-bootstrap/lib/ButtonToolbar";
@@ -51,6 +52,7 @@ class PushNotificationsPage extends React.Component {
     let subscribeText = this.state.subscribed === true ? 'You are already subscribed' : this.state.subscribed === false ? 'Subscribe' : 'You blocked subscription';
     return (
       <div className="container">
+        <Helmet title="Push Notification Page"/>
         <h2 className="alt-header">Push notifications</h2>
         <ButtonToolbar>
           <Button className="js-push-button" onClick={this.subscribeAction} bsStyle="default"
@@ -74,7 +76,7 @@ class PushNotificationsPage extends React.Component {
 }
 
 PushNotificationsPage.propTypes = {
-  dispatch: PropTypes.object
+  dispatch: PropTypes.func
 };
 
 export default connect(

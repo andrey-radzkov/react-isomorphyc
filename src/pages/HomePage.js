@@ -1,8 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Helmet from "react-helmet";
 
 const HomePage = () => (
   <div className="container">
+    <Helmet title="Home page"/>
+
     <h1>React Sandbox</h1>
 
     <h2>Get Started</h2>
