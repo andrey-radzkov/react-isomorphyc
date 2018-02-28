@@ -6,6 +6,7 @@ import App from "./pages/App";
 import StaticRouter from "react-router-dom/StaticRouter";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
+import ReactDOMServer from "react-dom/server";
 
 class ServerSideRender extends React.Component {
   constructor(props) {
@@ -15,6 +16,11 @@ class ServerSideRender extends React.Component {
 
 
   render() {
+    const content = ReactDOMServer.renderToString(<Provider store={this.props.store}>
+      <StaticRouter location={this.props.location} context={this.context}>
+        <App/>
+      </StaticRouter>
+    </Provider>);
     const head = Helmet.renderStatic();
 
     return (
@@ -37,13 +43,7 @@ class ServerSideRender extends React.Component {
 
       </head>
       <body>
-      <div id="app">
-        <Provider store={this.props.store}>
-          <StaticRouter location={this.props.location} context={this.context}>
-            <App/>
-          </StaticRouter>
-        </Provider>
-      </div>
+      <div id="app" dangerouslySetInnerHTML={{__html: content}}/>
       <noscript>
         <div className="container"><h2>Please, enable javascript for this application</h2></div>
       </noscript>
