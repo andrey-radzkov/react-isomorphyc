@@ -21,7 +21,7 @@ class ServerSideRender extends React.Component {
         <App/>
       </StaticRouter>
     </Provider>);
-    const head = Helmet.renderStatic();
+    const helmet = Helmet.renderStatic();
 
     return (
 
@@ -39,7 +39,11 @@ class ServerSideRender extends React.Component {
         <meta charSet="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#E16E03"/>
-        {head.title.toComponent()}
+
+        {helmet.meta.toComponent()}
+
+        {helmet.title.toComponent()}
+
 
       </head>
       <body>

@@ -52,7 +52,12 @@ class PushNotificationsPage extends React.Component {
     let subscribeText = this.state.subscribed === true ? 'You are already subscribed' : this.state.subscribed === false ? 'Subscribe' : 'You blocked subscription';
     return (
       <div className="container">
-        <Helmet title="Push Notification Page"/>
+        <Helmet title="Push Notification Page"
+                meta={[
+                  {"name": "description", "content": "Helmet application"},
+                  {"name": "keywords", "content": "react,helmet"},
+                ]}
+        />
         <h2 className="alt-header">Push notifications</h2>
         <ButtonToolbar>
           <Button className="js-push-button" onClick={this.subscribeAction} bsStyle="default"
