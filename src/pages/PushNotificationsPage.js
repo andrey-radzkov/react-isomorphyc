@@ -54,8 +54,8 @@ class PushNotificationsPage extends React.Component {
       <div className="container">
         <Helmet title="Push Notification Page"
                 meta={[
-                  {"name": "description", "content": "Helmet application"},
-                  {"name": "keywords", "content": "react,helmet"},
+                  {"name": "description", "content": "Push Notification Page description"},
+                  {"name": "keywords", "content": "Push Notification, react"},
                 ]}
         />
         <h2 className="alt-header">Push notifications</h2>

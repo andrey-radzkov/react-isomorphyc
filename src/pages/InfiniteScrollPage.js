@@ -10,8 +10,12 @@ if (isClient()) {
 const InfiniteScrollPage = () => {
   return (
     <div className="container">
-      <Helmet title="Infinite scroll Page"/>
-
+      <Helmet title="Infinite scroll Page"
+              meta={[
+                {"name": "description", "content": "Infinite scroll Page description"},
+                {"name": "keywords", "content": "Infinite scroll"},
+              ]}
+      />
       <h2 className="alt-header">Infinite scroll</h2>
       <p>
         This example app for demos. This page is for infinite scroll.

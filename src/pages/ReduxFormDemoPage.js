@@ -70,9 +70,15 @@ class ReduxFormDemoPage extends React.Component {
 
 
   render() {
+    const id = this.props.id ? this.props.id : "";
     return (
       <div className="container">
-        <Helmet title={"Redux form Page " + this.props.id}/>
+        <Helmet title={"Redux form Page " + id}
+                meta={[
+                  {"name": "description", "content": "Redux form Page " + id + " description"},
+                  {"name": "keywords", "content": "Redux form, react"},
+                ]}
+        />
         <Button bsStyle="default" type="button"
                 onClick={() => this.props.openModal("supplierModal")}>Create
           new</Button>
