@@ -51,6 +51,7 @@ class ServerSideRender extends React.Component {
       <noscript>
         <div className="container"><h2>Please, enable javascript for this application</h2></div>
       </noscript>
+      <script async={true} src={this.props.script} charSet="UTF-8"/>
       </body>
       </html>
     );
@@ -60,6 +61,7 @@ class ServerSideRender extends React.Component {
 ServerSideRender.propTypes = {
   location: PropTypes.string,
   store: PropTypes.object,
+  script: PropTypes.string,
 };
 
 export default ServerSideRender;
