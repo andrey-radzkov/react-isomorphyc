@@ -22,7 +22,7 @@ export default class FirebaseMessaging extends React.Component {
     this.messaging = firebase.messaging();
     this.messaging.onMessage(payload => {
       this.appendMessage(payload);
-      new Notification(payload.notification.title, payload.notification);
+      new Notification(payload.data.title, payload.data);
     });
   }
 
