@@ -10,7 +10,6 @@ const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function (payload) {
 
-  payload.data.image = payload.data.icon;
   console.log("data", payload.data);
   payload.data.actions = [
     {
@@ -33,7 +32,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
 self.addEventListener("notificationclick", function (event) {
   console.log("event", event);
   event.stopImmediatePropagation();
-  clients.openWindow(event.action || "http://localhost:3000/redux-form/");//TODO: from data
+  clients.openWindow(event.action || JSON.parse(event.notification.data).action || "http://localhost:3000/push");//TODO: from data
   event.notification.close();
 });
 
