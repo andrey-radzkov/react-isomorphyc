@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
   // TODO: move from home page
-  <div className="container">
+  <div className="container text-center">
     <Helmet title="Home page"
             meta={[
               {"name": "description", "content": "Персональный помощник в стирке"},
@@ -18,7 +18,7 @@ let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
     <h1>Персональный помощник в стирке</h1>
     <form className="form-horizontal" onSubmit={putClothes}>
 
-      <Button bsStyle="primary" type="submit" disabled={submitting}>Положить носки в корзину</Button>
+      <Button bsStyle="success" className="submitClothes" type="submit" disabled={submitting}>В стирку!</Button>
     </form>
   </div>
 );

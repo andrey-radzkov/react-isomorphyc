@@ -80,3 +80,20 @@ h2 {
   }
 }
 
+.btn.btn-success.submitClothes {
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  outline: none;
+  font-size: 40px;
+  background-image: url(https://opt-936833.ssl.1c-bitrix-cdn.ru/upload/iblock/f81/f81e13000e39381d3a42d4bcc0840f9d.png);
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  padding-top: 90px;
+  text-shadow: 2px 2px 2px #000;
+  &:hover {
+    text-shadow: 4px 4px 4px #000;
+  }
+}
+
