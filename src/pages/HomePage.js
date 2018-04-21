@@ -1,23 +1,57 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import Helmet from "react-helmet";
+import {reduxForm} from "redux-form";
+import {putClothes} from "../actions/washClothesActions";
+import Button from "react-bootstrap/lib/Button";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
-const HomePage = () => (
+let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
+  // TODO: move from home page
   <div className="container">
     <Helmet title="Home page"
             meta={[
-              {"name": "description", "content": "Home Page description"},
-              {"name": "keywords", "content": "Home, react"},
+              {"name": "description", "content": "Персональный помощник в стирке"},
+              {"name": "keywords", "content": "Гразные носки"},
             ]}
     />
-    <h1>React Sandbox</h1>
+    <h1>Персональный помощник в стирке</h1>
+    <form className="form-horizontal" onSubmit={putClothes}>
 
-    <h2>Get Started</h2>
-    <ol>
-      <li>Review the <Link to="redux-form">Redux form demo</Link></li>
-      <li>Remove the demo and start coding: npm run remove-demo</li>
-    </ol>
+      <Button bsStyle="primary" type="submit" disabled={submitting}>Положить носки в корзину</Button>
+    </form>
   </div>
 );
 
+HomePage.propTypes = {
+  putClothes: PropTypes.func,
+  pristine: PropTypes.bool,
+  reset: PropTypes.func,
+  submitting: PropTypes.bool,
+  invalid: PropTypes.bool,
+};
+
+HomePage = reduxForm({
+  form: 'putClothes', // a unique identifier for this form
+  // touchOnChange: true
+  enableReinitialize: true,
+
+})(HomePage);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    putClothes: (e) => {
+      e.preventDefault();
+      dispatch(putClothes());
+    },
+  };
+};
+const mapStateToProps = (state) => {
+  return {};
+};
+
+HomePage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);
 export default HomePage;

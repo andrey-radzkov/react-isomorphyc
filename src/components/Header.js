@@ -12,7 +12,7 @@ const Header = ({path}) => (
     <Row>
       <Navbar.Collapse>
         <Nav>
-          <IndexLinkContainer to="/"><NavItem>Home</NavItem></IndexLinkContainer>
+          <IndexLinkContainer to="/"><NavItem>Главная</NavItem></IndexLinkContainer>
           <LinkContainer to="/push"><NavItem>Push</NavItem></LinkContainer>
           <LinkContainer to="/infinite-scroll"><NavItem>Infinite scroll</NavItem></LinkContainer>
           <LinkContainer to="/redux-form"><NavItem>Redux form</NavItem></LinkContainer>
