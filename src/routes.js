@@ -8,12 +8,14 @@ import Oauth2Login from "./pages/Oauth2Login";
 import {PrivateRoute} from "./PrivateRoute";
 import PushNotificationsPage from "./pages/PushNotificationsPage";
 import ClothesPage from "./pages/ClothesPage";
+import BasketPage from "./pages/BasketPage";
 
 const Routes = () => (
   <div>
     <Switch>
       <Route exact path="/" component={HomePage}/>
       <PrivateRoute exact path="/my-clothes" component={ClothesPage}/>
+      <PrivateRoute exact path="/my-basket" component={BasketPage}/>
       <PrivateRoute exact path="/push" component={PushNotificationsPage}/>
       <PrivateRoute exact path="/redux-form" component={ReduxFormDemoPage}/>
       <PrivateRoute path="/redux-form/:id" component={ReduxFormDemoPage}/>

@@ -8,3 +8,4 @@ export const SHOW_WAITING = 'SHOW_WAITING';
 export const HIDE_WAITING = 'HIDE_WAITING';
 
 export const LOAD_CLOTHES = 'LOAD_CLOTHES';
+export const LOAD_BASKET = 'LOAD_BASKET';

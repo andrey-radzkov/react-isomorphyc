@@ -5,12 +5,12 @@ import supplierListReducer from "./supplierListReducer";
 import modalReducer from "./modalReducer";
 import {routerReducer} from "react-router-redux";
 import {reducer as reduxFormReducer} from "redux-form";
-import clothesListReducer from "./clothesListReducer";
+import clothesReducer from "./clothesReducer";
 
 const rootReducer = combineReducers({
   supplierReducer,
   supplierListReducer,
-  clothesListReducer,
+  clothesReducer,
   ajaxActionsReducer,
   modalReducer,
   routing: routerReducer,

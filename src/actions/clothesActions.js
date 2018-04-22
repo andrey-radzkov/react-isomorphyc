@@ -1,5 +1,5 @@
 import {securedGet, securedPost} from "../oauth2/xhr";
-import {LOAD_CLOTHES} from "../constants/actionTypes";
+import {LOAD_BASKET, LOAD_CLOTHES} from "../constants/actionTypes";
 
 export const putClothes = () => (dispatch) => {
   dispatch(
@@ -18,5 +18,10 @@ export const loadClothes = () => (dispatch) => {
   dispatch(securedGet(process.env.API_URL + '/resource/my-clothes/')).then(response => {
     dispatch({type: LOAD_CLOTHES, clothes: response.data});
   });
+};
 
+export const loadBasket = () => (dispatch) => {
+  dispatch(securedGet(process.env.API_URL + '/resource/my-basket/')).then(response => {
+    dispatch({type: LOAD_BASKET, basket: response.data || {}});
+  });
 };
