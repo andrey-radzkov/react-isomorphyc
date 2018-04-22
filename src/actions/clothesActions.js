@@ -1,13 +1,11 @@
 import {securedGet, securedPost} from "../oauth2/xhr";
 import {LOAD_BASKET, LOAD_CLOTHES} from "../constants/actionTypes";
 
-export const putClothes = () => (dispatch) => {
-  dispatch(
+export const putClothes = (e) => (dispatch) => {
+  e.preventDefault();
+  return dispatch(
     //tODO: create put methods in rest api
-    securedPost(process.env.API_URL + '/resource/put-clothes-to-basket/')).then(
-    response => {
-      //  dispatch({type: LOAD_SUPPLIER, data: response.data});
-    });
+    securedPost(process.env.API_URL + '/resource/put-clothes-to-basket/'));
 };
 
 export const registerIfNecessary = () => (dispatch) => {
@@ -26,7 +24,8 @@ export const loadBasket = () => (dispatch) => {
   });
 };
 
-export const washClothes = () => (dispatch) => {
+export const washClothes = (e) => (dispatch) => {
+  e.preventDefault();
   dispatch(
     securedPost(process.env.API_URL + '/resource/wash-clothes-in-basket/')).then(
     response => {

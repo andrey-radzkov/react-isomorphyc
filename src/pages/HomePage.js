@@ -40,8 +40,7 @@ HomePage = reduxForm({
 const mapDispatchToProps = dispatch => {
   return {
     putClothes: (e) => {
-      e.preventDefault();
-      dispatch(putClothes());
+      return dispatch(putClothes(e));
     },
   };
 };

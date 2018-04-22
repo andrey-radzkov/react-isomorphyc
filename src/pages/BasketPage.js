@@ -54,8 +54,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadBasket: () => dispatch(loadBasket()),
     washClothes: (e) => {
-      e.preventDefault();
-      dispatch(washClothes());
+      dispatch(washClothes(e));
     }
   };
 };
