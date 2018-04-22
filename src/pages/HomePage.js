@@ -32,8 +32,7 @@ HomePage.propTypes = {
 };
 
 HomePage = reduxForm({
-  form: 'putClothes', // a unique identifier for this form
-  // touchOnChange: true
+  form: 'putClothes',
   enableReinitialize: true,
 
 })(HomePage);

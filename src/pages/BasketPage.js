@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {loadBasket} from "../actions/clothesActions";
+import {loadBasket, washClothes} from "../actions/clothesActions";
 import Button from "react-bootstrap/lib/Button";
 import {Helmet} from "react-helmet";
+import {reduxForm} from "redux-form";
 
 class BasketPage extends React.Component {
   constructor(props) {
@@ -27,9 +28,10 @@ class BasketPage extends React.Component {
           />
           <h1>Одежда в корзине</h1>
           {basket}
-          <br/>
-          {/*TODO: разделить по правам - кто то уведомляет кто то стирает. так же добавиьт уведомление по вещам*/}
-          <Button bsStyle="success" className="submitClothes">Постирано</Button>
+          <form className="form-horizontal" onSubmit={this.props.washClothes}>
+            {/*TODO: разделить по правам - кто то уведомляет кто то стирает. так же добавиьт уведомление по вещам*/}
+            <Button bsStyle="success" className="submitClothes" type="submit">Постирано</Button>
+          </form>
         </div>
       </div>
     );
@@ -38,13 +40,23 @@ class BasketPage extends React.Component {
 
 BasketPage.propTypes = {
   loadBasket: PropTypes.func,
+  washClothes: PropTypes.func,
   basket: PropTypes.object,
 };
+
+BasketPage = reduxForm({
+  form: 'washClothes',
+  enableReinitialize: true,
+
+})(BasketPage);
+
 const mapDispatchToProps = dispatch => {
   return {
-    loadBasket: () => {
-      dispatch(loadBasket());
-    },
+    loadBasket: () => dispatch(loadBasket()),
+    washClothes: (e) => {
+      e.preventDefault();
+      dispatch(washClothes());
+    }
   };
 };
 const mapStateToProps = (state) => {

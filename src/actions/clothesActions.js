@@ -25,3 +25,11 @@ export const loadBasket = () => (dispatch) => {
     dispatch({type: LOAD_BASKET, basket: response.data || {}});
   });
 };
+
+export const washClothes = () => (dispatch) => {
+  dispatch(
+    securedPost(process.env.API_URL + '/resource/wash-clothes-in-basket/')).then(
+    response => {
+      dispatch(loadBasket());
+    });
+};
