@@ -1,4 +1,4 @@
-import {securedPost} from "../oauth2/xhr";
+import {securedGet, securedPost} from "../oauth2/xhr";
 
 export const putClothes = () => (dispatch) => {
   dispatch(
@@ -7,4 +7,9 @@ export const putClothes = () => (dispatch) => {
     response => {
       //  dispatch({type: LOAD_SUPPLIER, data: response.data});
     });
+};
+
+
+export const registerIfNecessary = () => (dispatch) => {
+  dispatch(securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
 };

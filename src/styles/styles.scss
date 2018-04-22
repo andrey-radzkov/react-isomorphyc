@@ -92,8 +92,9 @@ h2 {
   background-position: 50% 0;
   padding-top: 90px;
   text-shadow: 2px 2px 2px #000;
+  border: 3px solid #3c7e3c;
   &:hover {
-    text-shadow: 4px 4px 4px #000;
+    text-shadow: 3px 3px 4px #000;
   }
 }
 

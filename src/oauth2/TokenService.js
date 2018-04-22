@@ -27,11 +27,11 @@ export const requestToken = (code, history) => {
   };
   const searchParams = createUrlFormEncoded(params);
 
-  tokenRequest.post('/uaa/oauth/token', searchParams).then(response => {
+  return tokenRequest.post('/uaa/oauth/token', searchParams).then(response => {
     let token = response.data;
     setTokens(token.access_token, token.refresh_token);
     history.push(getTargetUrl());
-
+    return response.data;
   }).catch(error => {
     if (error) {
       console.log('//TODO: redirect to error page');
