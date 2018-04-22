@@ -15,7 +15,7 @@ let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
               {"name": "keywords", "content": "Гразные носки"},
             ]}
     />
-    <h1>Персональный помощник в стирке</h1>
+    <h1>Положите вещь в стирку</h1>
     <form className="form-horizontal" onSubmit={putClothes}>
 
       <Button bsStyle="success" className="submitClothes" type="submit" disabled={submitting}>В стирку!</Button>
