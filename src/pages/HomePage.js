@@ -6,7 +6,7 @@ import Button from "react-bootstrap/lib/Button";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
+let HomePage = ({pristine, reset,handleSubmit, submitting, invalid, putClothes}) => (
   // TODO: move from home page
   <div className="container text-center">
     <Helmet title="Home page"
@@ -16,8 +16,7 @@ let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
             ]}
     />
     <h1>Положите вещь в стирку</h1>
-    <form className="form-horizontal" onSubmit={putClothes}>
-
+    <form className="form-horizontal" onSubmit={handleSubmit(putClothes)}>
       <Button bsStyle="success" className="submitClothes" type="submit" disabled={submitting}>В стирку!</Button>
     </form>
   </div>
@@ -26,6 +25,7 @@ let HomePage = ({pristine, reset, submitting, invalid, putClothes}) => (
 HomePage.propTypes = {
   putClothes: PropTypes.func,
   pristine: PropTypes.bool,
+  handleSubmit: PropTypes.func,
   reset: PropTypes.func,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
@@ -39,8 +39,8 @@ HomePage = reduxForm({
 
 const mapDispatchToProps = dispatch => {
   return {
-    putClothes: (e) => {
-      return dispatch(putClothes(e));
+    putClothes: () => {
+      return dispatch(putClothes());
     },
   };
 };
