@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
 import {requestToken} from "../oauth2/TokenService";
-import {registerIfNecessary} from "../actions/washClothesActions";
+import {registerIfNecessary} from "../actions/clothesActions";
 import {connect} from "react-redux";
 
 class Oauth2Login extends React.Component {

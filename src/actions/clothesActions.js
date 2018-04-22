@@ -1,4 +1,5 @@
 import {securedGet, securedPost} from "../oauth2/xhr";
+import {LOAD_CLOTHES} from "../constants/actionTypes";
 
 export const putClothes = () => (dispatch) => {
   dispatch(
@@ -9,7 +10,13 @@ export const putClothes = () => (dispatch) => {
     });
 };
 
-
 export const registerIfNecessary = () => (dispatch) => {
   dispatch(securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
+};
+
+export const loadClothes = () => (dispatch) => {
+  dispatch(securedGet(process.env.API_URL + '/resource/my-clothes/')).then(response => {
+    dispatch({type: LOAD_CLOTHES, clothes: response.data});
+  });
+
 };
