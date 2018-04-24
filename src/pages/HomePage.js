@@ -1,12 +1,14 @@
 import React from "react";
 import Helmet from "react-helmet";
-import {reduxForm} from "redux-form";
+import {Field, reduxForm} from "redux-form";
 import {putClothes} from "../actions/clothesActions";
 import Button from "react-bootstrap/lib/Button";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import DropdownListRedux from "../components/DropdownListRedux";
+import {required} from "../validators/validatorsForFormat";
 
-let HomePage = ({pristine, reset,handleSubmit, submitting, invalid, putClothes}) => (
+let HomePage = ({pristine, reset, handleSubmit, submitting, invalid, putClothes}) => (
   // TODO: move from home page
   <div className="container text-center">
     <Helmet title="Home page"
@@ -17,6 +19,20 @@ let HomePage = ({pristine, reset,handleSubmit, submitting, invalid, putClothes})
     />
     <h1>Положите вещь в стирку</h1>
     <form className="form-horizontal" onSubmit={handleSubmit(putClothes)}>
+      {/*//TODO: select data from server, default value*/}
+      <Field name="type"
+             component={DropdownListRedux}
+             data={[
+               {type: 'socks', text: 'Носки'}
+               , {type: 't-shirt', text: 'Майки'}
+               , {type: 'trousers', text: 'Штаны'}
+               , {type: 'others', text: 'Остальные вещи'}
+             ]}
+             defaultValue={'socks'}
+             valueField="type"
+             textField="text"
+             validate={[required]}
+      />
       <Button bsStyle="success" className="submitClothes" type="submit" disabled={submitting}>В стирку!</Button>
     </form>
   </div>
