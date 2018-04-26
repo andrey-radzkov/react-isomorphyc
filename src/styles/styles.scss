@@ -98,9 +98,13 @@ h2 {
   }
 }
 
-.select-radio {
+.select-dropdown {
   width: 250px;
   text-align: left;
   margin: 20px auto;
+  &:hover{
+    background-color: #e6e6e6;
+    cursor: pointer;
+  }
 }
 

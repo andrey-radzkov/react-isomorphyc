@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import DropdownListRedux from "../components/DropdownListRedux";
 import {required} from "../validators/validatorsForFormat";
 
+
 let HomePage = ({pristine, reset, handleSubmit, submitting, invalid, putClothes}) => (
   // TODO: move from home page
   <div className="container text-center">
@@ -19,7 +20,8 @@ let HomePage = ({pristine, reset, handleSubmit, submitting, invalid, putClothes}
     />
     <h1>Положите вещь в стирку</h1>
     <form className="form-horizontal" onSubmit={handleSubmit(putClothes)}>
-      {/*//TODO: select data from server, default value*/}
+      {/*//TODO: select data from server, default value from redux*/}
+
       <Field name="type"
              component={DropdownListRedux}
              data={[
@@ -28,7 +30,6 @@ let HomePage = ({pristine, reset, handleSubmit, submitting, invalid, putClothes}
                , {type: 'trousers', text: 'Штаны'}
                , {type: 'others', text: 'Остальные вещи'}
              ]}
-             defaultValue={'socks'}
              valueField="type"
              textField="text"
              validate={[required]}
@@ -55,13 +56,14 @@ HomePage = reduxForm({
 
 const mapDispatchToProps = dispatch => {
   return {
-    putClothes: () => {
-      return dispatch(putClothes());
+    putClothes: (values) => {
+      return dispatch(putClothes(values));
     },
   };
 };
 const mapStateToProps = (state) => {
-  return {};
+  //TODO: to state
+  return {initialValues: {"type": {"type": "socks"}}};
 };
 
 HomePage = connect(
