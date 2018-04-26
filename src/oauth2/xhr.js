@@ -14,6 +14,10 @@ export const securedPost = (url, data, waitingLayerId) => (dispatch) => {
   return dispatch(
     request(url, {method: "POST", data, waitingLayerId: waitingLayerId}));
 };
+export const securedPut = (url, data, waitingLayerId) => (dispatch) => {
+  return dispatch(
+    request(url, {method: "PUT", data, waitingLayerId: waitingLayerId}));
+};
 
 const request = (url, config) => (dispatch) => {
   //TODO: create growls

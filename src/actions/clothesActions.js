@@ -1,11 +1,11 @@
-import {securedGet, securedPost} from "../oauth2/xhr";
+import {securedGet, securedPost, securedPut} from "../oauth2/xhr";
 import {LOAD_BASKET, LOAD_CLOTHES} from "../constants/actionTypes";
 
 export const putClothes = (values) => (dispatch) => {
   //tODO: wait and animation here
   return dispatch(
     //tODO: create put methods in rest api
-    securedPost(process.env.API_URL + '/resource/put-clothes-to-basket/', {type: values.type.type}));
+    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {type: values.type.type}));
 };
 
 export const registerIfNecessary = () => (dispatch) => {
