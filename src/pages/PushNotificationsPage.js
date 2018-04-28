@@ -7,6 +7,7 @@ import Helmet from "react-helmet";
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import ButtonToolbar from "react-bootstrap/lib/ButtonToolbar";
 import {isClient} from "../utils/ssr-util";
+import {securedPost} from "../oauth2/xhr";
 
 class PushNotificationsPage extends React.Component {
   constructor(props) {
@@ -38,6 +39,13 @@ class PushNotificationsPage extends React.Component {
   };
 
   subscribeAction = () => {
+    //TODO: normal
+    this.props.dispatch((dispatch) => {
+      this.firebaseMessaging.getMessaging().getToken().then(token => {
+        dispatch(securedPost(process.env.API_URL + '/resource/subscribe', {token: token}));
+      });
+    });
+
     this.firebaseMessaging.subscribe(this.subscribed);
   };
 
