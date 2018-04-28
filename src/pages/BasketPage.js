@@ -30,7 +30,7 @@ class BasketPage extends React.Component {
           {basket}
           <form className="form-horizontal" onSubmit={this.props.washClothes}>
             {/*TODO: разделить по правам - кто то уведомляет кто то стирает. так же добавиьт уведомление по вещам*/}
-            <Button bsStyle="success" className="submitClothes" type="submit">Постирано</Button>
+            <Button bsStyle="success" className="submitClothes" type="submit">Постирать</Button>
           </form>
         </div>
       </div>

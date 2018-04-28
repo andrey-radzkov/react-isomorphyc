@@ -36,9 +36,7 @@ ClothesPage.propTypes = {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    loadClothes: () => {
-      dispatch(loadClothes());
-    },
+    loadClothes: () => dispatch(loadClothes()),
   };
 };
 const mapStateToProps = (state) => {
