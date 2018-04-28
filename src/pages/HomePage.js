@@ -7,15 +7,26 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import DropdownListRedux from "../components/DropdownListRedux";
 import {required} from "../validators/validatorsForFormat";
+import isEmpty from "lodash/isEmpty";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({busy: true});
   }
 
   componentDidMount() {
-    this.props.loadClothes();
+    this.props.loadClothes()
+      .then(res => this.onChange());
   }
+
+  onChange = () => {
+    this.setState({busy: false});
+  };
 
   render() {
     return (
@@ -36,6 +47,8 @@ class HomePage extends React.Component {
                  data={mapRemainingClothesWithLocalization(this.props.clothes)}
                  valueField="type"
                  textField="text"
+                 busy={this.state.busy}
+                 messages={{emptyList: "Нет чистых вещей", open: "Открыть"}}
                  validate={[required]}
           />
           <Button bsStyle="success" className="submitClothes" type="submit" disabled={this.props.submitting}>В
@@ -70,9 +83,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = (state) => {
-  //TODO: to state
   return {
-    initialValues: {"type": {"type": "socks"}},
+    initialValues: isEmpty(state.clothesReducer.clothes) ? null : {"type": mapRemainingClothesWithLocalization(state.clothesReducer.clothes)[0]},
     clothes: state.clothesReducer.clothes
   };
 };

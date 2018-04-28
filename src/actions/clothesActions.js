@@ -10,8 +10,9 @@ export const putClothes = (values) => (dispatch) => {
   //tODO: wait and animation here
   return dispatch(
     //tODO: create put methods in rest api
-    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {type: values.type.type})).then(res=>{
-      dispatch(loadClothes());
+    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {type: values.type.type})).then(res => {
+    //tODO: do without rest call
+    dispatch(loadClothes());
   });
 };
 
@@ -20,9 +21,10 @@ export const registerIfNecessary = () => (dispatch) => {
 };
 
 export const loadClothes = () => (dispatch) => {
-  dispatch(securedGet(process.env.API_URL + '/resource/clean-clothes/')).then(response => {
-    dispatch({type: LOAD_CLOTHES, clothes: response.data});
-  });
+  return dispatch(securedGet(process.env.API_URL + '/resource/clean-clothes/'))
+    .then(response => {
+      return dispatch({type: LOAD_CLOTHES, clothes: response.data});
+    });
 };
 
 export const mapRemainingClothesWithLocalization = (clothes) => {

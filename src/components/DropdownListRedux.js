@@ -3,11 +3,15 @@ import React from "react";
 import "react-widgets/dist/css/react-widgets.css";
 import PropTypes from "prop-types";
 
-const DropdownListRedux = ({input, data, valueField, textField, defaultValue, ...rest}) => (
-  <DropdownList {...input}
-                onBlur={() => input.onBlur()}
-                data={data} valueField={valueField} defaultValue={defaultValue}
-                textField={textField} className="select-dropdown"  {...rest}/>
+const DropdownListRedux = ({input, data, valueField, textField, ...rest}) => (
+  <DropdownList  {...input}
+                 onBlur={() => input.onBlur()}
+                 data={data}
+                 valueField={valueField}
+                 textField={textField}
+                 className="select-dropdown"
+                 {...rest}
+  />
 );
 DropdownListRedux.propTypes = {
   input: PropTypes.object,
