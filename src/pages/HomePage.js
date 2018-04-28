@@ -28,6 +28,10 @@ class HomePage extends React.Component {
     this.setState({busy: false});
   };
 
+  putClothes = (values) => {
+    return this.props.putClothes(values, this.props.clothes);
+  };
+
   render() {
     return (
       // TODO: move from home page
@@ -39,7 +43,7 @@ class HomePage extends React.Component {
                 ]}
         />
         <h1>Положите вещь в стирку</h1>
-        <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.props.putClothes)}>
+        <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.putClothes)}>
           {/*//TODO: select data from server, default value from redux*/}
 
           <Field name="type"
@@ -78,7 +82,7 @@ HomePage = reduxForm({
 
 const mapDispatchToProps = dispatch => {
   return {
-    putClothes: (values) => dispatch(putClothes(values)),
+    putClothes: (values, clothes) => dispatch(putClothes(values, clothes)),
     loadClothes: () => dispatch(loadClothes()),
   };
 };

@@ -3,16 +3,20 @@ import {LOAD_BASKET, LOAD_CLOTHES} from "../constants/actionTypes";
 import map from "lodash/map";
 import countBy from "lodash/countBy";
 import uniqBy from "lodash/uniqBy";
+import findIndex from "lodash/findIndex";
+import pullAt from "lodash/pullAt";
 
 import {typeLocalization} from "../constants/clothesTypesLocalization";
 
-export const putClothes = (values) => (dispatch) => {
+export const putClothes = (values, clothes) => (dispatch) => {
   //tODO: wait and animation here
   return dispatch(
-    //tODO: create put methods in rest api
     securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {type: values.type.type})).then(res => {
-    //tODO: do without rest call
-    dispatch(loadClothes());
+    let indexToRemove = findIndex(clothes, (item) => {
+      return item.type.type === values.type.type;
+    });
+    const restClothes = pullAt(clothes, indexToRemove);
+    return dispatch({type: LOAD_CLOTHES, clothes: restClothes});
   });
 };
 
