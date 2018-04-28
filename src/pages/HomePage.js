@@ -33,6 +33,9 @@ class HomePage extends React.Component {
   };
 
   render() {
+    const clothesWithLocalization = mapRemainingClothesWithLocalization(this.props.clothes);
+    const emptyText = "Нет чистых вещей";
+    const placeholder = this.state.busy ? "" : emptyText
     return (
       // TODO: move from home page
       <div className="container text-center">
@@ -48,11 +51,13 @@ class HomePage extends React.Component {
 
           <Field name="type"
                  component={DropdownListRedux}
-                 data={mapRemainingClothesWithLocalization(this.props.clothes)}
+                 data={clothesWithLocalization}
                  valueField="type"
                  textField="text"
+                 disabled={isEmpty(clothesWithLocalization)}
+                 placeholder={placeholder}
                  busy={this.state.busy}
-                 messages={{emptyList: "Нет чистых вещей", open: "Открыть"}}
+                 messages={{emptyList: emptyText, open: "Открыть"}}
                  validate={[required]}
           />
           <Button bsStyle="success" className="submitClothes" type="submit" disabled={this.props.submitting}>В
