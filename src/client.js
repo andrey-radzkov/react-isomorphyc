@@ -13,6 +13,7 @@ if (isClient()) {
   require('./styles/styles.scss');
   require('../static/favicon.ico');
   require('./service-worker-register.js');
+  require("react-widgets/dist/css/react-widgets.css");
 }
 
 const store = configureStore(preloadedState);
