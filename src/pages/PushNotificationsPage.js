@@ -39,21 +39,19 @@ class PushNotificationsPage extends React.Component {
   };
 
   subscribeAction = () => {
-    //TODO: normal
-    this.props.dispatch((dispatch) => {
-      this.firebaseMessaging.getMessaging().getToken().then(token => {
-        dispatch(securedPost(process.env.API_URL + '/resource/subscribe', {token: token}));
+    this.firebaseMessaging.subscribe((subscribed) => {
+      this.subscribed(subscribed);
+      //TODO: normal
+      this.props.dispatch((dispatch) => {
+        this.firebaseMessaging.getMessaging().getToken().then(token => {
+          dispatch(securedPost(process.env.API_URL + '/resource/subscribe', {token: token}));
+        });
       });
     });
-
-    this.firebaseMessaging.subscribe(this.subscribed);
   };
 
   sendNotification = () => {
     this.props.dispatch(this.firebaseMessaging.sendNotification());
-  };
-  sendNotificationToAll = () => {
-    this.props.dispatch(this.firebaseMessaging.sendNotificationToAll());
   };
 
   render() {
@@ -77,9 +75,6 @@ class PushNotificationsPage extends React.Component {
           <Button onClick={this.sendNotification} bsStyle="primary" disabled={!this.state.subscribed}>Send
             to
             current</Button>
-          <Button onClick={this.sendNotificationToAll} bsStyle="primary"
-                  disabled={!this.state.subscribed}>Send to
-            all</Button>
         </ButtonToolbar>
         <div id="messages"/>
 

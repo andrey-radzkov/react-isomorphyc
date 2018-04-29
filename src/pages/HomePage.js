@@ -5,9 +5,9 @@ import {loadClothes, mapRemainingClothesWithLocalization, putClothes} from "../a
 import Button from "react-bootstrap/lib/Button";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import DropdownListRedux from "../components/DropdownListRedux";
 import {required} from "../validators/validatorsForFormat";
 import isEmpty from "lodash/isEmpty";
+import DropdownListRedux from "../components/DropdownListRedux";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class HomePage extends React.Component {
   render() {
     const clothesWithLocalization = mapRemainingClothesWithLocalization(this.props.clothes);
     const emptyText = "Нет чистых вещей";
-    const placeholder = this.state.busy ? "" : emptyText
+    const placeholder = this.state.busy ? "" : emptyText;
     return (
       // TODO: move from home page
       <div className="container text-center">
@@ -59,6 +59,7 @@ class HomePage extends React.Component {
                  busy={this.state.busy}
                  messages={{emptyList: emptyText, open: "Открыть"}}
                  validate={[required]}
+                 className="select-dropdown"
           />
           <Button bsStyle="success" className="submitClothes" type="submit" disabled={this.props.submitting}>В
             стирку!</Button>

@@ -50,10 +50,6 @@ export default class FirebaseMessaging extends React.Component {
     });
   };
 
-  sendNotificationToAll = () => (dispatch) => {
-    dispatch(securedGet(process.env.API_URL + '/resource/send-push-message-to-all/'));
-  };
-
   subscribe = (callback) => {
     this.getMessaging().requestPermission().then(() => {
       callback(true);
