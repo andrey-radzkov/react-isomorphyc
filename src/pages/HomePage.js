@@ -52,7 +52,7 @@ class HomePage extends React.Component {
           <Field name="type"
                  component={DropdownListRedux}
                  data={clothesWithLocalization}
-                 valueField="type"
+                 valueField="name"
                  textField="text"
                  disabled={isEmpty(clothesWithLocalization)}
                  placeholder={placeholder}

@@ -33,9 +33,9 @@ export const loadClothes = () => (dispatch) => {
 
 export const mapRemainingClothesWithLocalization = (clothes) => {
   //TODO: move logic to ocmplonent
-  const countByType = countBy(clothes, "type.type");
-  return map(uniqBy(clothes, "type.type"), (item) => {
-    const typeVal = item.type.type;
+  const countByType = countBy(clothes, "type.name");
+  return map(uniqBy(clothes, "type.name"), (item) => {
+    const typeVal = item.type.name;
     return {type: typeVal, text: typeLocalization[typeVal] + " (" + countByType[typeVal] + ")"};
   });
 };
