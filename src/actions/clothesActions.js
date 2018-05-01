@@ -11,9 +11,9 @@ import {typeLocalization} from "../constants/clothesTypesLocalization";
 export const putClothes = (values, clothes) => (dispatch) => {
   //tODO: wait and animation here
   return dispatch(
-    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {type: values.type.type})).then(res => {
+    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {name: values.type.name})).then(res => {
     let indexToRemove = findIndex(clothes, (item) => {
-      return item.type.type === values.type.type;
+      return item.type.name === values.type.name;
     });
     const restClothes = pullAt(clothes, indexToRemove);
     return dispatch({type: LOAD_CLOTHES, clothes: restClothes});
@@ -36,7 +36,12 @@ export const mapRemainingClothesWithLocalization = (clothes) => {
   const countByType = countBy(clothes, "type.name");
   return map(uniqBy(clothes, "type.name"), (item) => {
     const typeVal = item.type.name;
-    return {type: typeVal, text: typeLocalization[typeVal] + " (" + countByType[typeVal] + ")"};
+    return {
+      id:item.type.id,
+      type: typeVal,
+      text: typeLocalization[typeVal] + " (" + countByType[typeVal] + ")",
+      imgSrc: item.type.imgSrc
+    };
   });
 };
 

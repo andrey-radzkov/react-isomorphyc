@@ -97,7 +97,12 @@ h2 {
     text-shadow: 3px 3px 4px #000;
   }
 }
-
+.btn.btn-default.clothes-btn{
+  background-size: contain !important;
+  padding: 16px 10px 16px 70px;
+  outline: none;
+  width: 240px;
+}
 .select-dropdown {
   width: 250px;
   text-align: left;
@@ -110,4 +115,5 @@ h2 {
 
 h1 {
   margin-top: 0px;
+  font-size: 34px;
 }

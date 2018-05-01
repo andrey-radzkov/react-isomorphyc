@@ -24,20 +24,7 @@ export default class FirebaseMessaging extends React.Component {
       new Notification(payload.data.title, payload.data);
     });
   }
-
-
-// TODO: Add a message to the messages element. Just for test purposes. rewrite to react component
-  appendMessage(payload) {
-    const messagesElement = document.querySelector('#messages');
-    const dataHeaderELement = document.createElement('h5');
-    const dataElement = document.createElement('pre');
-    dataElement.style = 'overflow-x:hidden;';
-    dataHeaderELement.textContent = 'Received message:';
-    dataElement.textContent = JSON.stringify(payload, null, 2);
-    messagesElement.appendChild(dataHeaderELement);
-    messagesElement.appendChild(dataElement);
-  }
-
+  
   getMessaging = () => {
     return this.messaging;
   };

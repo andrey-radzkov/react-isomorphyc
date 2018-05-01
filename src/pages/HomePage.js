@@ -1,13 +1,11 @@
 import React from "react";
 import Helmet from "react-helmet";
-import {Field, reduxForm} from "redux-form";
+import {reduxForm} from "redux-form";
 import {loadClothes, mapRemainingClothesWithLocalization, putClothes} from "../actions/clothesActions";
-import Button from "react-bootstrap/lib/Button";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {required} from "../validators/validatorsForFormat";
 import isEmpty from "lodash/isEmpty";
-import DropdownListRedux from "../components/DropdownListRedux";
+import {ButtonList} from "../components/ButtonList";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -34,8 +32,7 @@ class HomePage extends React.Component {
 
   render() {
     const clothesWithLocalization = mapRemainingClothesWithLocalization(this.props.clothes);
-    const emptyText = "Нет чистых вещей";
-    const placeholder = this.state.busy ? "" : emptyText;
+
     return (
       // TODO: move from home page
       <div className="container text-center">
@@ -45,24 +42,12 @@ class HomePage extends React.Component {
                   {"name": "keywords", "content": "Гразные носки"},
                 ]}
         />
-        <h1>Положите вещь в стирку</h1>
-        <form className="form-horizontal" onSubmit={this.props.handleSubmit(this.putClothes)}>
-          {/*//TODO: select data from server, default value from redux*/}
+        <h1>Я кладу в стирку:</h1>
 
-          <Field name="type"
-                 component={DropdownListRedux}
-                 data={clothesWithLocalization}
-                 valueField="name"
-                 textField="text"
-                 disabled={isEmpty(clothesWithLocalization)}
-                 placeholder={placeholder}
-                 busy={this.state.busy}
-                 messages={{emptyList: emptyText, open: "Открыть"}}
-                 validate={[required]}
-                 className="select-dropdown"
-          />
-          <Button bsStyle="success" className="submitClothes" type="submit" disabled={this.props.submitting}>В
-            стирку!</Button>
+        <form className="form-horizontal" onSubmit={this.props.handleSubmit}>
+          <ButtonList mappedClothes={clothesWithLocalization} busy={this.state.busy}
+                      onSubmit={this.putClothes} handleSubmit={this.props.handleSubmit}
+                      disabled={false}/>
         </form>
       </div>
     );
