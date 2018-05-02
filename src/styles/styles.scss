@@ -97,12 +97,20 @@ h2 {
     text-shadow: 3px 3px 4px #000;
   }
 }
-.btn.btn-default.clothes-btn{
+
+.btn.btn-default.clothes-btn {
   background-size: contain !important;
   padding: 16px 10px 16px 70px;
   outline: none;
   width: 240px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px;
+  &:hover {
+    background-color: #f5f5f5 !important;
+  }
 }
+
 .select-dropdown {
   width: 250px;
   text-align: left;

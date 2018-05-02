@@ -15,6 +15,7 @@ export const putClothes = (values, clothes) => (dispatch) => {
     let indexToRemove = findIndex(clothes, (item) => {
       return item.type.name === values.type.name;
     });
+    //TODO: create -one , don`t remove, create zero and disable
     const restClothes = pullAt(clothes, indexToRemove);
     return dispatch({type: LOAD_CLOTHES, clothes: restClothes});
   });
