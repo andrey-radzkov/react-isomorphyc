@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {loadClothes} from "../actions/clothesActions";
+import {loadClothes, mapRemainingClothesWithLocalization} from "../actions/clothesActions";
 import {Helmet} from "react-helmet";
 
 class ClothesPage extends React.Component {
@@ -14,7 +14,9 @@ class ClothesPage extends React.Component {
   }
 
   render() {
-    let clothes = JSON.stringify(this.props.clothes);//TODO: table with form
+    const clothesWithLocalization = mapRemainingClothesWithLocalization(this.props.clothes);
+
+    let clothess = JSON.stringify(clothesWithLocalization);//TODO: table with form
     return (
       <div className="container">
         <Helmet title="Моя одежда"
@@ -24,14 +26,14 @@ class ClothesPage extends React.Component {
                 ]}
         />
         <h1>Моя одежда</h1>
-        {clothes}
+        {clothess}
       </div>
     );
   }
 }
 
 ClothesPage.propTypes = {
-  loadClothes: PropTypes.func,
+  loadCleanClothes: PropTypes.func,
   clothes: PropTypes.array,
 };
 const mapDispatchToProps = dispatch => {

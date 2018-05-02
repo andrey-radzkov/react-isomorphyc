@@ -25,8 +25,15 @@ export const registerIfNecessary = () => (dispatch) => {
   dispatch(securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
 };
 
-export const loadClothes = () => (dispatch) => {
+export const loadCleanClothes = () => (dispatch) => {
   return dispatch(securedGet(process.env.API_URL + '/resource/clean-clothes/'))
+    .then(response => {
+      return dispatch({type: LOAD_CLOTHES, clothes: response.data});
+    });
+};
+
+export const loadClothes = () => (dispatch) => {
+  return dispatch(securedGet(process.env.API_URL + '/resource/all-clothes/'))
     .then(response => {
       return dispatch({type: LOAD_CLOTHES, clothes: response.data});
     });

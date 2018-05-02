@@ -1,7 +1,7 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {reduxForm} from "redux-form";
-import {loadClothes, mapRemainingClothesWithLocalization, putClothes} from "../actions/clothesActions";
+import {loadCleanClothes, mapRemainingClothesWithLocalization, putClothes} from "../actions/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
@@ -18,7 +18,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadClothes()
+    this.props.loadCleanClothes()
       .then(res => this.onChange());
   }
 
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  loadClothes: PropTypes.func,
+  loadCleanClothes: PropTypes.func,
   putClothes: PropTypes.func,
   pristine: PropTypes.bool,
   handleSubmit: PropTypes.func,
@@ -74,7 +74,7 @@ HomePage = reduxForm({
 const mapDispatchToProps = dispatch => {
   return {
     putClothes: (values, clothes) => dispatch(putClothes(values, clothes)),
-    loadClothes: () => dispatch(loadClothes()),
+    loadCleanClothes: () => dispatch(loadCleanClothes()),
   };
 };
 const mapStateToProps = (state) => {
