@@ -15,7 +15,33 @@ import {
   required,
   tooOld
 } from "../validators/validatorsForFormat";
+import TextField from 'material-ui/TextField'
+import {orange500, blue500} from 'material-ui/styles/colors';
+const styles = {
 
+  underlineStyle: {
+    borderColor: orange500,
+  },
+  floatingLabelStyle: {
+    color: orange500,
+  },
+};
+const renderTextField = ({
+                           input,
+                           label,
+                           meta: { touched, error },
+                           ...custom
+                         }) => (
+  <TextField
+    hintText={label}
+    floatingLabelText={label}
+    errorText={touched && error}
+    underlineStyle={styles.underlineStyle}
+    underlineFocusStyle={styles.underlineStyle}
+    {...input}
+    {...custom}
+  />
+);
 
 let FieldLevelValidationForm = ({
   onSubmit, pristine, reset, submitting, invalid, id
@@ -25,7 +51,7 @@ let FieldLevelValidationForm = ({
       <h2>Redux validation for supplier {id}</h2>
       <form className="form-horizontal" onSubmit={onSubmit}>
         <Field name="companyName" type="text"
-               component={TextInputRedux} label="companyName"
+               component={renderTextField} label="companyName"
                validate={[required, maxLength15]}
         />
         <Field name="email" type="email"

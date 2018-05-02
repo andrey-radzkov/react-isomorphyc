@@ -7,6 +7,7 @@ import StaticRouter from "react-router-dom/StaticRouter";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import ReactDOMServer from "react-dom/server";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 class ServerSideRender extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class ServerSideRender extends React.Component {
   render() {
     const content = ReactDOMServer.renderToString(<Provider store={this.props.store}>
       <StaticRouter location={this.props.location} context={this.context}>
-        <App/>
+        <MuiThemeProvider>
+          <App/>
+        </MuiThemeProvider>
       </StaticRouter>
     </Provider>);
     const helmet = Helmet.renderStatic();
