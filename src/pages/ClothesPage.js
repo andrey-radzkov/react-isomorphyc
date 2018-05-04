@@ -33,7 +33,7 @@ class ClothesPage extends React.Component {
 }
 
 ClothesPage.propTypes = {
-  loadCleanClothes: PropTypes.func,
+  loadClothes: PropTypes.func,
   clothes: PropTypes.array,
 };
 const mapDispatchToProps = dispatch => {

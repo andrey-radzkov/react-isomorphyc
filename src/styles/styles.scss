@@ -122,6 +122,15 @@ h2 {
 }
 
 h1 {
-  margin-top: 0px;
+  margin-top: 15px;
   font-size: 34px;
+}
+
+a.app-bar-link {
+  color: #fff;
+  text-decoration: none;
+  &hover {
+    color: #fff !important;
+    //TODO: delete after bootstrap removal
+  }
 }

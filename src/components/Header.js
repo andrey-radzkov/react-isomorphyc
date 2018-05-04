@@ -1,35 +1,58 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {getAccessToken, logout} from "../oauth2/TokenService";
-import {IndexLinkContainer, LinkContainer} from "react-router-bootstrap";
-import {Nav, Navbar, NavItem, Row} from "react-bootstrap";
+import AppBar from "material-ui/AppBar";
+import Drawer from "material-ui/Drawer";
+import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
+import Home from "material-ui/svg-icons/action/home";
+import Basket from "material-ui/svg-icons/action/shopping-basket";
+import ViewList from "material-ui/svg-icons/action/view-list";
+import {LinkMenuItem} from "./LinkMenuItem";
+import {Link} from "react-router-dom";
+import {teal700 as orange} from "material-ui/styles/colors";
 
-const Header = ({path}) => (
-  <Navbar>
-    <Navbar.Header className="container-fluid">
-      <Navbar.Toggle />
-    </Navbar.Header >
-    <Row>
-      <Navbar.Collapse>
-        <Nav>
-          <IndexLinkContainer to="/"><NavItem>Главная</NavItem></IndexLinkContainer>
-          <LinkContainer to="/my-clothes"><NavItem>Моя одежда</NavItem></LinkContainer>
-          <LinkContainer to="/my-basket"><NavItem>В стирке</NavItem></LinkContainer>
-          <LinkContainer to="/push"><NavItem>Push</NavItem></LinkContainer>
-          <LinkContainer to="/infinite-scroll"><NavItem>Infinite scroll</NavItem></LinkContainer>
-          <LinkContainer to="/redux-form"><NavItem>Redux form</NavItem></LinkContainer>
-        </Nav>
-        <Nav pullRight>
-          {getAccessToken() !== null &&
-            <NavItem onClick={logout}>
-              <span className={"glyphicon glyphicon-log-out"}/> Log out
-            </NavItem>
-          }
-        </Nav>
-      </Navbar.Collapse>
-    </Row>
-  </Navbar>
-);
+const iconStyles = {
+  cursor: "pointer",
+};
+const appBarStyle = {
+  backgroundColor: orange,
+};
+
+
+class Header extends React.Component {
+//tODO: migrate to reactstrap
+  constructor(props) {
+    super(props);
+    this.state = {open: false};
+  }
+
+  handleToggle = () => this.setState({open: !this.state.open});
+
+  render() {
+    return (
+      <div>
+        {/*TODO: logo*/}
+        <AppBar
+          style={appBarStyle}
+          title={<Link to="/" className="app-bar-link">Время стирки</Link>}
+          onLeftIconButtonClick={this.handleToggle}
+          iconElementRight={getAccessToken() !== null && <ExitToApp style={iconStyles} onClick={logout}/>}
+        />
+        <Drawer
+          docked={false}
+          width={200}
+          open={this.state.open}
+          onRequestChange={(open) => this.setState({open})}
+        >
+          <LinkMenuItem onClick={this.handleToggle} leftIcon={<Home/>} to="/" primaryText="Главная"/>
+          <LinkMenuItem onClick={this.handleToggle} leftIcon={<Basket/>} to="/my-clothes" primaryText="Моя одежда"/>
+          <LinkMenuItem onClick={this.handleToggle} leftIcon={<ViewList/>} to="/my-basket" primaryText="В стирке"/>
+        </Drawer>
+      </div>
+
+    );
+  }
+}
 
 Header.propTypes = {
   path: PropTypes.string,
