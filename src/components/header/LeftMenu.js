@@ -12,9 +12,9 @@ export const LeftMenu = ({open, onClose, onOpen}) => (
                    onOpen={onOpen}>
     <LinkMenuItem onClick={onClose} leftIcon={<Home/>} to="/"
                   primaryText="Главная"/>
-    <LinkMenuItem onClick={onClose} leftIcon={<Basket/>} to="/my-clothes"
+    <LinkMenuItem onClick={onClose} leftIcon={<ViewList/>} to="/my-clothes"
                   primaryText="Моя одежда"/>
-    <LinkMenuItem onClick={onClose} leftIcon={<ViewList/>} to="/my-basket"
+    <LinkMenuItem onClick={onClose} leftIcon={<Basket/>} to="/my-basket"
                   primaryText="В стирке"/>
   </SwipeableDrawer>
 );
