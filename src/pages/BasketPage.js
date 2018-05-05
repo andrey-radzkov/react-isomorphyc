@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {loadBasket, washClothes} from "../actions/clothesActions";
-import Button from "react-bootstrap/lib/Button";
+import Button from "material-ui/Button";
 import {Helmet} from "react-helmet";
 import {reduxForm} from "redux-form";
 
@@ -30,7 +30,7 @@ class BasketPage extends React.Component {
           {basket}
           <form className="form-horizontal" onSubmit={this.props.washClothes}>
             {/*TODO: разделить по правам - кто то уведомляет кто то стирает. так же добавиьт уведомление по вещам*/}
-            <Button bsStyle="success" className="submitClothes" type="submit">Постирать</Button>
+            <Button className="submitClothes" type="submit">Постирать</Button>
           </form>
         </div>
       </div>

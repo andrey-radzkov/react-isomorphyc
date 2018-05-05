@@ -6,7 +6,19 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 import {ButtonList} from "../components/button-list/ButtonList";
+import {withStyles} from "material-ui/styles";
+import Grid from "material-ui/Grid";
 
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    margin: theme.spacing.unit,
+  },
+
+  align: {
+    textAlign: "center",
+  },
+});
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -31,24 +43,31 @@ class HomePage extends React.Component {
   };
 
   render() {
+    const {classes} = this.props;
     const clothesWithLocalization = mapRemainingClothesWithLocalization(this.props.clothes);
 
     return (
       // TODO: move from home page
-      <div className="container text-center">
-        <Helmet title="Home page"
-                meta={[
-                  {"name": "description", "content": "Персональный помощник в стирке"},
-                  {"name": "keywords", "content": "Гразные носки"},
-                ]}
-        />
-        <h1>Я кладу в стирку:</h1>
+      <div className={classes.root}>
+        <Grid container spacing={16}>
+          <Helmet title="Home page"
+                  meta={[
+                    {"name": "description", "content": "Персональный помощник в стирке"},
+                    {"name": "keywords", "content": "Гразные носки"},
+                  ]}
+          />
+          <Grid item xs={12} lg={4}/>
+          <Grid item xs={12} lg={4} className={classes.align}>
+            <h1>Я кладу в стирку:</h1>
 
-        <form className="form-horizontal" onSubmit={this.props.handleSubmit}>
-          <ButtonList mappedClothes={clothesWithLocalization} busy={this.state.busy}
-                      onSubmit={this.putClothes} handleSubmit={this.props.handleSubmit}
-                      disabled={false}/>
-        </form>
+            <form onSubmit={this.props.handleSubmit}>
+              <ButtonList mappedClothes={clothesWithLocalization} busy={this.state.busy}
+                          onSubmit={this.putClothes} handleSubmit={this.props.handleSubmit}
+                          disabled={false}/>
+            </form>
+          </Grid>
+          <Grid item xs={12} lg={4}/>
+        </Grid>
       </div>
     );
   }
@@ -63,6 +82,7 @@ HomePage.propTypes = {
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   clothes: PropTypes.array,
+  classes: PropTypes.object.isRequired,
 };
 
 HomePage = reduxForm({
@@ -88,5 +108,4 @@ HomePage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(HomePage);
-
-export default HomePage;
+export default withStyles(styles)(HomePage);

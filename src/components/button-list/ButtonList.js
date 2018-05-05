@@ -1,4 +1,4 @@
-import RaisedButton from "material-ui/RaisedButton";
+import Button from "material-ui/Button";
 import {WaitingLayer} from "../WaitingLayer";
 import React from "react";
 import PropTypes from "prop-types";
@@ -11,19 +11,22 @@ export const ButtonList = ({mappedClothes, onSubmit, handleSubmit, disabled, bus
   if (mappedClothes && mappedClothes.length > 0) {
     return mappedClothes.map(item => {
       return (
-        <div key={item.id} style={{margin: "15px"}}>
-          <RaisedButton type="submit" className="clothes-btn"
-                        disabled={disabled}
-                        label={item.text}
-                        onClick={handleSubmit(values =>
-                          onSubmit({
-                            "type": {"name": item.type}
-                          }))}
-                        icon={<img src={process.env.API_URL + "/resource" + item.imgSrc} width="50px" height="auto"/>}
-                        overlayStyle={{padding:"5px"}}
-                        style={{
-                           height: "auto"
-                        }}/>
+        <div key={item.id} className="button-list">
+          <Button type="submit"
+                  variant="raised"
+                  size="large"
+                  color="default"
+                  className="button-list__clothes-btn"
+                  disabled={disabled}
+                  onClick={handleSubmit(values =>
+                    onSubmit({
+                      "type": {"name": item.type}
+                    })
+                  )}
+          >
+            <img src={process.env.API_URL + "/resource" + item.imgSrc} width="50px" height="50px"/>
+            <span className="button-list__button-label">{item.text}</span>
+          </Button>
         </div>
       );
     });

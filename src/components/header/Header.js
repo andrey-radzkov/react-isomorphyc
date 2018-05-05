@@ -1,16 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getAccessToken, logout} from "../../oauth2/TokenService";
 import AppBar from "material-ui/AppBar";
-import Drawer from "material-ui/Drawer";
-import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
-import Home from "material-ui/svg-icons/action/home";
-import Basket from "material-ui/svg-icons/action/shopping-basket";
-import ViewList from "material-ui/svg-icons/action/view-list";
-import {LinkMenuItem} from "../LinkMenuItem";
 import {Link} from "react-router-dom";
-import {teal600 as appBarColor} from "material-ui/styles/colors";
 import {isClient} from "../../utils/ssr-util";
+import Toolbar from "material-ui/Toolbar";
+import IconButton from "material-ui/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import {Typography, withStyles} from "material-ui";
+import ExitToApp from "@material-ui/icons/ExitToApp";
+import {getAccessToken, logout} from "../../oauth2/TokenService";
+import {LeftMenu} from "./LeftMenu";
 if (isClient()) {
   require('./header.scss');
 }
@@ -18,8 +17,17 @@ if (isClient()) {
 const iconStyles = {
   cursor: "pointer",
 };
-const appBarStyle = {
-  backgroundColor: appBarColor,
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
 };
 
 
@@ -27,31 +35,37 @@ class Header extends React.Component {
 //tODO: migrate to reactstrap
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {
+      left: false,
+    };
   }
 
-  handleToggle = () => this.setState({open: !this.state.open});
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
 
   render() {
+    const {classes} = this.props;
     return (
-      <div>
-        {/*TODO: logo*/}
-        <AppBar
-          style={appBarStyle}
-          title={<Link to="/" className="app-bar-link">Время стирки</Link>}
-          onLeftIconButtonClick={this.handleToggle}
-          iconElementRight={getAccessToken() !== null && <ExitToApp style={iconStyles} onClick={logout}/>}
-        />
-        <Drawer
-          docked={false}
-          width={200}
-          open={this.state.open}
-          onRequestChange={(open) => this.setState({open})}
-        >
-          <LinkMenuItem onClick={this.handleToggle} leftIcon={<Home/>} to="/" primaryText="Главная"/>
-          <LinkMenuItem onClick={this.handleToggle} leftIcon={<Basket/>} to="/my-clothes" primaryText="Моя одежда"/>
-          <LinkMenuItem onClick={this.handleToggle} leftIcon={<ViewList/>} to="/my-basket" primaryText="В стирке"/>
-        </Drawer>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} onClick={this.toggleDrawer('left', true)} color="inherit"
+                        aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              <Link to="/" className="app-bar-link">Время стирки</Link>
+            </Typography>
+            {getAccessToken() !== null && (<ExitToApp style={iconStyles} onClick={logout}/>)}
+            {/*TODO: logo*/}
+            <LeftMenu open={this.state.left}
+                      onClose={this.toggleDrawer('left', false)}
+                      onOpen={this.toggleDrawer('left', true)}/>
+          </Toolbar>
+        </AppBar>
       </div>
 
     );
@@ -60,6 +74,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   path: PropTypes.string,
+  classes: PropTypes.object.isRequired,
 };
 
-export default Header;
+export default withStyles(styles)(Header);

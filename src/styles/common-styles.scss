@@ -1,58 +1,43 @@
-/* Variables */
-$vin-blue: #5bb7db;
-$vin-green: #60b044;
-$vin-red: #ff0000;
-$bell-from: 15deg;
-$bell-to: 45deg;
-
-/* Styles */
 body {
-  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 1.4em;
   min-width: 230px;
   margin: 0 auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  font-weight: 300;
-}
-
-h2 {
-  color: $vin-blue;
-}
-
-.bell {
-  margin-right: 5px;
-  position: relative;
-  transform: rotateZ($bell-to) !important;
-  animation: rotateBell 2s infinite;
-  top: 3px;
-  left: 3px;
-  transform-origin: top center;
-}
-
-@keyframes rotateBell {
-  0% {
-    transform: rotateZ($bell-to);
-  }
-  6% {
-    transform: rotateZ($bell-from);
-  }
-  12% {
-    transform: rotateZ($bell-to);
-  }
-  18% {
-    transform: rotateZ($bell-from);
-  }
-  24% {
-    transform: rotateZ($bell-to);
-  }
-  100% {
-    transform: rotateZ($bell-to);
-  }
 }
 
 h1 {
-  margin-top: 15px;
+  margin-top: 0px;
   font-size: 34px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
+
+@media screen and (min-width: 960px) {
+  h1 {
+    margin-top: 15px;
+  }
+}
+
+//TODO: to header.scss
+a.app-bar-link {
+  color: #fff;
+  text-decoration: none;
+  &hover {
+    color: #fff !important;
+  }
+}
+
+//TODO: to button-list.scss
+.button-list {
+  margin: 16px;
+}
+
+.button-list__clothes-btn {
+  width: 240px;
+}
+
+.button-list__button-label {
+  flex: 1;
+}
+
+.menu-item-link {
+  text-decoration: none;
+}
+

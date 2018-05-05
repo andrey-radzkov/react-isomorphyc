@@ -7,6 +7,7 @@ import {BrowserRouter} from "react-router-dom";
 import configureStore from "./store/configureStore";
 import {isClient} from "./utils/ssr-util";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import {muiTheme} from "./theme";
 
 const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
@@ -21,7 +22,7 @@ const store = configureStore(preloadedState);
 hydrate(
   <Provider store={store}>
     <BrowserRouter>
-      <MuiThemeProvider>
+      <MuiThemeProvider theme={muiTheme}>
         <App/>
       </MuiThemeProvider>
     </BrowserRouter>
