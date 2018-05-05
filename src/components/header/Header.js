@@ -1,21 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getAccessToken, logout} from "../oauth2/TokenService";
+import {getAccessToken, logout} from "../../oauth2/TokenService";
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
 import Home from "material-ui/svg-icons/action/home";
 import Basket from "material-ui/svg-icons/action/shopping-basket";
 import ViewList from "material-ui/svg-icons/action/view-list";
-import {LinkMenuItem} from "./LinkMenuItem";
+import {LinkMenuItem} from "../LinkMenuItem";
 import {Link} from "react-router-dom";
-import {teal700 as orange} from "material-ui/styles/colors";
+import {teal600 as appBarColor} from "material-ui/styles/colors";
+import {isClient} from "../../utils/ssr-util";
+if (isClient()) {
+  require('./header.scss');
+}
 
 const iconStyles = {
   cursor: "pointer",
 };
 const appBarStyle = {
-  backgroundColor: orange,
+  backgroundColor: appBarColor,
 };
 
 

@@ -4,7 +4,7 @@ import {
   validateAndUpdateTokenIfNecessary
 } from "./TokenService";
 import axios from "axios";
-import {hideWaiting, showWaiting} from "../actions/supplierActions";
+import {hideWaiting, showWaiting} from "../actions/componentStateActions";
 
 export const securedGet = (url, waitingLayerId) => (dispatch) => {
   return dispatch(request(url,

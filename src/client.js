@@ -11,11 +11,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 if (isClient()) {
-  require('bootstrap-sass/assets/stylesheets/_bootstrap.scss');
-  require('./styles/styles.scss');
+  require('./styles/common-styles.scss');
   require('../static/favicon.ico');
   require('./service-worker-register.js');
-  require("react-widgets/dist/css/react-widgets.css");
 }
 
 const store = configureStore(preloadedState);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Routes from "../routes";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 
 const App = () => (
   <div>

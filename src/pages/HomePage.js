@@ -5,7 +5,7 @@ import {loadCleanClothes, mapRemainingClothesWithLocalization, putClothes} from 
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
-import {ButtonList} from "../components/ButtonList";
+import {ButtonList} from "../components/button-list/ButtonList";
 
 class HomePage extends React.Component {
   constructor(props) {
