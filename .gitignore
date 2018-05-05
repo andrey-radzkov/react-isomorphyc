@@ -28,7 +28,7 @@ node_modules
 
 #dist folder
 dist
-*/main/resources/static
+ui-app/src/main/resources/static
 
 # IDEA/Webstorm project files
 .idea
