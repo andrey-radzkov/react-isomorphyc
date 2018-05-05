@@ -18,6 +18,10 @@ export const securedPut = (url, data, waitingLayerId) => (dispatch) => {
   return dispatch(
     request(url, {method: "PUT", data, waitingLayerId: waitingLayerId}));
 };
+export const securedDelete = (url, data, waitingLayerId) => (dispatch) => {
+  return dispatch(
+    request(url, {method: "DELETE", data, waitingLayerId: waitingLayerId}));
+};
 
 const request = (url, config) => (dispatch) => {
   //TODO: create growls

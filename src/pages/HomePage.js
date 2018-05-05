@@ -1,7 +1,7 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {reduxForm} from "redux-form";
-import {loadCleanClothes, mapRemainingClothesWithLocalization, putClothes} from "../actions/clothesActions";
+import {loadCleanClothes, mapClothesWithLocalization, putClothes} from "../actions/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
@@ -31,7 +31,7 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const clothesWithLocalization = mapRemainingClothesWithLocalization(this.props.clothes);
+    const clothesWithLocalization = mapClothesWithLocalization(this.props.clothes);
 
     return (
       // TODO: move from home page
@@ -78,8 +78,8 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = (state) => {
   return {
-    initialValues: isEmpty(state.clothesReducer.clothes) ? null : {"type": mapRemainingClothesWithLocalization(state.clothesReducer.clothes)[0]},
-    clothes: state.clothesReducer.clothes
+    initialValues: isEmpty(state.clothesReducer.cleanClothes) ? null : {"type": mapClothesWithLocalization(state.clothesReducer.cleanClothes)[0]},
+    clothes: state.clothesReducer.cleanClothes
   };
 };
 
