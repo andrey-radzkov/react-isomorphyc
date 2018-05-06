@@ -1,0 +1,3 @@
+rootProject.name = 'react-isomorphyc'
+include 'ui-java-app'
+
