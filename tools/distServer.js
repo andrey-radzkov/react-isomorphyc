@@ -1,25 +1,25 @@
+// This file configures the development web server
 import webpack from "webpack";
 import Express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 
 import path from "path";
-import {Provider} from "react-redux";
 import rootReducer from "../src/reducers";
-import fs from "fs";
 import compression from "compression";
 import config from "../webpack/webpack.config.prod";
 import http from "http";
-import App from "../src/pages/App";
-import StaticRouter from "react-router-dom/StaticRouter";
 import {createStore} from "redux";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import proxy from "express-http-proxy";
+import ServerSideRender from "../src/server";
 const compiler = webpack(config);
 const app = new Express();
 const port = process.env.PORT || 3000;
 global.__SERVER__ = true;
+global.__SERVER__ = true;
+
+//TODO: generate bundle for using without babel
 let initialState = {};
-const store = createStore(rootReducer, initialState);
 
 let options = {
   // key: fs.readFileSync('./tools/certificates/localhost_3000.key'),
@@ -29,28 +29,39 @@ let options = {
 };
 
 app.use(compression());
+const apiProxy = proxy('https://backend-for-react-resource.herokuapp.com', {preserveHostHdr: true});
+app.use("/api", apiProxy);
 
+const authProxy = proxy('https://backend-for-react-authserver.herokuapp.com', {
+  preserveHostHdr: true, proxyReqPathResolver: function (req) {
+    return "/uaa" + require('url').parse(req.url).path;
+  }
+});
+app.use("/uaa", authProxy);
 
 app.use(Express.static(path.resolve(__dirname, '..', 'dist')));
 // Always return the main index.html, so react-router render the route in the client
-app.get('*', (req, res) => {
-  let context = {store: {}};
-  let html = ReactDOMServer.renderToString(
-    <Provider store={store}>
-      <StaticRouter location={req.url} context={context}>
-        <MuiThemeProvider>
-          <App/>
-        </MuiThemeProvider>
-      </StaticRouter>
-    </Provider>
-  );
-  let readFileSync = fs.readFileSync(
-    path.resolve(__dirname, '..', 'dist', 'index.html'), {encoding: "utf8"});
+app.use("*", (req, res) => {
 
-  readFileSync = readFileSync.replace("Loading...", html);
+  //TODO: load real suppliers async
+  let initialState = {
+    clothesReducer: {clothes: [], basket: {}}
+  };
+  const store = createStore(rootReducer, initialState);
+
+  let html = ReactDOMServer.renderToString(
+    <ServerSideRender location={req.originalUrl} store={store} script={config.output.filename}/>
+  );
   //TODO: temp solution
-  res.send(readFileSync);
-  // res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+  html = html.replace("</noscript>",
+    "</noscript>" +
+    "<script>" +
+
+    "window.__PRELOADED_STATE__ =" + JSON.stringify(initialState).replace(/</g, '\\u003c') + ";" +
+    "</script>");
+  res.send('<!DOCTYPE html>' + html);
+
+  res.end();
 });
 //TODO: enable https, import correct certificates
 //TODO: create proxy
