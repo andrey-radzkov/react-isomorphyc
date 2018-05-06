@@ -17,7 +17,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 const compiler = webpack(config);
 const app = new Express();
 const port = process.env.PORT || 3000;
-
+global.__SERVER__ = true;
 let initialState = {};
 const store = createStore(rootReducer, initialState);
 
