@@ -4,8 +4,7 @@
   "description": "Starter kit for creating apps with React and Redux",
   "engines": {
     "node": "6.11.1",
-    "npm": ">=3",
-    "yarn": "0.27.5"
+    "npm": ">=4"
   },
   "scripts": {
     "preinstall": "node tools/nodeVersionCheck.js",
