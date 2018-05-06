@@ -14,6 +14,9 @@ buildscript {
     }
 }
 
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
 repositories {
     mavenCentral()
 }
