@@ -5,15 +5,15 @@ import ReactDOMServer from "react-dom/server";
 
 import path from "path";
 import {Provider} from "react-redux";
-import rootReducer from '../src/reducers';
+import rootReducer from "../src/reducers";
 import fs from "fs";
 import compression from "compression";
 import config from "../webpack/webpack.config.prod";
-import https from 'https';
+import http from "http";
 import App from "../src/pages/App";
-import StaticRouter from 'react-router-dom/StaticRouter';
-import {createStore} from 'redux';
-import proxy from 'express-http-proxy';
+import StaticRouter from "react-router-dom/StaticRouter";
+import {createStore} from "redux";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 const compiler = webpack(config);
 const app = new Express();
 const port = process.env.PORT || 3000;
@@ -22,8 +22,8 @@ let initialState = {};
 const store = createStore(rootReducer, initialState);
 
 let options = {
-  key: fs.readFileSync('./tools/certificates/localhost_3000.key'),
-  cert: fs.readFileSync('./tools/certificates/localhost_3000.cert'),
+  // key: fs.readFileSync('./tools/certificates/localhost_3000.key'),
+  // cert: fs.readFileSync('./tools/certificates/localhost_3000.cert'),
   requestCert: false,
   rejectUnauthorized: false
 };
@@ -38,7 +38,9 @@ app.get('*', (req, res) => {
   let html = ReactDOMServer.renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
-        <App/>
+        <MuiThemeProvider>
+          <App/>
+        </MuiThemeProvider>
       </StaticRouter>
     </Provider>
   );
@@ -52,13 +54,14 @@ app.get('*', (req, res) => {
 });
 //TODO: enable https, import correct certificates
 //TODO: create proxy
-let server = https.createServer(options, app);
+// let server = https.createServer(options, app);
+let server = http.createServer(app);
 server.listen(port, function (error) {
   if (error) {
     console.error(error);
   } else {
     console.info(
-      "==> 🌎  Listening on port %s. Open up https://localhost:%s/ in your browser.",
+      "==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.",
       port, port);
   }
 });

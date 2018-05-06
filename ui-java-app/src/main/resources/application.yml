@@ -1,0 +1,14 @@
+server:
+    port: 20000
+zuul:
+  routes:
+    resource:
+      path: /api/**
+      url: http://localhost:9000
+    user:
+      path: /uaa/**
+      url: http://localhost:9999/uaa
+
+spring:
+    profiles:
+        active: ${activeProfile}

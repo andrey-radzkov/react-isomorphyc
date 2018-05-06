@@ -13,7 +13,7 @@ let config = {
   entry: [
     // must be first entry to properly set public path
     './src/webpack-public-path',
-    'webpack-hot-middleware/client?path=https://localhost:3000/__webpack_hmr&reload=true',
+    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr&reload=true',
     'babel-polyfill',
     "webpack/hot/dev-server",
     path.resolve(__dirname, '../src/client.js') // Defining path seems necessary for this to work consistently on Windows machines.
@@ -29,7 +29,7 @@ let config = {
       'process.env.NODE_ENV': JSON.stringify('development'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
       'process.env.PORT': JSON.stringify('3000'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
       'process.env.API_URL': JSON.stringify("/api"),
-      'process.env.LOGIN_URL': JSON.stringify("https://localhost:3000/login"),
+      'process.env.LOGIN_URL': JSON.stringify("http://localhost:3000/login"),
       'process.env.AUTH_SERVER_URL': JSON.stringify("http://localhost:9999"),
       __SERVER__: false,
     }),
