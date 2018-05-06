@@ -1,12 +1,18 @@
 server:
     port: 20000
+    compression:
+      enabled: true
+      mime-types: application/json,application/javascript,text/css,application/xml,text/html,text/xml,text/plain,stylesheet,script
 zuul:
   routes:
     resource:
       path: /api/**
+      sensitiveHeaders:
       url: http://localhost:9000
+      rewrite: /api
     user:
       path: /uaa/**
+      sensitiveHeaders:
       url: http://localhost:9999/uaa
 
 spring:

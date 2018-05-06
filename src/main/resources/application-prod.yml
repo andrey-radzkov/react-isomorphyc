@@ -1,0 +1,11 @@
+zuul:
+  routes:
+    resource:
+      path: /api/**
+      sensitiveHeaders:
+      url: https://backend-for-react-resource.herokuapp.com
+      rewrite: /api
+    user:
+      path: /uaa/**
+      sensitiveHeaders:
+      url: https://backend-for-react-authserver.herokuapp.com/uaa
