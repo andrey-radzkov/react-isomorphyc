@@ -66,8 +66,9 @@ app.use("*", (req, res) => {
 //TODO: enable https, import correct certificates
 //TODO: create proxy
 // let server = https.createServer(options, app);
+console.log("will Listening on port " + port);
 let server = http.createServer(app);
-server.listen(port, function (error) {
+server.listen(port, '0.0.0.0',  function (error) {
   if (error) {
     console.error(error);
   } else {
