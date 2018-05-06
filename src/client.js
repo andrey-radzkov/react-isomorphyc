@@ -8,7 +8,13 @@ import configureStore from "./store/configureStore";
 import {isClient} from "./utils/ssr-util";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {muiTheme} from "./theme";
+import JssProvider from "react-jss/lib/JssProvider";
+import {create} from "jss";
+import {createGenerateClassName, jssPreset} from "material-ui/styles";
 
+const generateClassName = createGenerateClassName();
+const jss = create(jssPreset());
+jss.options.insertionPoint =  document.getElementById('jss-insertion-point');
 const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 if (isClient()) {
@@ -22,9 +28,12 @@ const store = configureStore(preloadedState);
 hydrate(
   <Provider store={store}>
     <BrowserRouter>
-      <MuiThemeProvider theme={muiTheme}>
-        <App/>
-      </MuiThemeProvider>
+      <JssProvider jss={jss} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={muiTheme()}>
+          <App />
+        </MuiThemeProvider>
+      </JssProvider>
+
     </BrowserRouter>
   </Provider>, document.getElementById('app')
 );

@@ -8,7 +8,7 @@ import withStyles from "material-ui/styles/withStyles";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    margin: "8px", //TODO: get from theme
+    margin: theme.spacing.unit
   },
 
   align: {
@@ -16,10 +16,10 @@ const styles = theme => ({
   },
 });
 
-const App = (classes) => (
+const App = ({classes}) => (
   <div>
     <Header path="curr"/>
-    <div className={classes.root} style={{margin:"8px"}}>
+    <div className={classes.root} >
       <Grid container spacing={16}>
         <Grid item xs={12} lg={4}/>
         <Grid item xs={12} lg={4} className={classes.align}>

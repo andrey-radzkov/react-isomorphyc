@@ -2,10 +2,6 @@ import Button from "material-ui/Button";
 import {WaitingLayer} from "../WaitingLayer";
 import React from "react";
 import PropTypes from "prop-types";
-import {isClient} from "../../utils/ssr-util";
-if (isClient()) {
-  require('./button-list.scss');
-}
 
 export const ButtonList = ({mappedClothes, onSubmit, handleSubmit, disabled, busy}) => {
   if (mappedClothes && mappedClothes.length > 0) {

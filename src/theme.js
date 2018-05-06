@@ -5,11 +5,13 @@ import red from "material-ui/colors/red";
 import createPalette from "material-ui/styles/createPalette";
 
 //TODO: my theme
-export const muiTheme = createMuiTheme({
-  palette: createPalette({
-    primary: teal,
-    accent: amber,
-    error: red,
-    type: 'light'
-  })
-});
+export const muiTheme = () => {
+  return createMuiTheme({
+    palette: createPalette({
+      primary: teal,
+      accent: amber,
+      error: red,
+      type: 'light'
+    })
+  });
+};

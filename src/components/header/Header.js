@@ -28,6 +28,13 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  appBarLink: {
+    color: "#fff",
+    textDecoration: "none",
+    '&:hover':{
+      color: "#fff !important"
+    }
+  }
 };
 
 
@@ -38,6 +45,15 @@ class Header extends React.Component {
     this.state = {
       left: false,
     };
+  }
+
+  componentDidMount(){
+    //TODO: It`s necessary. this need afetr fix Warning: Prop `className` did not match.
+    // TODO: Server: "MuiSvgIcon-root-49" Client: "MuiSvgIcon-root-52"
+    // const jssStyles = document.getElementById('jss-server-side');
+    // if (jssStyles && jssStyles.parentNode) {
+    //   jssStyles.parentNode.removeChild(jssStyles);
+    // }
   }
 
   toggleDrawer = (side, open) => () => {
@@ -57,7 +73,7 @@ class Header extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              <Link to="/" className="app-bar-link">Время стирки</Link>
+              <Link to="/" className={classes.appBarLink}>Время стирки</Link>
             </Typography>
             {getAccessToken() !== null && (<ExitToApp style={iconStyles} onClick={logout}/>)}
             {/*TODO: logo*/}
