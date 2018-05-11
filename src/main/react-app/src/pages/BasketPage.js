@@ -1,10 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {loadBasket, washClothes} from "../actions/clothesActions";
-import Button from "material-ui/Button";
+import {loadBasket, mapClothesWithLocalization, washClothes} from "../actions/clothesActions";
 import {Helmet} from "react-helmet";
 import {reduxForm} from "redux-form";
+import List from "material-ui/List";
+import ListItem from "material-ui/List/ListItem";
+import ListItemAvatar from "material-ui/List/ListItemAvatar";
+import Avatar from "material-ui/Avatar/Avatar";
+import ListItemText from "material-ui/List/ListItemText";
+import ListItemSecondaryAction from "material-ui/List/ListItemSecondaryAction";
+import IconButton from "material-ui/IconButton/IconButton";
+import Delete from "@material-ui/icons/Delete";
+
 
 class BasketPage extends React.Component {
   constructor(props) {
@@ -16,7 +24,8 @@ class BasketPage extends React.Component {
   }
 
   render() {
-    let basket = JSON.stringify(this.props.basket);//TODO: table with form
+    const clothesWithLocalization = mapClothesWithLocalization(this.props.basket?this.props.basket.dirtyClothes:[]);
+
     return (
       <div className="container">
         <div className="text-center">
@@ -27,10 +36,30 @@ class BasketPage extends React.Component {
                   ]}
           />
           <h1>Одежда в корзине</h1>
-          {basket}
-          <form className="form-horizontal" onSubmit={this.props.washClothes}>
-            {/*TODO: разделить по правам - кто то уведомляет кто то стирает. так же добавиьт уведомление по вещам*/}
-            <Button className="submitClothes" type="submit">Постирать</Button>
+          <form className="form-horizontal" onSubmit={this.props.handleSubmit}>
+            <List dense={false}>
+              {/* TODO: split dirty and clean. ability to delete dirty*/}
+              {clothesWithLocalization && clothesWithLocalization.length > 0 &&
+              clothesWithLocalization.map(item => {
+                return (
+                  <ListItem key={item.id} className="clothes-list">
+                    <ListItemAvatar>
+                      <Avatar>
+                        <img src={process.env.API_URL + "/resource" + item.imgSrc} width="50px" height="50px"/>
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={item.text}/>
+                    <ListItemSecondaryAction>
+                      <IconButton aria-label="Delete" onClick={this.props.handleSubmit((values) => {
+                        this.props.deleteClothes(item.type, this.props.clothes);
+                      })}>
+                        <Delete />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>);
+              })}
+
+            </List>
           </form>
         </div>
       </div>

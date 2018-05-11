@@ -7,9 +7,12 @@ import StaticRouter from "react-router-dom/StaticRouter";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import ReactDOMServer from "react-dom/server";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import {createGenerateClassName, MuiThemeProvider} from "material-ui/styles";
 import {muiTheme} from "./theme";
-
+import {SheetsRegistry} from "react-jss/lib/jss";
+import JssProvider from "react-jss/lib/JssProvider";
+const sheetsRegistry = new SheetsRegistry();
+const generateClassName = createGenerateClassName();
 class ServerSideRender extends React.Component {
   constructor(props) {
     super(props);
@@ -20,11 +23,14 @@ class ServerSideRender extends React.Component {
   render() {
     const content = ReactDOMServer.renderToString(<Provider store={this.props.store}>
       <StaticRouter location={this.props.location} context={this.context}>
-        <MuiThemeProvider theme={muiTheme}>
-          <App/>
-        </MuiThemeProvider>
+        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+          <MuiThemeProvider theme={muiTheme}>
+            <App/>
+          </MuiThemeProvider>
+        </JssProvider>
       </StaticRouter>
     </Provider>);
+    const css = sheetsRegistry.toString();
     const helmet = Helmet.renderStatic();
 
     return (
@@ -43,7 +49,7 @@ class ServerSideRender extends React.Component {
         <meta charSet="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#009688"/>
-
+        <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}}/>
         {helmet.meta.toComponent()}
 
         {helmet.title.toComponent()}
