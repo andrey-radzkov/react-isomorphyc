@@ -69,6 +69,7 @@ class BasketPage extends React.Component {
 BasketPage.propTypes = {
   loadBasket: PropTypes.func,
   washClothes: PropTypes.func,
+  handleSubmit: PropTypes.func,
   basket: PropTypes.object,
 };
 
