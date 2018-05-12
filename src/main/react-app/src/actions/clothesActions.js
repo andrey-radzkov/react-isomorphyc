@@ -87,10 +87,9 @@ export const loadBasket = () => (dispatch) => {
   });
 };
 
-export const washClothes = (e) => (dispatch) => {
-  e.preventDefault();
+export const washClothes = (type) => (dispatch) => {
   dispatch(
-    securedPost(process.env.API_URL + '/resource/wash-clothes-in-basket/')).then(
+    securedPost(process.env.API_URL + '/resource/wash-clothes-in-basket/', {name: type})).then(
     response => {
       dispatch(loadBasket());
     });

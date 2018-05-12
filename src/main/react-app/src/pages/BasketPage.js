@@ -10,9 +10,8 @@ import ListItemAvatar from "material-ui/List/ListItemAvatar";
 import Avatar from "material-ui/Avatar/Avatar";
 import ListItemText from "material-ui/List/ListItemText";
 import ListItemSecondaryAction from "material-ui/List/ListItemSecondaryAction";
-import IconButton from "material-ui/IconButton/IconButton";
-import Delete from "@material-ui/icons/Delete";
-
+import Autorenew from "@material-ui/icons/Autorenew";
+import Button from "material-ui/Button";
 
 class BasketPage extends React.Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class BasketPage extends React.Component {
   }
 
   render() {
-    const clothesWithLocalization = mapClothesWithLocalization(this.props.basket?this.props.basket.dirtyClothes:[]);
+    const clothesWithLocalization = mapClothesWithLocalization(this.props.basket ? this.props.basket.dirtyClothes : []);
 
     return (
       <div className="container">
@@ -50,11 +49,11 @@ class BasketPage extends React.Component {
                     </ListItemAvatar>
                     <ListItemText primary={item.text}/>
                     <ListItemSecondaryAction>
-                      <IconButton aria-label="Delete" onClick={this.props.handleSubmit((values) => {
-                        this.props.deleteClothes(item.type, this.props.clothes);
-                      })}>
-                        <Delete />
-                      </IconButton>
+                      <Button aria-label="Delete" onClick={this.props.handleSubmit((values) => {
+                        this.props.washClothes(item.type);
+                      })}>Постирать
+                        <Autorenew />
+                      </Button >
                     </ListItemSecondaryAction>
                   </ListItem>);
               })}
@@ -82,8 +81,8 @@ BasketPage = reduxForm({
 const mapDispatchToProps = dispatch => {
   return {
     loadBasket: () => dispatch(loadBasket()),
-    washClothes: (e) => {
-      dispatch(washClothes(e));
+    washClothes: (type) => {
+      dispatch(washClothes(type));
     }
   };
 };
