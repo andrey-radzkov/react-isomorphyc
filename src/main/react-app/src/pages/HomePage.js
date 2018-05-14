@@ -1,37 +1,27 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {reduxForm} from "redux-form";
-import {loadCleanClothes, mapClothesWithLocalization, putClothes} from "../actions/clothesActions";
+import {loadClothesTypesWithCount, putClothesToBasket} from "../actions/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import isEmpty from "lodash/isEmpty";
-import {ButtonList} from "../components/button-list/ButtonList";
+import {ClothesList} from "../components/button-list/ClothesList";
+import {CLOTHES_TYPES_WAITING_ID} from "../actions/componentStateActions";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({busy: true});
-  }
 
   componentDidMount() {
-    this.props.loadCleanClothes()
-      .then(res => this.onChange());
+    this.props.loadClothesTypesWithCount();
   }
 
-  onChange = () => {
-    this.setState({busy: false});
-  };
-
-  putClothes = (values) => {
-    return this.props.putClothes(values, this.props.clothes);
+  putClothesToBasket = (values) => {
+    return this.props.putClothesToBasket(values);
   };
 
   render() {
-    const clothesWithLocalization = mapClothesWithLocalization(this.props.clothes);
 
     return (
       // TODO: move from home page
@@ -44,9 +34,9 @@ class HomePage extends React.Component {
         />
         <h1>Я кладу в стирку:</h1>
         <form onSubmit={this.props.handleSubmit}>
-          <ButtonList mappedClothes={clothesWithLocalization} busy={this.state.busy}
-                      onSubmit={this.putClothes} handleSubmit={this.props.handleSubmit}
-                      disabled={false}/>
+          <ClothesList clothesTypesWithCount={this.props.clothesTypes}
+                       onSubmit={this.putClothesToBasket} handleSubmit={this.props.handleSubmit}
+                       disabled={false} showWaiting={this.props.showWaiting}/>
         </form>
       </div>
     );
@@ -54,14 +44,14 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  loadCleanClothes: PropTypes.func,
-  putClothes: PropTypes.func,
+  loadClothesTypesWithCount: PropTypes.func.isRequired,
+  putClothesToBasket: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
-  handleSubmit: PropTypes.func,
+  handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
-  clothes: PropTypes.array,
+  showWaiting: PropTypes.bool,
 };
 
 HomePage = reduxForm({
@@ -72,14 +62,14 @@ HomePage = reduxForm({
 
 const mapDispatchToProps = dispatch => {
   return {
-    putClothes: (values, clothes) => dispatch(putClothes(values, clothes)),
-    loadCleanClothes: () => dispatch(loadCleanClothes()),
+    putClothesToBasket: (values) => dispatch(putClothesToBasket(values)),
+    loadClothesTypesWithCount: () => dispatch(loadClothesTypesWithCount()),
   };
 };
 const mapStateToProps = (state) => {
   return {
-    initialValues: isEmpty(state.clothesReducer.cleanClothes) ? null : {"type": mapClothesWithLocalization(state.clothesReducer.cleanClothes)[0]},
-    clothes: state.clothesReducer.cleanClothes
+    clothesTypes: state.clothesReducer.clothesTypes,
+    showWaiting: state.ajaxActionsReducer[CLOTHES_TYPES_WAITING_ID]
   };
 };
 

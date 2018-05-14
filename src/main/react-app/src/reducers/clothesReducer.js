@@ -1,11 +1,9 @@
-import {LOAD_All_CLOTHES, LOAD_BASKET, LOAD_CLEAN_CLOTHES} from "../constants/actionTypes";
+import {LOAD_CLOTHES_TYPES_WITH_COUNT, LOAD_BASKET} from "../constants/actionTypes";
 
-const clothesReducer = (state = {clothes: [], cleanClothes: [], basket: {}}, action) => {
+const clothesReducer = (state = {clothesTypes: [], basket: {}}, action) => {
   switch (action.type) {
-    case LOAD_All_CLOTHES:
-      return {clothes: action.clothes};
-    case LOAD_CLEAN_CLOTHES:
-      return {cleanClothes: action.cleanClothes};
+    case LOAD_CLOTHES_TYPES_WITH_COUNT:
+      return {clothesTypes: action.clothesTypes};
     case LOAD_BASKET:
       return {basket: action.basket};
     default:

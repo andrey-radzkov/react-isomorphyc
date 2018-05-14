@@ -1,5 +1,5 @@
 import {CLOSE_MODAL, HIDE_WAITING, OPEN_MODAL, SHOW_WAITING} from "../constants/actionTypes";
-
+export const CLOTHES_TYPES_WAITING_ID="clothes-types-waiting";
 export const openModal = (modalId) => {
   return {type: OPEN_MODAL, modalId};
 };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export const WaitingLayer = ({waitingId, showWaiting}) => {
   if (showWaiting) {
-    return (<div>Загрузка...</div>);
+    return (<div id={waitingId}>Загрузка...</div>);
   } else {
     return null;
   }
