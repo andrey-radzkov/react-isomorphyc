@@ -30,7 +30,6 @@ const styles = {
     fontSize: "17px"
   }
 };
-// TODO: red color if lower than
 const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes}) => {
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
