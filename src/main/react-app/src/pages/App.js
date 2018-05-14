@@ -19,7 +19,7 @@ const styles = theme => ({
 const App = (classes) => (
   <div>
     <Header path="curr"/>
-    <div className={classes.root} style={{margin:"8px"}}>
+    <div className={classes.root} style={{margin: "8px"}}>
       <Grid container spacing={16}>
         <Grid item xs={12} lg={4}/>
         <Grid item xs={12} lg={4} className={classes.align}>

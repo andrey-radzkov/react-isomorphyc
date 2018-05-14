@@ -4,7 +4,7 @@ import {reduxForm} from "redux-form";
 import {loadClothesTypesWithCount, putClothesToBasket} from "../actions/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {ClothesList} from "../components/button-list/ClothesList";
+import ClothesList from "../components/button-list/ClothesList";
 import {CLOTHES_TYPES_WAITING_ID} from "../actions/componentStateActions";
 
 class HomePage extends React.Component {
@@ -32,7 +32,7 @@ class HomePage extends React.Component {
                   {"name": "keywords", "content": "Гразные носки"},
                 ]}
         />
-        <h1>Я кладу в стирку:</h1>
+        <h1>Мои вещи:</h1>
         <form onSubmit={this.props.handleSubmit}>
           <ClothesList clothesTypesWithCount={this.props.clothesTypes}
                        onSubmit={this.putClothesToBasket} handleSubmit={this.props.handleSubmit}

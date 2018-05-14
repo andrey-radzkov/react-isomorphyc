@@ -3,6 +3,7 @@ $averageMargin: 16px;
 body {
   min-width: 230px;
   margin: 0 auto;
+  background: #fafafa;
 }
 
 h1 {
@@ -27,20 +28,12 @@ a.app-bar-link {
   }
 }
 
-//TODO: to button-list.scss
-.button-list {
-  margin: $averageMargin;
-  button {
-    background-color: #f5f5f5;
-  }
-}
-
 .clothes-list {
   margin: $averageMargin;
 }
 
 .button-list__clothes-btn {
-  width: 240px;
+  width: 100%;
 }
 
 .button-list__button-label {
