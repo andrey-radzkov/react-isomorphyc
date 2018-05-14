@@ -22,7 +22,8 @@ export const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handl
                     disabled={disabled || type.cleanItemCount === 0}
                     onClick={handleSubmit(values =>
                       onSubmit({
-                        "type": {"name": type.name}
+                        "type": {"name": type.name},
+                        "clothesTypes": clothesTypesWithCount
                       })
                     )}
             >
@@ -40,7 +41,7 @@ export const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handl
 };
 
 ClothesList.propTypes = {
-  clothesTypesWithCount: PropTypes.array.isRequired,
+  clothesTypesWithCount: PropTypes.array,
   disabled: PropTypes.bool,
   showWaiting: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,

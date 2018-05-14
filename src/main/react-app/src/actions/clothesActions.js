@@ -13,12 +13,13 @@ import {CLOTHES_TYPES_WAITING_ID, hideWaiting, showWaiting} from "./componentSta
 export const putClothesToBasket = (values) => (dispatch) => {
   return dispatch(
     securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {name: values.type.name})).then(res => {
-    // let indexToRemove = findIndex(clothes, (item) => {
-    //   return item.type.name === values.type.name;
-    // });
+    let indexToReduce = findIndex(values.clothesTypes, (item) => {
+      return item.name === values.type.name;
+    });
     //TODO: catch error
-    // const restClothes = pullAt(clothes, indexToRemove);
-    // return dispatch({type: LOAD_CLEAN_CLOTHES, clothesTypes: restClothes});
+    const clothesTypes = values.clothesTypes;
+    clothesTypes[indexToReduce].cleanItemCount--;
+    return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: clothesTypes});
   });
 };
 
