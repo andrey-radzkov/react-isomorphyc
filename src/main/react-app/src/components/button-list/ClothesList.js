@@ -1,6 +1,7 @@
 import {WaitingLayer} from "../WaitingLayer";
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import {isClient} from "../../utils/ssr-util";
 import {CLOTHES_TYPES_WAITING_ID} from "../../actions/componentStateActions";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
@@ -16,6 +17,9 @@ const styles = {
   card: {
     textAlign: "left",
   },
+  redCard: {
+    background: "#fff0f0",
+  },
   buttonList: {
     margin: "8px 0px",
   },
@@ -30,10 +34,13 @@ const styles = {
 const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes}) => {
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
+        const tooLowCleanClothes = type.cleanItemCount < 3 && type.allItemCount > 0;
         return (
           <div key={type.id} className={classes.buttonList}>
 
-            <Card className={classes.card}>
+            <Card className={classnames(classes.card, {
+              [classes.redCard]: tooLowCleanClothes,
+            })}>
               <CardHeader
                 className={classes.cardHeader}
                 avatar={
@@ -42,9 +49,9 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
                   </Avatar>
                 }
                 title={
-                  <div className={classes.title}><b>{typeLocalization[type.name]}</b>: всего {type.allItemCount} шт
+                  <div className={classes.title}><b>{typeLocalization[type.name]}</b>: чистых {type.cleanItemCount} шт
                   </div>}
-                subheader={<div>из них чистых: {type.cleanItemCount} шт</div>}
+                subheader={<div>Всего в наличии: {type.allItemCount} шт</div>}
 
               />
               <CardActions>
