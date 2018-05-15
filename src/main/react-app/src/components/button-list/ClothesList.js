@@ -2,14 +2,11 @@ import {WaitingLayer} from "../WaitingLayer";
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import {isClient} from "../../utils/ssr-util";
 import {CLOTHES_TYPES_WAITING_ID} from "../../actions/componentStateActions";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
 import {Avatar, Button, Card, CardActions, CardHeader, withStyles} from "material-ui";
-if (isClient()) {
-  require('./button-list.scss');
-}
-const styles = {
+
+const styles = theme => ({
   bigAvatar: {
     width: 60,
     height: 60,
@@ -21,15 +18,18 @@ const styles = {
     background: "#fff0f0",
   },
   buttonList: {
-    margin: "8px 0px",
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+    marginLeft: 0,
+    marginRight: 0,
   },
   cardHeader: {
-    paddingBottom: "8px",
+    paddingBottom: theme.spacing.unit,
   },
   title: {
     fontSize: "17px"
   }
-};
+});
 const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes}) => {
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
@@ -76,6 +76,9 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
       }
     )}
     <WaitingLayer showWaiting={showWaiting} waitingId={CLOTHES_TYPES_WAITING_ID}/>
+    {/*<Button variant="fab" className={fab.className} color={fab.color}>*/}
+    {/*{fab.icon}*/}
+    {/*</Button>*/}
   </div>);
 
 
@@ -90,4 +93,4 @@ ClothesList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ClothesList);
+export default withStyles(styles, {withTheme: true})(ClothesList);
