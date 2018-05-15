@@ -5,6 +5,7 @@ import classnames from "classnames";
 import {CLOTHES_TYPES_WAITING_ID} from "../../actions/componentStateActions";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
 import {Avatar, Button, Card, CardActions, CardHeader, withStyles} from "material-ui";
+import Edit from "@material-ui/icons/es/Edit";
 
 const styles = theme => ({
   bigAvatar: {
@@ -28,17 +29,26 @@ const styles = theme => ({
   },
   title: {
     fontSize: "17px"
+  },
+  buttonPosition: {
+    position: "fixed",
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   }
+
 });
+const isTooLowCleanClothes = function (type) {
+  return type.cleanItemCount < 3 && type.allItemCount > 0;
+};
+
 const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes}) => {
   return (<div>
-    {clothesTypesWithCount && clothesTypesWithCount.map(type => {
-        const tooLowCleanClothes = type.cleanItemCount < 3 && type.allItemCount > 0;
+    { clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
           <div key={type.id} className={classes.buttonList}>
 
             <Card className={classnames(classes.card, {
-              [classes.redCard]: tooLowCleanClothes,
+              [classes.redCard]: isTooLowCleanClothes(type),
             })}>
               <CardHeader
                 className={classes.cardHeader}
@@ -75,10 +85,12 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
         )
       }
     )}
+    { clothesTypesWithCount &&
+    <Button variant="fab" color="secondary" className={classes.buttonPosition}>
+      <Edit/>
+    </Button>
+    }
     <WaitingLayer showWaiting={showWaiting} waitingId={CLOTHES_TYPES_WAITING_ID}/>
-    {/*<Button variant="fab" className={fab.className} color={fab.color}>*/}
-    {/*{fab.icon}*/}
-    {/*</Button>*/}
   </div>);
 
 
