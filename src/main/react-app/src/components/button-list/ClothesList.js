@@ -4,51 +4,16 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {CLOTHES_TYPES_WAITING_ID} from "../../actions/componentStateActions";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
-import {
-  Avatar,
-  Button,
-  Card,
-  CardActions,
-  CardHeader,
-  withStyles
-} from "material-ui";
+import {Avatar, Button, Card, CardActions, CardHeader, withStyles} from "material-ui";
 import Edit from "@material-ui/icons/Edit";
+import Done from "@material-ui/icons/Done";
+import {styles} from "./ClothesListStyles";
 
-const styles = theme => ({
-  bigAvatar: {
-    width: 60,
-    height: 60,
-  },
-  card: {
-    textAlign: "left",
-  },
-  redCard: {
-    background: "#fff0f0",
-  },
-  buttonList: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
-    marginLeft: 0,
-    marginRight: 0,
-  },
-  cardHeader: {
-    paddingBottom: theme.spacing.unit,
-  },
-  title: {
-    fontSize: "17px"
-  },
-  buttonPosition: {
-    position: "fixed",
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-  }
-
-});
 const isTooLowCleanClothes = function (type) {
   return type.cleanItemCount < 3 && type.allItemCount > 0;
 };
 
-const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes}) => {
+const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes, editMode}) => {
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
@@ -98,7 +63,12 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
     )}
     {clothesTypesWithCount &&
     <Button variant="fab" color="secondary" className={classes.buttonPosition}>
+      {!editMode &&
       <Edit/>
+      }
+      {editMode &&
+      <Done/>
+      }
     </Button>
     }
     <WaitingLayer showWaiting={showWaiting}
@@ -111,6 +81,7 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
 ClothesList.propTypes = {
   clothesTypesWithCount: PropTypes.array,
   disabled: PropTypes.bool,
+  editMode: PropTypes.bool,
   showWaiting: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

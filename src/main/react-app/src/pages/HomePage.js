@@ -36,7 +36,8 @@ class HomePage extends React.Component {
         <form onSubmit={this.props.handleSubmit}>
           <ClothesList clothesTypesWithCount={this.props.clothesTypes}
                        onSubmit={this.putClothesToBasket} handleSubmit={this.props.handleSubmit}
-                       disabled={false} showWaiting={this.props.showWaiting}/>
+                       disabled={false}
+                       showWaiting={this.props.showWaiting} editMode={false}/>
         </form>
       </div>
     );
