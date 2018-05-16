@@ -13,7 +13,7 @@ const isTooLowCleanClothes = function (type) {
   return type.cleanItemCount < 3 && type.allItemCount > 0;
 };
 
-const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes, editMode}) => {
+const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes, editMode, onEditClick}) => {
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
@@ -62,7 +62,7 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
       }
     )}
     {clothesTypesWithCount &&
-    <Button variant="fab" color="secondary" className={classes.buttonPosition}>
+    <Button variant="fab" color="secondary" className={classes.buttonPosition} onClick={onEditClick}>
       {!editMode &&
       <Edit/>
       }
@@ -84,6 +84,7 @@ ClothesList.propTypes = {
   editMode: PropTypes.bool,
   showWaiting: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };

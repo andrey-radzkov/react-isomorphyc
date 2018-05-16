@@ -10,6 +10,7 @@ import {CLOTHES_TYPES_WAITING_ID} from "../actions/componentStateActions";
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {editMode: false};
   }
 
 
@@ -19,6 +20,10 @@ class HomePage extends React.Component {
 
   putClothesToBasket = (values) => {
     return this.props.putClothesToBasket(values);
+  };
+
+  toggleEditMode = () => {
+    this.setState({editMode: !this.state.editMode});
   };
 
   render() {
@@ -37,7 +42,8 @@ class HomePage extends React.Component {
           <ClothesList clothesTypesWithCount={this.props.clothesTypes}
                        onSubmit={this.putClothesToBasket} handleSubmit={this.props.handleSubmit}
                        disabled={false}
-                       showWaiting={this.props.showWaiting} editMode={false}/>
+                       showWaiting={this.props.showWaiting} editMode={this.state.editMode}
+                       onEditClick={this.toggleEditMode}/>
         </form>
       </div>
     );
