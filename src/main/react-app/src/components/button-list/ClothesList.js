@@ -4,8 +4,15 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {CLOTHES_TYPES_WAITING_ID} from "../../actions/componentStateActions";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
-import {Avatar, Button, Card, CardActions, CardHeader, withStyles} from "material-ui";
-import Edit from "@material-ui/icons/es/Edit";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardActions,
+  CardHeader,
+  withStyles
+} from "material-ui";
+import Edit from "@material-ui/icons/Edit";
 
 const styles = theme => ({
   bigAvatar: {
@@ -43,7 +50,7 @@ const isTooLowCleanClothes = function (type) {
 
 const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes}) => {
   return (<div>
-    { clothesTypesWithCount && clothesTypesWithCount.map(type => {
+    {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
           <div key={type.id} className={classes.buttonList}>
 
@@ -54,11 +61,14 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
                 className={classes.cardHeader}
                 avatar={
                   <Avatar className={classes.bigAvatar}>
-                    <img src={process.env.API_URL + "/resource" + type.imgSrc} width="60px" height="60px"/>
+                    <img src={process.env.API_URL + "/resource" + type.imgSrc}
+                         width="60px" height="60px"/>
                   </Avatar>
                 }
                 title={
-                  <div className={classes.title}><b>{typeLocalization[type.name]}</b>: чистых {type.cleanItemCount} шт
+                  <div className={classes.title}>
+                    <b>{typeLocalization[type.name]}</b>:
+                    чистых {type.cleanItemCount} шт
                   </div>}
                 subheader={<div>Всего в наличии: {type.allItemCount} шт</div>}
 
@@ -76,21 +86,23 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
                           })
                         )}
                 >
-                  <span className="button-list__button-label">Положить в стирку</span>
+                  <span
+                    className="button-list__button-label">Положить в стирку</span>
                 </Button>
               </CardActions>
             </Card>
 
           </div>
-        )
+        );
       }
     )}
-    { clothesTypesWithCount &&
+    {clothesTypesWithCount &&
     <Button variant="fab" color="secondary" className={classes.buttonPosition}>
       <Edit/>
     </Button>
     }
-    <WaitingLayer showWaiting={showWaiting} waitingId={CLOTHES_TYPES_WAITING_ID}/>
+    <WaitingLayer showWaiting={showWaiting}
+                  waitingId={CLOTHES_TYPES_WAITING_ID}/>
   </div>);
 
 
