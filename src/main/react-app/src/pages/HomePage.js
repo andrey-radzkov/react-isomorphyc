@@ -52,6 +52,7 @@ HomePage.propTypes = {
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   showWaiting: PropTypes.bool,
+  clothesTypes: PropTypes.array,
 };
 
 HomePage = reduxForm({
