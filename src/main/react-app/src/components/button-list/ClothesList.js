@@ -1,19 +1,20 @@
-import {WaitingLayer} from "../WaitingLayer";
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import {CLOTHES_TYPES_WAITING_ID} from "../../actions/componentStateActions";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
 import {Avatar, Button, Card, CardActions, CardHeader, withStyles} from "material-ui";
 import Edit from "@material-ui/icons/Edit";
 import Done from "@material-ui/icons/Done";
 import {styles} from "./ClothesListStyles";
+import Delete from "@material-ui/icons/Delete";
+import PlusOne from "@material-ui/icons/PlusOne";
+import {ClothesActionButton} from "./ClothesActionButton";
 
 const isTooLowCleanClothes = function (type) {
   return type.cleanItemCount < 3 && type.allItemCount > 0;
 };
 
-const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit, disabled, classes, editMode, onEditClick}) => {
+const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteSubmit, handleSubmit, disabled, classes, editMode, onEditClick}) => {
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
@@ -39,21 +40,26 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
 
               />
               <CardActions>
-                <Button type="submit"
-                        color="primary"
-                        variant="raised"
-                        className="button-list__clothes-btn"
-                        disabled={disabled || type.cleanItemCount === 0}
-                        onClick={handleSubmit(values =>
-                          onSubmit({
-                            "type": {"name": type.name},
-                            "clothesTypes": clothesTypesWithCount
-                          })
-                        )}
-                >
-                  <span
-                    className="button-list__button-label">Положить в стирку</span>
-                </Button>
+                {!editMode &&
+                <ClothesActionButton className={classes.putClothesBtn} disabled={disabled || type.cleanItemCount === 0}
+                                     handleSubmit={handleSubmit} onSubmit={onPutSubmit} type={type}
+                                     clothesTypesWithCount={clothesTypesWithCount}
+                                     color="primary">
+                  Положить в стирку
+                </ClothesActionButton>
+                }
+                {editMode &&
+                <ClothesActionButton className={classes.addClothesBtn} disabled={false}
+                                     handleSubmit={handleSubmit} onSubmit={onAddSubmit} type={type}
+                                     clothesTypesWithCount={clothesTypesWithCount}
+                                     color="secondary">Добавить <PlusOne/></ClothesActionButton>
+                }
+                {editMode &&
+                <ClothesActionButton className={classes.deleteClothesBtn} disabled={false}
+                                     handleSubmit={handleSubmit} onSubmit={onDeleteSubmit} type={type}
+                                     clothesTypesWithCount={clothesTypesWithCount}
+                                     color="default">Удалить <Delete/></ClothesActionButton>
+                }
               </CardActions>
             </Card>
 
@@ -63,16 +69,9 @@ const ClothesList = ({clothesTypesWithCount, showWaiting, onSubmit, handleSubmit
     )}
     {clothesTypesWithCount &&
     <Button variant="fab" color="secondary" className={classes.buttonPosition} onClick={onEditClick}>
-      {!editMode &&
-      <Edit/>
-      }
-      {editMode &&
-      <Done/>
-      }
+      {editMode ? <Done/> : <Edit/>}
     </Button>
     }
-    <WaitingLayer showWaiting={showWaiting}
-                  waitingId={CLOTHES_TYPES_WAITING_ID}/>
   </div>);
 
 
@@ -82,8 +81,9 @@ ClothesList.propTypes = {
   clothesTypesWithCount: PropTypes.array,
   disabled: PropTypes.bool,
   editMode: PropTypes.bool,
-  showWaiting: PropTypes.bool,
-  onSubmit: PropTypes.func.isRequired,
+  onPutSubmit: PropTypes.func.isRequired,
+  onAddSubmit: PropTypes.func.isRequired,
+  onDeleteSubmit: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,

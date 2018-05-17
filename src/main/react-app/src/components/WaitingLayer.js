@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {CircularProgress} from "material-ui";
 
 export const WaitingLayer = ({waitingId, showWaiting}) => {
   if (showWaiting) {
-    return (<div id={waitingId}>Загрузка...</div>);
+    return (<div id={waitingId}><CircularProgress size={50}/></div>);
   } else {
     return null;
   }

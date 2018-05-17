@@ -4,7 +4,6 @@ import map from "lodash/map";
 import countBy from "lodash/countBy";
 import uniqBy from "lodash/uniqBy";
 import findIndex from "lodash/findIndex";
-import pullAt from "lodash/pullAt";
 import orderBy from "lodash/orderBy";
 
 import {typeLocalization} from "../constants/clothesTypesLocalization";
@@ -13,39 +12,31 @@ import {CLOTHES_TYPES_WAITING_ID, hideWaiting, showWaiting} from "./componentSta
 export const putClothesToBasket = (values) => (dispatch) => {
   return dispatch(
     securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {name: values.type.name})).then(res => {
-    let indexToReduce = findIndex(values.clothesTypes, (item) => {
-      return item.name === values.type.name;
+    return changeClothesCount(values, dispatch, (type) => {
+      type.cleanItemCount--
     });
-    //TODO: catch error
-    const clothesTypes = values.clothesTypes;
-    clothesTypes[indexToReduce].cleanItemCount--;
-    return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: clothesTypes});
   });
 };
 
-export const deleteClothes = (type, clothes) => (dispatch) => {
+export const deleteClothes = (values) => (dispatch) => {
   //tODO: wait and animation here, delete only dirty
   return dispatch(
-    securedDelete(process.env.API_URL + '/resource/delete-clothes/', {name: type})).then(res => {
+    securedDelete(process.env.API_URL + '/resource/delete-clothes/', {name: values.type.name})).then(res => {
     if (res.status === 200) {
-      let indexToRemove = findIndex(clothes, (item) => {
-        return item.type.name === type;
+      return changeClothesCount(values, dispatch, (type) => {
+        type.cleanItemCount--
       });
-      //TODO: create -one , don`t remove, create zero and disable
-      let restClothes = clothes.slice();
-      pullAt(restClothes, indexToRemove);
-      return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothes: restClothes});
     }
   });
 };
 
-export const addClothes = (type, clothes) => (dispatch) => {
+export const addClothes = (values) => (dispatch) => {
   //tODO: wait and animation here
   return dispatch(
-    securedPost(process.env.API_URL + '/resource/add-clothes/', {name: type})).then(res => {
-    const restClothes = clothes.slice();
-    restClothes.push(res.data);
-    return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothes: restClothes});
+    securedPost(process.env.API_URL + '/resource/add-clothes/', {name: values.type.name})).then(res => {
+    return changeClothesCount(values, dispatch, (type) => {
+      type.cleanItemCount++
+    });
   });
 };
 
@@ -88,4 +79,13 @@ export const washClothes = (type) => (dispatch) => {
     response => {
       dispatch(loadBasket());
     });
+};
+
+const changeClothesCount = function (values, dispatch, changeCount) {
+  let indexToReduce = findIndex(values.clothesTypes, (item) => {
+    return item.name === values.type.name;
+  });
+  //TODO: catch error
+  changeCount(values.clothesTypes[indexToReduce]);
+  return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: values.clothesTypes});
 };
