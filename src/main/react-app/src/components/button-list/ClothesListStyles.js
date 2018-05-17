@@ -27,13 +27,16 @@ export const styles = theme => ({
     right: theme.spacing.unit * 2,
   },
   putClothesBtn: {
-    width: "100%",
+    margin: "auto",
   },
   addClothesBtn: {
-    marginLeft:"auto",
+    marginLeft: "auto",
   },
   deleteClothesBtn: {
     marginLeft: theme.spacing.unit,
     minWidth: "30px",
   },
+  icon: {
+    marginLeft: theme.spacing.unit,
+  }
 });

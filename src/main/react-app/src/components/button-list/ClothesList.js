@@ -7,8 +7,9 @@ import Edit from "@material-ui/icons/Edit";
 import Done from "@material-ui/icons/Done";
 import {styles} from "./ClothesListStyles";
 import Delete from "@material-ui/icons/Delete";
-import PlusOne from "@material-ui/icons/PlusOne";
 import {ClothesActionButton} from "./ClothesActionButton";
+import Archive from "@material-ui/icons/Archive";
+import {ExposurePlus1} from "@material-ui/icons/index";
 
 const isTooLowCleanClothes = function (type) {
   return type.cleanItemCount < 3 && type.allItemCount > 0;
@@ -45,14 +46,16 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
                                      handleSubmit={handleSubmit} onSubmit={onPutSubmit} type={type}
                                      clothesTypesWithCount={clothesTypesWithCount}
                                      color="primary">
-                  Положить в стирку
+                  Положить в стирку <Archive className={classes.icon}/>
                 </ClothesActionButton>
                 }
                 {editMode &&
                 <ClothesActionButton className={classes.addClothesBtn} disabled={false}
                                      handleSubmit={handleSubmit} onSubmit={onAddSubmit} type={type}
                                      clothesTypesWithCount={clothesTypesWithCount}
-                                     color="secondary">Добавить <PlusOne/></ClothesActionButton>
+                                     color="secondary">
+                  Добавить <ExposurePlus1 className={classes.icon}/>
+                </ClothesActionButton>
                 }
                 {editMode &&
                 <ClothesActionButton className={classes.deleteClothesBtn} disabled={type.cleanItemCount === 0}
