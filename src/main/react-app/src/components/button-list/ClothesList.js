@@ -41,7 +41,7 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
               />
               <CardActions>
                 {!editMode &&
-                <ClothesActionButton className={classes.putClothesBtn} disabled={disabled || type.cleanItemCount === 0}
+                <ClothesActionButton className={classes.putClothesBtn} disabled={type.cleanItemCount === 0}
                                      handleSubmit={handleSubmit} onSubmit={onPutSubmit} type={type}
                                      clothesTypesWithCount={clothesTypesWithCount}
                                      color="primary">
@@ -55,10 +55,10 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
                                      color="secondary">Добавить <PlusOne/></ClothesActionButton>
                 }
                 {editMode &&
-                <ClothesActionButton className={classes.deleteClothesBtn} disabled={false}
+                <ClothesActionButton className={classes.deleteClothesBtn} disabled={type.cleanItemCount === 0}
                                      handleSubmit={handleSubmit} onSubmit={onDeleteSubmit} type={type}
                                      clothesTypesWithCount={clothesTypesWithCount}
-                                     color="default">Удалить <Delete/></ClothesActionButton>
+                                     color="default"><Delete/></ClothesActionButton>
                 }
               </CardActions>
             </Card>

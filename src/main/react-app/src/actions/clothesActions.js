@@ -13,7 +13,7 @@ export const putClothesToBasket = (values) => (dispatch) => {
   return dispatch(
     securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {name: values.type.name})).then(res => {
     return changeClothesCount(values, dispatch, (type) => {
-      type.cleanItemCount--
+      type.cleanItemCount--;
     });
   });
 };
@@ -24,7 +24,8 @@ export const deleteClothes = (values) => (dispatch) => {
     securedDelete(process.env.API_URL + '/resource/delete-clothes/', {name: values.type.name})).then(res => {
     if (res.status === 200) {
       return changeClothesCount(values, dispatch, (type) => {
-        type.cleanItemCount--
+        type.cleanItemCount--;
+        type.allItemCount--;
       });
     }
   });
@@ -35,7 +36,8 @@ export const addClothes = (values) => (dispatch) => {
   return dispatch(
     securedPost(process.env.API_URL + '/resource/add-clothes/', {name: values.type.name})).then(res => {
     return changeClothesCount(values, dispatch, (type) => {
-      type.cleanItemCount++
+      type.cleanItemCount++;
+      type.allItemCount++;
     });
   });
 };

@@ -30,8 +30,10 @@ export const styles = theme => ({
     width: "100%",
   },
   addClothesBtn: {
+    marginLeft:"auto",
   },
   deleteClothesBtn: {
-    marginLeft: "auto",
+    marginLeft: theme.spacing.unit,
+    minWidth: "30px",
   },
 });
