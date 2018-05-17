@@ -1,8 +1,5 @@
 import {TIMEOUT} from "./Oauth";
-import {
-  getAccessToken,
-  validateAndUpdateTokenIfNecessary
-} from "./TokenService";
+import {getAccessToken, validateAndUpdateTokenIfNecessary} from "./TokenService";
 import axios from "axios";
 import {hideWaiting, showWaiting} from "../actions/componentStateActions";
 
@@ -43,6 +40,8 @@ const request = (url, config) => (dispatch) => {
       dispatch(hideWaitingIfEnabled(config.waitingLayerId));
       console.debug("server.request.error", error);
     });
+  }).catch((params) => {
+    console.log("please, log in", params);
   });
 };
 

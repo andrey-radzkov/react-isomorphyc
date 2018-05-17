@@ -52,7 +52,7 @@ export const loadClothesTypesWithCount = () => (dispatch) => {
     .then(response => {
       dispatch(hideWaiting(CLOTHES_TYPES_WAITING_ID));
       return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: response.data});
-    });
+    }).catch(res=>console.log("error"));
 };
 //TODO: delete
 export const mapClothesWithLocalization = (clothes) => {

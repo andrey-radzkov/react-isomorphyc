@@ -35,7 +35,6 @@ export const requestToken = (code, history) => {
   }).catch(error => {
     if (error) {
       console.log('//TODO: redirect to error page');
-      redirectToAuthService();
     }
   });
 };
@@ -162,10 +161,7 @@ export const validateAndUpdateTokenIfNecessary = () => {
     } else if (
       isAccessTokenExpired(access_token) &&
       isRefreshTokenExpired(refresh_token)) {
-      console.log("All tokens expired");
-      if (isClient()) {
-        authenticate({pathname: window.location.pathname});
-      }
+      reject(window.location.pathname);
     } else {
       resolve();
     }
