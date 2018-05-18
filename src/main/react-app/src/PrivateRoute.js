@@ -2,20 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import {Route} from "react-router-dom";
-import {authenticate, isAuthed} from "./oauth2/TokenService";
+import {isAuthed, redirectToAuthService} from "./oauth2/TokenService";
+import {Button} from "material-ui";
 
 export const PrivateRoute = ({component: Component, ...rest}) => {
   let authed = isAuthed();
-  if (authed !== true) {
-    //TODO: think ABOUT MOVING TO app
-    authenticate(rest.location);
-  }
+
 
   return (
     <Route
       {...rest}
       render={(props) => authed === true
-        ? <Component {...props} /> : <div/>}
+        ? <Component {...props} /> : <div><h1>Пожалуйста, войдите</h1>
+          <Button variant="raised" color="primary" onClick={redirectToAuthService}>Тестовый логин</Button></div>
+      }
     />
   );
 };

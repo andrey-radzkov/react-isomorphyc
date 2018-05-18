@@ -7,8 +7,6 @@ import PropTypes from "prop-types";
 import ClothesList from "../components/button-list/ClothesList";
 import {CLOTHES_TYPES_WAITING_ID} from "../actions/componentStateActions";
 import {WaitingLayer} from "../components/WaitingLayer";
-import {isAuthed, redirectToAuthService} from "../oauth2/TokenService";
-import {Button} from "material-ui";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -46,26 +44,19 @@ class HomePage extends React.Component {
                   {"name": "keywords", "content": "Гразные носки"},
                 ]}
         />
-        {isAuthed() ?
-          <div>
-            <h1>Мои вещи:</h1>
-            <form onSubmit={this.props.handleSubmit}>
-              <ClothesList clothesTypesWithCount={this.props.clothesTypes}
-                           onPutSubmit={this.putClothesToBasket}
-                           onAddSubmit={this.addClothes}
-                           onDeleteSubmit={this.deleteClothes}
-                           handleSubmit={this.props.handleSubmit}
-                           disabled={this.props.submitting}
-                           editMode={this.state.editMode}
-                           onEditClick={this.toggleEditMode}/>
-              <WaitingLayer showWaiting={this.props.showWaiting}
-                            waitingId={CLOTHES_TYPES_WAITING_ID}/>
-            </form>
-          </div> :
-          <div><h1>Пожалуйста, войдите</h1>
-            {/*//TODO: to app*/}
-            <Button variant="raised" color="primary" onClick={redirectToAuthService}>Тестовый логин</Button></div>
-        }
+        <h1>Мои вещи:</h1>
+        <form onSubmit={this.props.handleSubmit}>
+          <ClothesList clothesTypesWithCount={this.props.clothesTypes}
+                       onPutSubmit={this.putClothesToBasket}
+                       onAddSubmit={this.addClothes}
+                       onDeleteSubmit={this.deleteClothes}
+                       handleSubmit={this.props.handleSubmit}
+                       disabled={this.props.submitting}
+                       editMode={this.state.editMode}
+                       onEditClick={this.toggleEditMode}/>
+          <WaitingLayer showWaiting={this.props.showWaiting}
+                        waitingId={CLOTHES_TYPES_WAITING_ID}/>
+        </form>
       </div>
     );
   }
