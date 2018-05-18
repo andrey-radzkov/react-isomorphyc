@@ -42,6 +42,14 @@ const authProxy = proxy('http://localhost:9999', {
   }
 });
 app.use("/uaa", authProxy);
+
+const authVkProxy = proxy('https://oauth.vk.com', {
+  preserveHostHdr: true, proxyReqPathResolver: function (req) {
+    return "/vk" + require('url').parse(req.url).path;
+  }
+});
+app.use("/vk", authVkProxy);
+
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 //TODO: for first page too
 app.use("*", (req, res) => {

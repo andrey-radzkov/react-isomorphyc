@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import {CLIENT_ID, CLIENT_SECRET, TIMEOUT} from "./Oauth";
+import {CLIENT_ID, CLIENT_SECRET, TIMEOUT, VK_CLIENT_ID, VK_CLIENT_SECRET} from "./Oauth";
 import axios from "axios";
 import {backoff} from "../utils/backoff";
 import {isClient, isSSR} from "../utils/ssr-util";
@@ -13,6 +13,33 @@ let createTokenRequest = function () {
       "Authorization": 'Basic ' + btoa(decodeURIComponent(
         encodeURIComponent(CLIENT_ID + ":" + CLIENT_SECRET))),
       "Content-Type": 'application/x-www-form-urlencoded'
+    }
+  });
+};
+
+export const requestVkToken = (code, history) => {
+  const params = {
+    grant_type: 'authorization_code',
+    client_id: VK_CLIENT_ID,
+    client_secret: VK_CLIENT_SECRET,
+    code: code,
+    redirect_uri: process.env.LOGIN_URL_VK,
+  };
+  const searchParams = createUrlFormEncoded(params);
+  let tokenRequest = axios.create({
+    headers: {
+      "Content-Type": 'application/x-www-form-urlencoded'
+    }
+  });
+  return tokenRequest.post('/vk/access_token', searchParams).then(response => {
+    let token = response.data;
+    //TODO: exp date
+    setTokens(token.access_token, token.refresh_token);
+    history.push(getTargetUrl());
+    return response.data;
+  }).catch(error => {
+    if (error) {
+      console.log('//TODO: redirect to error page');
     }
   });
 };
@@ -44,6 +71,12 @@ export const redirectToAuthService = () => {
     window.location.href = process.env.AUTH_SERVER_URL
       + '/uaa/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri='
       + process.env.LOGIN_URL + '&response_type=code&scope=resource-read';
+  }
+};
+export const redirectToVkAuthService = () => {
+  if (isClient()) {
+    window.location.href = "https://oauth.vk.com/authorize?client_id=" + VK_CLIENT_ID + "&display=page&redirect_uri="
+      + process.env.LOGIN_URL_VK + "&scope=status&response_type=code&v=5.75";
   }
 };
 export const rememberTargetUrl = (url) => {

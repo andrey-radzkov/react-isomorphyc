@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
-import {requestToken} from "../oauth2/TokenService";
+import {requestToken, requestVkToken} from "../oauth2/TokenService";
 import {registerIfNecessary} from "../actions/clothesActions";
 import {connect} from "react-redux";
 
@@ -13,9 +13,16 @@ class Oauth2Login extends React.Component {
 
   componentDidMount() {
     let getParameters = queryString.parse(this.props.location.search);
-    requestToken(getParameters.code, this.props.history).then(data => {
-      this.props.registerIfNecessary();
-    });
+    const isVk = this.props.location.pathname.indexOf("vk") > 0;
+    if (isVk) {
+      requestVkToken(getParameters.code, this.props.history).then(data => {
+        this.props.registerIfNecessary();
+      });
+    } else {
+      requestToken(getParameters.code, this.props.history).then(data => {
+        this.props.registerIfNecessary();
+      });
+    }
   }
 
   render() {

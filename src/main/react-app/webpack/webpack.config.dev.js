@@ -30,6 +30,7 @@ let config = {
       'process.env.PORT': JSON.stringify('3000'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
       'process.env.API_URL': JSON.stringify("/api"),
       'process.env.LOGIN_URL': JSON.stringify("http://localhost:3000/login"),
+      'process.env.LOGIN_URL_VK': JSON.stringify("http://localhost:3000/login/vk"),
       'process.env.AUTH_SERVER_URL': JSON.stringify("http://localhost:9999"),
       __SERVER__: false,
     }),
