@@ -10,9 +10,11 @@ import React from "react";
 import fs from "fs";
 import rootReducer from "../src/reducers";
 import http from "http";
+// import https from "https";
 import {createStore} from "redux";
 import proxy from "express-http-proxy";
 import ServerSideRender from "../src/server";
+
 global.__SERVER__ = true;
 let options = {
   key: fs.readFileSync('./tools/certificates/server-key.pem'),
@@ -44,8 +46,8 @@ const authProxy = proxy('http://localhost:9999', {
 app.use("/uaa", authProxy);
 
 const authVkProxy = proxy('https://oauth.vk.com', {
-  preserveHostHdr: true, proxyReqPathResolver: function (req) {
-    return "/vk" + require('url').parse(req.url).path;
+  proxyReqOptDecorator: function (proxyReqOpts, originalReq) {
+    return proxyReqOpts;
   }
 });
 app.use("/vk", authVkProxy);

@@ -10,6 +10,11 @@ zuul:
       sensitiveHeaders:
       url: http://localhost:9000
       rewrite: /api
+    vk:
+       path: /vk/**
+       sensitiveHeaders:
+       url: https://oauth.vk.com
+       rewrite: /vk
     user:
       path: /uaa/**
       sensitiveHeaders:

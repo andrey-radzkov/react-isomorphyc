@@ -19,19 +19,12 @@ let createTokenRequest = function () {
 
 export const requestVkToken = (code, history) => {
   const params = {
-    grant_type: 'authorization_code',
     client_id: VK_CLIENT_ID,
     client_secret: VK_CLIENT_SECRET,
     code: code,
     redirect_uri: process.env.LOGIN_URL_VK,
   };
-  const searchParams = createUrlFormEncoded(params);
-  let tokenRequest = axios.create({
-    headers: {
-      "Content-Type": 'application/x-www-form-urlencoded'
-    }
-  });
-  return tokenRequest.post('/vk/access_token', searchParams).then(response => {
+  return axios.get('/vk/access_token', {params: params}).then(response => {
     let token = response.data;
     //TODO: exp date
     setTokens(token.access_token, token.refresh_token);
