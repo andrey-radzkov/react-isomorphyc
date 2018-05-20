@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
-import {Avatar, Button, Card, CardActions, CardHeader, withStyles} from "material-ui";
+import {Avatar, Button, Card, CardActions, CardHeader, withStyles, Zoom} from "material-ui";
 import Edit from "@material-ui/icons/Edit";
 import Done from "@material-ui/icons/Done";
 import {styles} from "./ClothesListStyles";
@@ -10,12 +10,15 @@ import Delete from "@material-ui/icons/Delete";
 import {ClothesActionButton} from "./ClothesActionButton";
 import Archive from "@material-ui/icons/Archive";
 import {ExposurePlus1} from "@material-ui/icons/index";
-
 const isTooLowCleanClothes = function (type) {
   return type.cleanItemCount < 3 && type.allItemCount > 0;
 };
 
-const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteSubmit, handleSubmit, disabled, classes, editMode, onEditClick}) => {
+const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteSubmit, handleSubmit, disabled, classes, theme, editMode, onEditClick}) => {
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
+  };
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
@@ -71,9 +74,11 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
       }
     )}
     {clothesTypesWithCount && clothesTypesWithCount.length > 0 &&
-    <Button variant="fab" color="secondary" className={classes.buttonPosition} onClick={onEditClick}>
-      {editMode ? <Done/> : <Edit/>}
-    </Button>
+    <Zoom key="secondary" in={true} style={{transitionDelay: transitionDuration.exit}} unmountOnExit>
+      <Button variant="fab" color="secondary" className={classes.buttonPosition} onClick={onEditClick}>
+        {editMode ? <Done/> : <Edit/>}
+      </Button>
+    </Zoom>
     }
   </div>);
 
@@ -90,6 +95,7 @@ ClothesList.propTypes = {
   onEditClick: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object
 };
 
 export default withStyles(styles, {withTheme: true})(ClothesList);
