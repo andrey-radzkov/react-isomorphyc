@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
-import {Avatar, Button, Card, CardActions, CardHeader, withStyles, Zoom} from "material-ui";
+import {Avatar, Button, Card, CardActions, CardHeader, Fade, withStyles, Zoom} from "material-ui";
 import Edit from "@material-ui/icons/Edit";
 import Done from "@material-ui/icons/Done";
 import {styles} from "./ClothesListStyles";
@@ -17,64 +17,67 @@ const isTooLowCleanClothes = function (type) {
 const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteSubmit, handleSubmit, disabled, classes, theme, editMode, onEditClick}) => {
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
+    exit: theme.transitions.duration.leavingScreen * 10,
   };
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
-          <div key={type.id} className={classes.buttonList}>
+          <Fade key={type.id} in={true}>
+            <div className={classes.buttonList}>
 
-            <Card className={classnames(classes.card, {
-              [classes.redCard]: isTooLowCleanClothes(type),
-            })}>
-              <CardHeader
-                className={classes.cardHeader}
-                avatar={
-                  <Avatar className={classes.bigAvatar}>
-                    <img src={process.env.API_URL + "/resource" + type.imgSrc}
-                         width="60px" height="60px"/>
-                  </Avatar>
-                }
-                title={
-                  <div className={classes.title}>
-                    <b>{typeLocalization[type.name]}</b>:
-                    чистых {type.cleanItemCount} шт
-                  </div>}
-                subheader={<div>Всего в наличии: {type.allItemCount} шт</div>}
+              <Card className={classnames(classes.card, {
+                [classes.redCard]: isTooLowCleanClothes(type),
+              })}>
+                <CardHeader
+                  className={classes.cardHeader}
+                  avatar={
+                    <Avatar className={classes.bigAvatar}>
+                      <img src={process.env.API_URL + "/resource" + type.imgSrc}
+                           width="60px" height="60px"/>
+                    </Avatar>
+                  }
+                  title={
+                    <div className={classes.title}>
+                      <b>{typeLocalization[type.name]}</b>:
+                      чистых {type.cleanItemCount} шт
+                    </div>}
+                  subheader={<div>Всего в наличии: {type.allItemCount} шт</div>}
 
-              />
-              <CardActions>
-                {!editMode &&
-                <ClothesActionButton className={classes.putClothesBtn} disabled={type.cleanItemCount === 0}
-                                     handleSubmit={handleSubmit} onSubmit={onPutSubmit} type={type}
-                                     clothesTypesWithCount={clothesTypesWithCount}
-                                     color="primary">
-                  Положить в стирку <Archive className={classes.icon}/>
-                </ClothesActionButton>
-                }
-                {editMode &&
-                <ClothesActionButton className={classes.addClothesBtn} disabled={false}
-                                     handleSubmit={handleSubmit} onSubmit={onAddSubmit} type={type}
-                                     clothesTypesWithCount={clothesTypesWithCount}
-                                     color="secondary">
-                  Добавить <ExposurePlus1 className={classes.icon}/>
-                </ClothesActionButton>
-                }
-                {editMode &&
-                <ClothesActionButton className={classes.deleteClothesBtn} disabled={type.cleanItemCount === 0}
-                                     handleSubmit={handleSubmit} onSubmit={onDeleteSubmit} type={type}
-                                     clothesTypesWithCount={clothesTypesWithCount}
-                                     color="default"><Delete/></ClothesActionButton>
-                }
-              </CardActions>
-            </Card>
+                />
+                <CardActions>
+                  {/*TODO: disable if no basket*/}
+                  {!editMode &&
+                  <ClothesActionButton className={classes.putClothesBtn} disabled={type.cleanItemCount === 0}
+                                       handleSubmit={handleSubmit} onSubmit={onPutSubmit} type={type}
+                                       clothesTypesWithCount={clothesTypesWithCount}
+                                       color="primary">
+                    Положить в стирку <Archive className={classes.icon}/>
+                  </ClothesActionButton>
+                  }
+                  {editMode &&
+                  <ClothesActionButton className={classes.addClothesBtn} disabled={false}
+                                       handleSubmit={handleSubmit} onSubmit={onAddSubmit} type={type}
+                                       clothesTypesWithCount={clothesTypesWithCount}
+                                       color="secondary">
+                    Добавить <ExposurePlus1 className={classes.icon}/>
+                  </ClothesActionButton>
+                  }
+                  {editMode &&
+                  <ClothesActionButton className={classes.deleteClothesBtn} disabled={type.cleanItemCount === 0}
+                                       handleSubmit={handleSubmit} onSubmit={onDeleteSubmit} type={type}
+                                       clothesTypesWithCount={clothesTypesWithCount}
+                                       color="default"><Delete/></ClothesActionButton>
+                  }
+                </CardActions>
+              </Card>
 
-          </div>
+            </div>
+          </Fade>
         );
       }
     )}
     {clothesTypesWithCount && clothesTypesWithCount.length > 0 &&
-    <Zoom key="secondary" in={true} style={{transitionDelay: transitionDuration.exit}} unmountOnExit>
+    <Zoom key="secondary" in={true}>
       <Button variant="fab" color="secondary" className={classes.buttonPosition} onClick={onEditClick}>
         {editMode ? <Done/> : <Edit/>}
       </Button>
