@@ -70,7 +70,7 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
         );
       }
     )}
-    {clothesTypesWithCount &&
+    {clothesTypesWithCount && clothesTypesWithCount.length > 0 &&
     <Button variant="fab" color="secondary" className={classes.buttonPosition} onClick={onEditClick}>
       {editMode ? <Done/> : <Edit/>}
     </Button>

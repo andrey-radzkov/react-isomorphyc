@@ -25,11 +25,16 @@ export const requestVkToken = (code, history) => {
     redirect_uri: process.env.LOGIN_URL_VK,
   };
   return axios.get('/vk/access_token', {params: params}).then(response => {
-    let token = response.data;
-    //TODO: exp date
-    setTokens(token.access_token, token.refresh_token);
-    history.push(getTargetUrl());
-    return response.data;
+    let vkToken = response.data;
+    getLocalStorage().setItem("vk_token", vkToken.access_token);
+
+   return axios.post('/uaa/vk-auth', {token: vkToken.access_token, userId: vkToken.user_id}).then(response => {
+      let token = response.data;
+      setTokens(token.access_token, token.refresh_token);
+      history.push(getTargetUrl());
+      return response.data;
+    });
+
   }).catch(error => {
     if (error) {
       console.log('//TODO: redirect to error page');
@@ -69,7 +74,7 @@ export const redirectToAuthService = () => {
 export const redirectToVkAuthService = () => {
   if (isClient()) {
     window.location.href = "https://oauth.vk.com/authorize?client_id=" + VK_CLIENT_ID + "&display=page&redirect_uri="
-      + process.env.LOGIN_URL_VK + "&scope=status&response_type=code&v=5.75";
+      + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v=5.75";
   }
 };
 export const rememberTargetUrl = (url) => {
@@ -146,14 +151,18 @@ export const isAccessTokenExpired = token => isTokenExpired(token);
 export const isRefreshTokenExpired = token => isTokenExpired(token);
 
 export const isTokenExpired = token => {
-  if (!token) {
+  if (!token || token === null || token === undefined || token === "null" || token === "undefined") {
     return true;
   }
   if (isClient()) {
-    const {exp} = jwtDecode(token);
-    // exp in seconds
-    // token is expired if lifetime smaller then connection timeout
-    return (exp * 1000 - Date.now()) < TIMEOUT;
+    try {
+      const {exp} = jwtDecode(token);
+      // exp in seconds
+      // token is expired if lifetime smaller then connection timeout
+      return (exp * 1000 - Date.now()) < TIMEOUT;
+    } catch (e) {
+      return true;
+    }
   } else {
     return true;
   }
