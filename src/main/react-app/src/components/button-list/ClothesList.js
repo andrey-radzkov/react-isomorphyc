@@ -15,10 +15,6 @@ const isTooLowCleanClothes = function (type) {
 };
 
 const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteSubmit, handleSubmit, disabled, classes, theme, editMode, onEditClick}) => {
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen * 10,
-  };
   return (<div>
     {clothesTypesWithCount && clothesTypesWithCount.map(type => {
         return (
