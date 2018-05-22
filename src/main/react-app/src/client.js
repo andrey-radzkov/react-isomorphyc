@@ -6,7 +6,7 @@ import App from "./pages/App";
 import {BrowserRouter} from "react-router-dom";
 import configureStore from "./store/configureStore";
 import {isClient} from "./utils/ssr-util";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import {muiTheme} from "./theme";
 
 const preloadedState = window.__PRELOADED_STATE__;

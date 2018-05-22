@@ -13,7 +13,7 @@ import http from "http";
 import App from "../src/pages/App";
 import StaticRouter from "react-router-dom/StaticRouter";
 import {createStore} from "redux";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 const compiler = webpack(config);
 const app = new Express();
 const port = process.env.PORT || 3000;

@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AppBar from "material-ui/AppBar";
+import AppBar from "@material-ui/core/AppBar";
 import {Link} from "react-router-dom";
 import {isClient} from "../../utils/ssr-util";
-import Toolbar from "material-ui/Toolbar";
-import IconButton from "material-ui/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import {Typography, withStyles} from "material-ui";
+import {Typography, withStyles} from "@material-ui/core";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import {getAccessToken, logout} from "../../oauth2/TokenService";
 import {LeftMenu} from "./LeftMenu";

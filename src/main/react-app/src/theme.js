@@ -1,8 +1,8 @@
-import {createMuiTheme} from "material-ui";
-import teal from "material-ui/colors/teal";
-import amber from "material-ui/colors/amber";
-import red from "material-ui/colors/red";
-import createPalette from "material-ui/styles/createPalette";
+import {createMuiTheme} from "@material-ui/core";
+import teal from "@material-ui/core/colors/teal";
+import amber from "@material-ui/core/colors/amber";
+import red from "@material-ui/core/colors/red";
+import createPalette from "@material-ui/core/styles/createPalette";
 
 //TODO: my theme
 export const muiTheme = createMuiTheme({

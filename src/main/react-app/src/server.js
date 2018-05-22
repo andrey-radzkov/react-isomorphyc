@@ -7,7 +7,7 @@ import StaticRouter from "react-router-dom/StaticRouter";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import ReactDOMServer from "react-dom/server";
-import {createGenerateClassName, MuiThemeProvider} from "material-ui/styles";
+import {createGenerateClassName, MuiThemeProvider} from "@material-ui/core/styles";
 import {muiTheme} from "./theme";
 import {SheetsRegistry} from "react-jss/lib/jss";
 import JssProvider from "react-jss/lib/JssProvider";

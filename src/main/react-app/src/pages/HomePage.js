@@ -41,7 +41,7 @@ class HomePage extends React.Component {
         <Helmet title="Home page"
                 meta={[
                   {"name": "description", "content": "Персональный помощник в стирке"},
-                  {"name": "keywords", "content": "Гразные носки"},
+                  {"name": "keywords", "content": "Грязные носки"},
                 ]}
         />
         <h1>Мои вещи:</h1>

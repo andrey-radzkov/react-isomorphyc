@@ -1,9 +1,9 @@
 import React from "react";
 import Routes from "../routes";
 import Header from "../components/header/Header";
-import Grid from "material-ui/Grid";
+import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
-import withStyles from "material-ui/styles/withStyles";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
   root: {

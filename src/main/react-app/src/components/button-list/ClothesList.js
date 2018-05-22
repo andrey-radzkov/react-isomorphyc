@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import {typeLocalization} from "../../constants/clothesTypesLocalization";
-import {Avatar, Button, Card, CardActions, CardHeader, Fade, withStyles, Zoom} from "material-ui";
+import {Avatar, Button, Card, CardActions, CardHeader, Fade, withStyles, Zoom} from "@material-ui/core";
 import Edit from "@material-ui/icons/Edit";
 import Done from "@material-ui/icons/Done";
 import {styles} from "./ClothesListStyles";
