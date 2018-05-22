@@ -52,7 +52,7 @@ export const loadClothesTypesWithCount = () => (dispatch) => {
     .then(response => {
       dispatch(hideWaiting(CLOTHES_TYPES_WAITING_ID));
       return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: response.data});
-    }).catch(res=>console.log("error"));
+    }).catch(res => console.log("error"));
 };
 //TODO: delete
 export const mapClothesWithLocalization = (clothes) => {
@@ -88,6 +88,7 @@ const changeClothesCount = function (values, dispatch, changeCount) {
     return item.name === values.type.name;
   });
   //TODO: catch error
-  changeCount(values.clothesTypes[indexToReduce]);
-  return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: values.clothesTypes});
+  let newValues = JSON.parse(JSON.stringify(values));
+  changeCount(newValues.clothesTypes[indexToReduce]);
+  return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: newValues.clothesTypes});
 };
