@@ -10,9 +10,6 @@ import {Typography, withStyles} from "@material-ui/core";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import {getAccessToken, logout} from "../../oauth2/TokenService";
 import {LeftMenu} from "./LeftMenu";
-if (isClient()) {
-  require('./header.scss');
-}
 
 const iconStyles = {
   cursor: "pointer",
