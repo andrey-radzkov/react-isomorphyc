@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {Field, reduxForm} from "redux-form";
 import {ReduxFormCheckbox} from "../components/ReduxFormCheckbox";
+import {loadSettings, saveSettings} from "../actions/settingsActions";
 
 
 class SettingsPage extends React.Component {
@@ -14,10 +15,15 @@ class SettingsPage extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.props.loadSettings();
+  }
+
   render() {
     const {handleSubmit, pristine, reset, submitting} = this.props;
     return (
       <div className="home-page">
+
         <Helmet title="Home page"
                 meta={[
                   {"name": "description", "content": "Настройки"},
@@ -26,17 +32,19 @@ class SettingsPage extends React.Component {
         />
         <h1>Настройки</h1>
         {/*TODO: extract to component*/}
+        {/*TODO: waiting layer*/}
         <h3>Я хочу:</h3>
         <form onSubmit={handleSubmit}>
+          <Field name="id" id="settings-id" component="input" type="hidden"/>
           <FormControlLabel
             control={
-              <Field name="receive" component={ReduxFormCheckbox}/>
+              <Field name="receiver" value={true} component={ReduxFormCheckbox}/>
             }
             label="Получать"
           />
           <FormControlLabel
             control={
-              <Field name="send" component={ReduxFormCheckbox}/>
+              <Field name="sender" component={ReduxFormCheckbox}/>
             }
             label="Отправлять"
           />
@@ -56,12 +64,22 @@ SettingsPage.propTypes = {
   invalid: PropTypes.bool,
 };
 
+SettingsPage = reduxForm({
+  form: 'settingsForm',
+  enableReinitialize: true,
+})(SettingsPage);
+
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    loadSettings: () => dispatch(loadSettings()),
+    saveSettings: () => dispatch(saveSettings()),
+  };
 };
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    initialValues: state.settingsReducer.userSettings,
+  };
 };
 
 SettingsPage = connect(
@@ -69,7 +87,4 @@ SettingsPage = connect(
   mapDispatchToProps
 )(SettingsPage);
 
-export default reduxForm({
-  form: 'settingsForm',
-  enableReinitialize: true,
-})(SettingsPage);
+export default SettingsPage;
