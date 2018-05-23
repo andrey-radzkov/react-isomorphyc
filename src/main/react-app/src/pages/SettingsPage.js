@@ -34,17 +34,19 @@ class SettingsPage extends React.Component {
         {/*TODO: extract to component*/}
         {/*TODO: waiting layer*/}
         <h3>Я хочу:</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(this.props.saveSettings)}>
           <Field name="id" id="settings-id" component="input" type="hidden"/>
           <FormControlLabel
             control={
-              <Field name="receiver" value={true} component={ReduxFormCheckbox}/>
+              <Field name="receiver" submitOnChange={handleSubmit(this.props.saveSettings)}
+                     component={ReduxFormCheckbox}/>
             }
             label="Получать"
           />
           <FormControlLabel
             control={
-              <Field name="sender" component={ReduxFormCheckbox}/>
+              <Field name="sender" submitOnChange={handleSubmit(this.props.saveSettings)}
+                     component={ReduxFormCheckbox}/>
             }
             label="Отправлять"
           />
@@ -72,7 +74,7 @@ SettingsPage = reduxForm({
 const mapDispatchToProps = dispatch => {
   return {
     loadSettings: () => dispatch(loadSettings()),
-    saveSettings: () => dispatch(saveSettings()),
+    saveSettings: (values) => dispatch(saveSettings(values)),
   };
 };
 
