@@ -7,7 +7,7 @@ export const ReduxFormCheckbox = ({input, submitOnChange}) => (
     checked={!!input.value}
     onChange={(e, data) => {
       input.onChange(e, data);
-      setTimeout(submitOnChange, 200);//TODO: just hack
+      setTimeout(submitOnChange, 0);
     }}
   />
 );
