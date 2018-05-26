@@ -5,7 +5,7 @@ import {addClothes, deleteClothes, loadClothesTypesWithCount, putClothesToBasket
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ClothesList from "../components/button-list/ClothesList";
-import {CLOTHES_TYPES_WAITING_ID} from "../actions/componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import {WaitingLayer} from "../components/WaitingLayer";
 
 class HomePage extends React.Component {
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
                        editMode={this.state.editMode}
                        onEditClick={this.toggleEditMode}/>
           <WaitingLayer showWaiting={this.props.showWaiting}
-                        waitingId={CLOTHES_TYPES_WAITING_ID}/>
+                        waitingId={FULL_PAGE_WAITING_ID}/>
         </form>
       </div>
     );
@@ -93,7 +93,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state) => {
   return {
     clothesTypes: state.clothesReducer.clothesTypes,
-    showWaiting: state.ajaxActionsReducer[CLOTHES_TYPES_WAITING_ID]
+    showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
   };
 };
 

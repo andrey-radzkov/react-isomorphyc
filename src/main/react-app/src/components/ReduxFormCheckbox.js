@@ -14,4 +14,5 @@ export const ReduxFormCheckbox = ({input, submitOnChange}) => (
 
 ReduxFormCheckbox.propTypes = {
   input: PropTypes.object,
+  submitOnChange: PropTypes.func,
 };

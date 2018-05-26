@@ -7,7 +7,7 @@ import findIndex from "lodash/findIndex";
 import orderBy from "lodash/orderBy";
 
 import {typeLocalization} from "../constants/clothesTypesLocalization";
-import {CLOTHES_TYPES_WAITING_ID, hideWaiting, showWaiting} from "./componentStateActions";
+import {FULL_PAGE_WAITING_ID, hideWaiting, showWaiting} from "./componentStateActions";
 
 export const putClothesToBasket = (values) => (dispatch) => {
   return dispatch(
@@ -47,10 +47,10 @@ export const registerIfNecessary = () => (dispatch) => {
 };
 
 export const loadClothesTypesWithCount = () => (dispatch) => {
-  dispatch(showWaiting(CLOTHES_TYPES_WAITING_ID));
+  dispatch(showWaiting(FULL_PAGE_WAITING_ID));
   return dispatch(securedGet(process.env.API_URL + '/resource/all-types-with-count/'))
     .then(response => {
-      dispatch(hideWaiting(CLOTHES_TYPES_WAITING_ID));
+      dispatch(hideWaiting(FULL_PAGE_WAITING_ID));
       return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: response.data});
     }).catch(res => console.log("error loading clothes types"));
 };

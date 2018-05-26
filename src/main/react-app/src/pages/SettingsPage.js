@@ -7,7 +7,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {Field, reduxForm} from "redux-form";
 import {ReduxFormCheckbox} from "../components/ReduxFormCheckbox";
 import {loadSettings, saveSettings} from "../actions/settingsActions";
-
+import {WaitingLayer} from "../components/WaitingLayer";
+import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 
 class SettingsPage extends React.Component {
 
@@ -15,7 +16,7 @@ class SettingsPage extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadSettings();
   }
 
@@ -32,26 +33,32 @@ class SettingsPage extends React.Component {
         />
         <h1>Настройки</h1>
         {/*TODO: extract to component*/}
-        {/*TODO: waiting layer*/}
-        <h3>Я хочу:</h3>
-        <form onSubmit={handleSubmit(this.props.saveSettings)}>
-          <Field name="id" id="settings-id" component="input" type="hidden"/>
-          <FormControlLabel
-            control={
-              <Field name="receiver" submitOnChange={handleSubmit(this.props.saveSettings)}
-                     component={ReduxFormCheckbox}/>
-            }
-            label="Получать"
-          />
-          <FormControlLabel
-            control={
-              <Field name="sender" submitOnChange={handleSubmit(this.props.saveSettings)}
-                     component={ReduxFormCheckbox}/>
-            }
-            label="Отправлять"
-          />
-        </form>
-        <div>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
+        {!this.props.showWaiting &&
+        <div><h3>Я хочу:</h3>
+
+          <form onSubmit={handleSubmit(this.props.saveSettings)}>
+            <Field name="id" id="settings-id" component="input" type="hidden"/>
+            <FormControlLabel
+              control={
+                <Field name="receiver" submitOnChange={handleSubmit(this.props.saveSettings)}
+                       component={ReduxFormCheckbox}/>
+              }
+              label="Получать"
+            />
+            <FormControlLabel
+              control={
+                <Field name="sender" submitOnChange={handleSubmit(this.props.saveSettings)}
+                       component={ReduxFormCheckbox}/>
+              }
+              label="Отправлять"
+            />
+          </form>
+          <div>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
+        </div>
+        }
+        <WaitingLayer showWaiting={this.props.showWaiting}
+                      waitingId={FULL_PAGE_WAITING_ID}/>
+
       </div>
     );
   }
@@ -62,8 +69,12 @@ SettingsPage.propTypes = {
   pristine: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func,
+  loadSettings: PropTypes.func,
+  saveSettings: PropTypes.func,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
+  showWaiting: PropTypes.bool,
+
 };
 
 SettingsPage = reduxForm({
@@ -81,6 +92,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state) => {
   return {
     initialValues: state.settingsReducer.userSettings,
+    showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
+
   };
 };
 
