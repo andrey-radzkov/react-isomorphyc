@@ -52,6 +52,13 @@ const authVkProxy = proxy('https://oauth.vk.com', {
 });
 app.use("/vk", authVkProxy);
 
+const apiVkProxy = proxy('https://api.vk.com', {
+  proxyReqOptDecorator: function (proxyReqOpts, originalReq) {
+    return proxyReqOpts;
+  }
+});
+app.use("/vk-api", apiVkProxy);
+
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 //TODO: for first page too
 app.use("*", (req, res) => {

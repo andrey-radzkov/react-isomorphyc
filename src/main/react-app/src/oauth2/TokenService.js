@@ -73,6 +73,7 @@ export const redirectToAuthService = () => {
 };
 export const redirectToVkAuthService = () => {
   if (isClient()) {
+    //TODO: version to properties
     window.location.href = "https://oauth.vk.com/authorize?client_id=" + VK_CLIENT_ID + "&display=page&redirect_uri="
       + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v=5.75";
   }
