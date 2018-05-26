@@ -9,21 +9,29 @@ import {ReduxFormCheckbox} from "../components/ReduxFormCheckbox";
 import {loadSettings, saveSettings} from "../actions/settingsActions";
 import {WaitingLayer} from "../components/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
+import FirebaseMessaging from "../push/FirebaseMessaging";
 
 class SettingsPage extends React.Component {
 
   constructor(props) {
     super(props);
+    this.firebaseMessaging = new FirebaseMessaging();
   }
 
   componentDidMount() {
     this.props.loadSettings();
   }
 
+  subscribe(receiver) {
+    if (receiver) {
+      this.props.dispatch(this.firebaseMessaging.subscribe());
+    }
+  }
+
   render() {
     const {handleSubmit, pristine, reset, submitting} = this.props;
     return (
-      <div className="home-page">
+      <div className="text-center">
 
         <Helmet title="Home page"
                 meta={[
@@ -34,13 +42,19 @@ class SettingsPage extends React.Component {
         <h1>Настройки</h1>
         {/*TODO: extract to component*/}
         {!this.props.showWaiting &&
-        <div><h3>Я хочу:</h3>
+        <div>
+          <h3>Я хочу:</h3>
 
           <form onSubmit={handleSubmit(this.props.saveSettings)}>
             <Field name="id" id="settings-id" component="input" type="hidden"/>
             <FormControlLabel
               control={
-                <Field name="receiver" submitOnChange={handleSubmit(this.props.saveSettings)}
+                <Field name="receiver" submitOnChange={
+                  handleSubmit((values) => {
+                    this.subscribe(values.receiver);
+                    this.props.saveSettings(values);
+                  })
+                }
                        component={ReduxFormCheckbox}/>
               }
               label="Получать"

@@ -37,7 +37,7 @@ class HomePage extends React.Component {
 
     return (
       // TODO: move from home page
-      <div className="home-page">
+      <div className="text-center">
         <Helmet title="Home page"
                 meta={[
                   {"name": "description", "content": "Персональный помощник в стирке"},
