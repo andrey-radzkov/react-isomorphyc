@@ -33,9 +33,9 @@ class SettingsPage extends React.Component {
     this.setState({open: false});
   };
 
-  subscribe(receiver) {
-    //Todo
-    if (receiver) {
+  subscribe(type) {
+    //Todo: notify iser if not subscribed.
+    if (type === 'receiver') {
       this.props.dispatch(this.firebaseMessaging.subscribe());
     }
   }
@@ -65,7 +65,10 @@ class SettingsPage extends React.Component {
           <form onSubmit={handleSubmit(this.props.saveSettings)}>
             <Field name="id" id="settings-id" component="input" type="hidden"/>
 
-            <Field name="type" submitOnChange={handleSubmit(this.props.saveSettings)}
+            <Field name="type" submitOnChange={handleSubmit((values) => {
+              this.subscribe(values.type);
+              this.props.saveSettings(values);
+            })}
                    component={ReduxFormRadioGroup}>
               <FormControlLabel value="sender" control={<Radio/>} label="Отправлять"/>
               <FormControlLabel value="receiver" control={<Radio/>} label="Получать"/>
