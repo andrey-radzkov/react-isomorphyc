@@ -1,8 +1,8 @@
-import {LOAD_FRIENDS, LOAD_SETTINGS, SELECT_RECEIVER} from "../constants/actionTypes";
+import {LOAD_FRIENDS, LOAD_SETTINGS, SELECT_RECEIVER, SELECT_SENDERS} from "../constants/actionTypes";
 import {securedGet, securedPost} from "../oauth2/xhr";
 import {FULL_PAGE_WAITING_ID, hideWaiting, showWaiting} from "./componentStateActions";
 import axios from "axios";
-
+import remove from "lodash/remove";
 export const loadSettings = () => (dispatch) => {
   dispatch(showWaiting(FULL_PAGE_WAITING_ID));
   dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/'))
@@ -30,6 +30,16 @@ export const loadFriends = () => (dispatch) => {
 
 export const selectReceiver = (id) => (dispatch) => {
   dispatch({type: SELECT_RECEIVER, receiver: id});
+
+};
+export const selectSenders = (selectionId, alreadySelected) => (dispatch) => {
+  let newSelection = alreadySelected.slice();
+  if (alreadySelected.indexOf(selectionId) >= 0) {
+    remove(newSelection, (item) => item === selectionId);
+  } else {
+    newSelection.push(selectionId);
+  }
+  dispatch({type: SELECT_SENDERS, senders: newSelection});
 };
 
 export const saveSettings = (settings) => (dispatch) => {

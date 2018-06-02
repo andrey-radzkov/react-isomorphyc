@@ -1,4 +1,4 @@
-import {LOAD_FRIENDS, LOAD_SETTINGS, SAVE_SETTINGS, SELECT_RECEIVER} from "../constants/actionTypes";
+import {LOAD_FRIENDS, LOAD_SETTINGS, SAVE_SETTINGS, SELECT_RECEIVER, SELECT_SENDERS} from "../constants/actionTypes";
 const initialState = {userSettings: {}, friends: [], receiver: null, senders: []};
 
 const settingsReducer = (state = initialState, action) => {
@@ -11,6 +11,8 @@ const settingsReducer = (state = initialState, action) => {
       return {...state, friends: action.friends};
     case SELECT_RECEIVER:
       return {...state, receiver: action.receiver};
+    case SELECT_SENDERS:
+      return {...state, senders: action.senders};
     default:
       return state;
   }

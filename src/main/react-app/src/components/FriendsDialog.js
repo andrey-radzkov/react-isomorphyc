@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
 
-export const FriendsDialog = ({title, handleOk, handleCancel, ...other}) => (
+export const FriendsDialog = ({title, handleOk, handleCancel, multipleSelect, ...other}) => (
   <Dialog
     maxWidth="xs"
     fullWidth={true}
@@ -16,8 +16,7 @@ export const FriendsDialog = ({title, handleOk, handleCancel, ...other}) => (
   >
     <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
     <DialogContent>
-      <FriendsList/>
-
+      <FriendsList multipleSelect={multipleSelect}/>
     </DialogContent>
     <DialogActions>
       <Button color="primary" onClick={handleCancel}>
@@ -34,6 +33,7 @@ export const FriendsDialog = ({title, handleOk, handleCancel, ...other}) => (
 FriendsDialog.propTypes = {
   title: PropTypes.string,
   handleCancel: PropTypes.func,
+  multipleSelect: PropTypes.bool,
   handleOk: PropTypes.func,
 };
 

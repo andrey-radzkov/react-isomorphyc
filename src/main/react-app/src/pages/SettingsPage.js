@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button/Button";
 import {ReduxFormRadioGroup} from "../components/ReduxFormRadioGroup";
 import Radio from "@material-ui/core/Radio/Radio";
 import {FriendsDialog} from "../components/FriendsDialog";
+
 const selector = formValueSelector('settingsForm');
 
 
@@ -68,15 +69,14 @@ class SettingsPage extends React.Component {
             <Field name="type" submitOnChange={handleSubmit((values) => {
               this.subscribe(values.type);
               this.props.saveSettings(values);
-            })}
-                   component={ReduxFormRadioGroup}>
+            })} component={ReduxFormRadioGroup} style={{flexDirection: "row", marginLeft: 16}}>
               <FormControlLabel value="sender" control={<Radio/>} label="Отправлять"/>
               <FormControlLabel value="receiver" control={<Radio/>} label="Получать"/>
             </Field>
 
 
           </form>
-          <div>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
+          <div style={{margin: "8px"}}>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
           {this.props.type === 'sender' &&
           <SelectButton text="Выбрать получателя"/>
           }
@@ -86,6 +86,7 @@ class SettingsPage extends React.Component {
           <FriendsDialog open={this.state.open}
                          handleOk={this.handleClose}
                          handleCancel={this.handleClose}
+                         multipleSelect={this.props.type === 'receiver'}
                          title={"Выберите " + (this.props.type === 'sender' ? 'получателя' : "отправителей")}
           />
 
