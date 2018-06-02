@@ -10,3 +10,5 @@ export const LOAD_BASKET = 'LOAD_BASKET';
 
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export const SAVE_SETTINGS = 'SAVE_SETTINGS';
+export const LOAD_FRIENDS = 'LOAD_FRIENDS';
+export const SELECT_RECEIVER = 'SELECT_RECEIVER';

@@ -41,6 +41,16 @@ export const requestVkToken = (code, history) => {
     }
   });
 };
+
+export const authType=()=>{
+  //tODO: export to const
+  if(getLocalStorage().getItem("vk_token")){
+    return "VK";
+  }else{
+    return "internal";
+  }
+};
+
 export const requestToken = (code, history) => {
 
   let tokenRequest = createTokenRequest();

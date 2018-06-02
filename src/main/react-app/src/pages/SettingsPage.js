@@ -2,14 +2,16 @@ import React from "react";
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
 import PropTypes from "prop-types";
-import axios from "axios";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import {Field, reduxForm} from "redux-form";
+import {Field, formValueSelector, reduxForm} from "redux-form";
 import {ReduxFormCheckbox} from "../components/ReduxFormCheckbox";
 import {loadSettings, saveSettings} from "../actions/settingsActions";
 import {WaitingLayer} from "../components/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
+import FriendsList from "../components/vk/FriendsList";
+const selector = formValueSelector('settingsForm');
+
 
 class SettingsPage extends React.Component {
 
@@ -20,18 +22,6 @@ class SettingsPage extends React.Component {
 
   componentDidMount() {
     this.props.loadSettings();
-    return axios.get('/vk-api/method/friends.get', {
-      params: {
-        access_token: localStorage.getItem("vk_token"),
-        version: "5.78",
-        order: "name",
-        count: "3",
-        offset: "30",
-        fields: "photo_100",
-      }
-    }).then(response => {
-      console.log("resFromVk", response);
-    });
   }
 
   subscribe(receiver) {
@@ -56,7 +46,7 @@ class SettingsPage extends React.Component {
         {!this.props.showWaiting &&
         <div>
           <h3>Я хочу:</h3>
-
+          {/*TODO: handle no options*/}
           <form onSubmit={handleSubmit(this.props.saveSettings)}>
             <Field name="id" id="settings-id" component="input" type="hidden"/>
             <FormControlLabel
@@ -80,6 +70,7 @@ class SettingsPage extends React.Component {
             />
           </form>
           <div>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
+          <FriendsList render={this.props.sender}/>
         </div>
         }
         <WaitingLayer showWaiting={this.props.showWaiting}
@@ -118,6 +109,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = (state) => {
   return {
+    sender: selector(state, 'sender'),
     initialValues: state.settingsReducer.userSettings,
     showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
 

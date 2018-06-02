@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const WaitingLayer = ({waitingId, showWaiting}) => {
+  let waitingLayer = null;
   if (showWaiting) {
-    return (<div id={waitingId}><CircularProgress size={50}/></div>);
-  } else {
-    return null;
+    waitingLayer = (<div id={waitingId}><CircularProgress size={50}/></div>);
   }
+  return waitingLayer;
 };
 
 
