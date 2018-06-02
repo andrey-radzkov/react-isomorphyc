@@ -11,9 +11,11 @@ import List from "@material-ui/core/List/List";
 import withStyles from "@material-ui/core/styles/withStyles";
 import filter from "lodash/filter";
 import Radio from "@material-ui/core/Radio/Radio";
+import {WaitingLayer} from "../WaitingLayer";
 const styles = theme => ({
   viewport: {
-    height: 300,
+    minHeight: 300,
+    height: '100%',
     overflow: "auto",
   },
 });
@@ -29,37 +31,39 @@ class FriendsList extends React.Component {
     }
   }
 
-// TODO: use grid
+// TODO: use grid, search
   render() {
     const {classes} = this.props;
     return (<div >
-      {this.props.render &&
-      (<div>Список друзей для поиска
-        {/*TODO: re render checkbox if load is slow*/}
-        <List className={classes.viewport}>
-          {this.props.friends && filter(this.props.friends, friend => friend.first_name !== 'DELETED').map(friend => {
-            const friendFullName = friend.first_name + " " + friend.last_name;
-            const vkId = "vk_" + friend.uid;
-            return (
-              <ListItem key={friend.uid} dense button onClick={() => this.props.selectReceiver(vkId)}>
-                <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src={friend.photo_50}/>
-                </ListItemAvatar>
-                <ListItemText primary={friendFullName}/>
-                <ListItemSecondaryAction>
-                  <Radio
-                    name="friend"
-                    value={vkId}
-                    onChange={() => this.props.selectReceiver(vkId)}
-                    checked={this.props.receiver === vkId}
-                  />
-                </ListItemSecondaryAction>
-              </ListItem>
-            );
-          })}
-        </List>
-      </div>)
-      }
+
+      <List className={classes.viewport}>
+        {this.props.friends && filter(this.props.friends, friend => friend.first_name !== 'DELETED').map(friend => {
+          const friendFullName = friend.first_name + " " + friend.last_name;
+          const vkId = "vk_" + friend.uid;
+          return (
+            <ListItem key={friend.uid} dense button onClick={() => this.props.selectReceiver(vkId)}>
+              <ListItemAvatar>
+                <Avatar alt={friendFullName} src={friend.photo_50}/>
+              </ListItemAvatar>
+              <ListItemText primary={friendFullName}/>
+              <ListItemSecondaryAction>
+                <Radio
+                  name="friend"
+                  value={vkId}
+                  onChange={() => this.props.selectReceiver(vkId)}
+                  checked={this.props.receiver === vkId}
+                />
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        })}
+        {this.props.friends.length === 0 &&
+        <div className="text-center">
+          <WaitingLayer showWaiting={true}
+                        waitingId="friend-list-waiting"/>
+        </div>
+        }
+      </List>
     </div>);
   }
 
@@ -70,7 +74,6 @@ FriendsList.propTypes = {
   selectReceiver: PropTypes.func,
   friends: PropTypes.array,
   receiver: PropTypes.number,
-  render: PropTypes.bool,
   classes: PropTypes.object.isRequired,
 
 };

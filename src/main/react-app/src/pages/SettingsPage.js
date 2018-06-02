@@ -8,10 +8,10 @@ import {loadSettings, saveSettings} from "../actions/settingsActions";
 import {WaitingLayer} from "../components/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
-import FriendsList from "../components/vk/FriendsList";
 import Button from "@material-ui/core/Button/Button";
 import {ReduxFormRadioGroup} from "../components/ReduxFormRadioGroup";
 import Radio from "@material-ui/core/Radio/Radio";
+import {FriendsDialog} from "../components/FriendsDialog";
 const selector = formValueSelector('settingsForm');
 
 
@@ -20,19 +20,32 @@ class SettingsPage extends React.Component {
   constructor(props) {
     super(props);
     this.firebaseMessaging = new FirebaseMessaging();
+    this.state = {
+      open: false,
+    };
   }
 
   componentDidMount() {
     this.props.loadSettings();
   }
 
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
   subscribe(receiver) {
+    //Todo
     if (receiver) {
       this.props.dispatch(this.firebaseMessaging.subscribe());
     }
   }
 
   render() {
+    let SelectButton = ({text}) => (
+      <Button variant="raised" color="secondary" onClick={() => this.setState({open: true})}>
+        {text}
+      </Button>
+    );
     const {handleSubmit, pristine, reset, submitting} = this.props;
     return (
       <div className="text-center">
@@ -62,14 +75,17 @@ class SettingsPage extends React.Component {
           </form>
           <div>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
           {this.props.type === 'sender' &&
-          <Button variant="raised" color="secondary">
-            Выбрать получателя
-          </Button>}
+          <SelectButton text="Выбрать получателя"/>
+          }
           {this.props.type === 'receiver' &&
-          <Button variant="raised" color="secondary">
-            Выбрать отправителей
-          </Button>}
-          <FriendsList render={this.props.type === 'receiver'}/>
+          <SelectButton text="Выбрать отправителей"/>
+          }
+          <FriendsDialog open={this.state.open}
+                         handleOk={this.handleClose}
+                         handleCancel={this.handleClose}
+                         title={"Выберите " + (this.props.type === 'sender' ? 'получателя' : "отправителей")}
+          />
+
         </div>
         }
         <WaitingLayer showWaiting={this.props.showWaiting}
