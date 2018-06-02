@@ -15,6 +15,11 @@ zuul:
        sensitiveHeaders:
        url: https://oauth.vk.com
        rewrite: /vk
+    vk-api:
+       path: /vk-api/**
+       sensitiveHeaders:
+       url: https://api.vk.com
+      rewrite: /vk-api
     user:
       path: /uaa/**
       sensitiveHeaders:
