@@ -4,12 +4,14 @@ import {Helmet} from "react-helmet";
 import PropTypes from "prop-types";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {Field, formValueSelector, reduxForm} from "redux-form";
-import {ReduxFormCheckbox} from "../components/ReduxFormCheckbox";
 import {loadSettings, saveSettings} from "../actions/settingsActions";
 import {WaitingLayer} from "../components/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import FriendsList from "../components/vk/FriendsList";
+import Button from "@material-ui/core/Button/Button";
+import {ReduxFormRadioGroup} from "../components/ReduxFormRadioGroup";
+import Radio from "@material-ui/core/Radio/Radio";
 const selector = formValueSelector('settingsForm');
 
 
@@ -49,28 +51,25 @@ class SettingsPage extends React.Component {
           {/*TODO: handle no options*/}
           <form onSubmit={handleSubmit(this.props.saveSettings)}>
             <Field name="id" id="settings-id" component="input" type="hidden"/>
-            <FormControlLabel
-              control={
-                <Field name="receiver" submitOnChange={
-                  handleSubmit((values) => {
-                    this.subscribe(values.receiver);
-                    this.props.saveSettings(values);
-                  })
-                }
-                       component={ReduxFormCheckbox}/>
-              }
-              label="Получать"
-            />
-            <FormControlLabel
-              control={
-                <Field name="sender" submitOnChange={handleSubmit(this.props.saveSettings)}
-                       component={ReduxFormCheckbox}/>
-              }
-              label="Отправлять"
-            />
+
+            <Field name="type" submitOnChange={handleSubmit(this.props.saveSettings)}
+                   component={ReduxFormRadioGroup}>
+              <FormControlLabel value="sender" control={<Radio/>} label="Отправлять"/>
+              <FormControlLabel value="receiver" control={<Radio/>} label="Получать"/>
+            </Field>
+
+
           </form>
           <div>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
-          <FriendsList render={this.props.sender}/>
+          {this.props.type === 'sender' &&
+          <Button variant="raised" color="secondary">
+            Выбрать получателя
+          </Button>}
+          {this.props.type === 'receiver' &&
+          <Button variant="raised" color="secondary">
+            Выбрать отправителей
+          </Button>}
+          <FriendsList render={this.props.type === 'receiver'}/>
         </div>
         }
         <WaitingLayer showWaiting={this.props.showWaiting}
@@ -92,7 +91,7 @@ SettingsPage.propTypes = {
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   showWaiting: PropTypes.bool,
-  sender: PropTypes.bool,
+  type: PropTypes.string,
 
 };
 
@@ -110,7 +109,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = (state) => {
   return {
-    sender: selector(state, 'sender'),
+    type: selector(state, 'type'),
     initialValues: state.settingsReducer.userSettings,
     showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
 

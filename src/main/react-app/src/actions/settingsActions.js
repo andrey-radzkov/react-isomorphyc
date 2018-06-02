@@ -8,7 +8,8 @@ export const loadSettings = () => (dispatch) => {
   dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/'))
     .then(response => {
       dispatch(hideWaiting(FULL_PAGE_WAITING_ID));
-      dispatch({type: LOAD_SETTINGS, userSettings: response.data});
+      const settings = response.data;
+      dispatch({type: LOAD_SETTINGS, userSettings: {id: settings.id, type: settings.sender ? 'sender' : 'receiver'}});
     }).catch(res => console.log("error loading user settings"));
 };
 
@@ -32,7 +33,8 @@ export const selectReceiver = (id) => (dispatch) => {
 };
 
 export const saveSettings = (settings) => (dispatch) => {
-  return dispatch(securedPost(process.env.API_URL + '/resource/save-user-settings/', settings))
+  let settingsToSave = {id: settings.id, receiver: settings.type === 'receiver', sender: settings.type === 'sender'};
+  return dispatch(securedPost(process.env.API_URL + '/resource/save-user-settings/', settingsToSave))
     .then(response => {
     }).catch(res => console.log("error saving user settings"));
 };
