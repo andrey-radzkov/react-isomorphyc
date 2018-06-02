@@ -31,6 +31,7 @@ let config = {
       'process.env.API_URL': JSON.stringify("/api"),
       'process.env.LOGIN_URL': JSON.stringify("http://localhost:3000/login"),
       'process.env.LOGIN_URL_VK': JSON.stringify("http://localhost:3000/login/vk"),
+      'process.env.VK_API_VERSION': JSON.stringify("5.78"),
       'process.env.AUTH_SERVER_URL': JSON.stringify("http://localhost:9999"),
       __SERVER__: false,
     }),

@@ -92,6 +92,7 @@ SettingsPage.propTypes = {
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
   showWaiting: PropTypes.bool,
+  sender: PropTypes.bool,
 
 };
 

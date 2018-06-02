@@ -15,6 +15,7 @@ const GLOBALS = {
   'process.env.API_URL': JSON.stringify("/api"),
   'process.env.LOGIN_URL': JSON.stringify("https://time-to-wash-ui.herokuapp.com/login"),
   'process.env.LOGIN_URL_VK': JSON.stringify("https://time-to-wash-ui.herokuapp.com/login/vk"),
+  'process.env.VK_API_VERSION': JSON.stringify("5.78"),
   'process.env.AUTH_SERVER_URL': JSON.stringify("https://backend-for-react-authserver.herokuapp.com"),
   __SERVER__: false,
   __DEV__: false

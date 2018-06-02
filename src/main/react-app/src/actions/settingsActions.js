@@ -17,7 +17,7 @@ export const loadFriends = () => (dispatch) => {
   axios.get('/vk-api/method/friends.get', {
     params: {
       access_token: localStorage.getItem("vk_token"),
-      version: "5.78",
+      version: process.env.VK_API_VERSION,
       order: "mobile",
       offset: "0",
       fields: "photo_50",

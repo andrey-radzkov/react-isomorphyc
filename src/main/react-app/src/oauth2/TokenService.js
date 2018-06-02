@@ -28,7 +28,7 @@ export const requestVkToken = (code, history) => {
     let vkToken = response.data;
     getLocalStorage().setItem("vk_token", vkToken.access_token);
 
-   return axios.post('/uaa/vk-auth', {token: vkToken.access_token, userId: vkToken.user_id}).then(response => {
+    return axios.post('/uaa/vk-auth', {token: vkToken.access_token, userId: vkToken.user_id}).then(response => {
       let token = response.data;
       setTokens(token.access_token, token.refresh_token);
       history.push(getTargetUrl());
@@ -42,11 +42,11 @@ export const requestVkToken = (code, history) => {
   });
 };
 
-export const authType=()=>{
+export const authType = () => {
   //tODO: export to const
-  if(getLocalStorage().getItem("vk_token")){
+  if (getLocalStorage().getItem("vk_token")) {
     return "VK";
-  }else{
+  } else {
     return "internal";
   }
 };
@@ -85,7 +85,7 @@ export const redirectToVkAuthService = () => {
   if (isClient()) {
     //TODO: version to properties
     window.location.href = "https://oauth.vk.com/authorize?client_id=" + VK_CLIENT_ID + "&display=page&redirect_uri="
-      + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v=5.75";
+      + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v=" + process.env.VK_API_VERSION;
   }
 };
 export const rememberTargetUrl = (url) => {
@@ -100,10 +100,6 @@ export const isAuthed = () => {
   }
   return !(isAccessTokenExpired(getAccessToken()) && isRefreshTokenExpired(
     getRefreshToken()));
-};
-export const authenticate = (url) => {
-  rememberTargetUrl(url);
-  redirectToAuthService();
 };
 
 export const logout = () => {

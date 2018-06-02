@@ -55,7 +55,7 @@ class FriendsList extends React.Component {
                   />
                 </ListItemSecondaryAction>
               </ListItem>
-            )
+            );
           })}
         </List>
       </div>)
@@ -71,6 +71,7 @@ FriendsList.propTypes = {
   friends: PropTypes.array,
   receiver: PropTypes.number,
   render: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
 
 };
 
