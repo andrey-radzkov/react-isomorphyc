@@ -19,7 +19,7 @@ zuul:
        path: /vk-api/**
        sensitiveHeaders:
        url: https://api.vk.com
-      rewrite: /vk-api
+       rewrite: /vk-api
     user:
       path: /uaa/**
       sensitiveHeaders:
