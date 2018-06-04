@@ -10,6 +10,16 @@ export const LOAD_BASKET = 'LOAD_BASKET';
 
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export const SAVE_SETTINGS = 'SAVE_SETTINGS';
+
 export const LOAD_FRIENDS = 'LOAD_FRIENDS';
+
 export const SELECT_RECEIVER = 'SELECT_RECEIVER';
+export const SAVE_RECEIVER = 'SAVE_RECEIVER';
+export const REVERT_RECEIVER = 'REVERT_RECEIVER';
+
+export const SAVE_SENDERS = 'SAVE_SENDERS';
 export const SELECT_SENDERS = 'SELECT_SENDERS';
+export const REVERT_SENDERS = 'REVERT_SENDERS';
+
+
+

@@ -4,7 +4,14 @@ import {Helmet} from "react-helmet";
 import PropTypes from "prop-types";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {Field, formValueSelector, reduxForm} from "redux-form";
-import {loadSettings, saveSettings} from "../actions/settingsActions";
+import {
+  loadSettings,
+  revertReceiver,
+  revertSenders,
+  saveReceiver,
+  saveSenders,
+  saveSettings
+} from "../actions/settingsActions";
 import {WaitingLayer} from "../components/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
@@ -31,6 +38,24 @@ class SettingsPage extends React.Component {
   }
 
   handleClose = () => {
+    this.closeDialog();
+    if (this.props.type === 'receiver') {
+      this.props.revertSenders();
+    } else if (this.props.type === 'sender') {
+      this.props.revertReceiver();
+    }
+  };
+
+  handleOK = () => {
+    this.closeDialog();
+    if (this.props.type === 'receiver') {
+      this.props.saveSenders(this.props.senders);
+    } else if (this.props.type === 'sender') {
+      this.props.saveReceiver(this.props.receiver);
+    }
+  };
+
+  closeDialog = () => {
     this.setState({open: false});
   };
 
@@ -84,7 +109,7 @@ class SettingsPage extends React.Component {
           <SelectButton text="Выбрать отправителей"/>
           }
           <FriendsDialog open={this.state.open}
-                         handleOk={this.handleClose}
+                         handleOk={this.handleOK}
                          handleCancel={this.handleClose}
                          multipleSelect={this.props.type === 'receiver'}
                          title={"Выберите " + (this.props.type === 'sender' ? 'получателя' : "отправителей")}
@@ -107,6 +132,10 @@ SettingsPage.propTypes = {
   reset: PropTypes.func,
   loadSettings: PropTypes.func,
   saveSettings: PropTypes.func,
+  saveReceiver: PropTypes.func,
+  revertReceiver: PropTypes.func,
+  saveSenders: PropTypes.func,
+  revertSenders: PropTypes.func,
   dispatch: PropTypes.func,
   submitting: PropTypes.bool,
   invalid: PropTypes.bool,
@@ -124,6 +153,10 @@ const mapDispatchToProps = dispatch => {
   return {
     loadSettings: () => dispatch(loadSettings()),
     saveSettings: (values) => dispatch(saveSettings(values)),
+    saveReceiver: (id) => dispatch(saveReceiver(id)),
+    revertReceiver: () => dispatch(revertReceiver()),
+    saveSenders: (ids) => dispatch(saveSenders(ids)),
+    revertSenders: () => dispatch(revertSenders()),
   };
 };
 
@@ -131,6 +164,8 @@ const mapStateToProps = (state) => {
   return {
     type: selector(state, 'type'),
     initialValues: state.settingsReducer.userSettings,
+    receiver: state.settingsReducer.receiver,
+    senders: state.settingsReducer.senders,
     showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
 
   };

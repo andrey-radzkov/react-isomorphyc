@@ -1,4 +1,13 @@
-import {LOAD_FRIENDS, LOAD_SETTINGS, SELECT_RECEIVER, SELECT_SENDERS} from "../constants/actionTypes";
+import {
+  LOAD_FRIENDS,
+  LOAD_SETTINGS,
+  REVERT_RECEIVER,
+  REVERT_SENDERS,
+  SAVE_RECEIVER,
+  SAVE_SENDERS,
+  SELECT_RECEIVER,
+  SELECT_SENDERS
+} from "../constants/actionTypes";
 import {securedGet, securedPost} from "../oauth2/xhr";
 import {FULL_PAGE_WAITING_ID, hideWaiting, showWaiting} from "./componentStateActions";
 import axios from "axios";
@@ -10,7 +19,7 @@ export const loadSettings = () => (dispatch) => {
       dispatch(hideWaiting(FULL_PAGE_WAITING_ID));
       const settings = response.data;
       dispatch({type: LOAD_SETTINGS, userSettings: {id: settings.id, type: settings.sender ? 'sender' : 'receiver'}});
-    }).catch(res => console.log("error loading user settings"));
+    });
 };
 
 export const loadFriends = () => (dispatch) => {
@@ -46,5 +55,27 @@ export const saveSettings = (settings) => (dispatch) => {
   let settingsToSave = {id: settings.id, receiver: settings.type === 'receiver', sender: settings.type === 'sender'};
   return dispatch(securedPost(process.env.API_URL + '/resource/save-user-settings/', settingsToSave))
     .then(response => {
-    }).catch(res => console.log("error saving user settings"));
+    });
+};
+
+export const saveReceiver = (id) => (dispatch) => {
+  return dispatch(securedPost(process.env.API_URL + '/resource/save-receiver/', {id: id}))
+    .then(response => {
+      dispatch({type: SAVE_RECEIVER, receiver: id});
+    });
+};
+
+export const revertReceiver = () => (dispatch) => {
+  setTimeout(() => dispatch({type: REVERT_RECEIVER}), 500);
+};
+
+export const saveSenders = (ids) => (dispatch) => {
+  return dispatch(securedPost(process.env.API_URL + '/resource/save-senders/', {ids: ids}))
+    .then(response => {
+      dispatch({type: SAVE_SENDERS, senders: ids});
+    });
+};
+
+export const revertSenders = () => (dispatch) => {
+  setTimeout(() => dispatch({type: REVERT_SENDERS}), 500);
 };
