@@ -76,6 +76,7 @@ export const requestToken = (code, history) => {
 
 export const redirectToAuthService = () => {
   if (isClient()) {
+    rememberTargetUrl(window.location.href);
     window.location.href = process.env.AUTH_SERVER_URL
       + '/uaa/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri='
       + process.env.LOGIN_URL + '&response_type=code&scope=resource-read';
@@ -83,7 +84,7 @@ export const redirectToAuthService = () => {
 };
 export const redirectToVkAuthService = () => {
   if (isClient()) {
-    //TODO: version to properties
+    rememberTargetUrl(window.location.href);
     window.location.href = "https://oauth.vk.com/authorize?client_id=" + VK_CLIENT_ID + "&display=page&redirect_uri="
       + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v=" + process.env.VK_API_VERSION;
   }
