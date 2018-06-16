@@ -13,8 +13,8 @@ const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.PORT': JSON.stringify('3000'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.API_URL': JSON.stringify("/api"),
-  'process.env.LOGIN_URL': JSON.stringify("https://time-to-wash-ui.herokuapp.com/login"),
-  'process.env.LOGIN_URL_VK': JSON.stringify("https://time-to-wash-ui.herokuapp.com/login/vk"),
+  'process.env.LOGIN_URL': JSON.stringify("https://washing-time.herokuapp.com/login"),
+  'process.env.LOGIN_URL_VK': JSON.stringify("https://washing-time.herokuapp.com/login/vk"),
   'process.env.VK_API_VERSION': JSON.stringify("5.78"),
   'process.env.AUTH_SERVER_URL': JSON.stringify("https://backend-for-react-authserver.herokuapp.com"),
   __SERVER__: false,
