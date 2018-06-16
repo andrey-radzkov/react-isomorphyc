@@ -24,6 +24,10 @@ zuul:
       path: /uaa/**
       sensitiveHeaders:
       url: http://localhost:9999/uaa
+    blog:
+      path: /blog/**
+      sensitiveHeaders:
+      url:  http://washing-time-blog.hostenko.com
 
 spring:
     profiles:

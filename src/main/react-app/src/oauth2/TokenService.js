@@ -90,7 +90,7 @@ export const redirectToVkAuthService = () => {
   }
 };
 export const rememberTargetUrl = (url) => {
-  getLocalStorage().targetUrl = url.pathname;
+  getLocalStorage().targetUrl = url;
 };
 export const getTargetUrl = () => {
   return getLocalStorage().targetUrl;
