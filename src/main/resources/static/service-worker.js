@@ -8,6 +8,7 @@ self.addEventListener('install', function (event) {
       return cache.addAll([
         '/',
         OFFLINE_URL,
+        'bundle.js',
         'favicon.ico',
         'manifest.json',
       ]);

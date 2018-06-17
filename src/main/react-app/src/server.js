@@ -22,7 +22,7 @@ class ServerSideRender extends React.Component {
 
   render() {
     const content = ReactDOMServer.renderToString(<Provider store={this.props.store}>
-      <StaticRouter location={this.props.location} context={this.context}>
+      <StaticRouter location={this.props.location} context={this.context} basename={"app"}>
         <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
           <MuiThemeProvider theme={muiTheme}>
             <App/>

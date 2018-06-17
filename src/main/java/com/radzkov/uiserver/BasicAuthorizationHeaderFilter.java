@@ -31,7 +31,8 @@ public class BasicAuthorizationHeaderFilter extends ZuulFilter {
 
         RequestContext ctx = RequestContext.getCurrentContext();
         String requestURL = ctx.getRequest().getRequestURL().toString();
-        if (requestURL.contains("blog")) {
+        if (!(requestURL.contains("/app") || requestURL.contains("/api") || requestURL.contains("/vk")
+                || requestURL.contains("/uaa"))) {
             ctx.addZuulRequestHeader("Authorization", "Basic " + "d2FzaDp3YXNocGFzc3dvcmQ=");
         }
         return null;

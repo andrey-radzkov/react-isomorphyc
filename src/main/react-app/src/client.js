@@ -21,7 +21,7 @@ const store = configureStore(preloadedState);
 
 hydrate(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={"app"}>
       <MuiThemeProvider theme={muiTheme}>
         <App/>
       </MuiThemeProvider>

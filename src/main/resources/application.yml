@@ -4,6 +4,7 @@ server:
       enabled: true
       mime-types: application/json,application/javascript,text/css,application/xml,text/html,text/xml,text/plain,stylesheet,script
 zuul:
+  ignoredPatterns: /app/**, /main**, /index.html
   routes:
     resource:
       path: /api/**
@@ -25,7 +26,7 @@ zuul:
       sensitiveHeaders:
       url: http://localhost:9999/uaa
     blog:
-      path: /blog/**
+      path: /**
       sensitiveHeaders:
       url:  http://washing-time-blog.hostenko.com
 
