@@ -29,8 +29,8 @@ export default {
   entry: path.resolve(__dirname, '../src/client.js'),
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   output: {
-    path: path.resolve(__dirname, '../../resources/static'),
-    publicPath: '/',
+    path: path.resolve(__dirname, '../../resources/static/app'),
+    publicPath: '/app/',
     filename: '[name].[chunkhash].js'
   },
   plugins: [
@@ -86,7 +86,8 @@ export default {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new CopyWebpackPlugin([
-      {from: './static', to: ''},
+      {from: './static/app', to: './'},
+      {from: './static/firebase-messaging-sw.js', to: '../'},
       {from: './src/styles/fonts', to: 'fonts/bootstrap'},
     ]),
     new CompressionPlugin({

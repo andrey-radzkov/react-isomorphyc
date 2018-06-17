@@ -13,7 +13,7 @@ const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 if (isClient()) {
   require('./styles/common-styles.scss');
-  require('../static/favicon.ico');
+  require('../static/app/favicon.ico');
   require('./service-worker-register.js');
 }
 

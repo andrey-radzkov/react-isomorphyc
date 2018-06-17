@@ -25,7 +25,7 @@ public class UiApplication {
     if (url.contains(".")) {
       return String.format("forward:/%s", url);
     }
-    return "forward:/index.html";//tODO: remove
+    return "forward:/app/index.html";//tODO: remove
   }
 
 

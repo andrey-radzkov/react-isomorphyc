@@ -4,7 +4,7 @@ server:
       enabled: true
       mime-types: application/json,application/javascript,text/css,application/xml,text/html,text/xml,text/plain,stylesheet,script
 zuul:
-  ignoredPatterns: /app/**, /main**, /index.html
+  ignoredPatterns: /app/**, /main**, /index.html, /firebase-messaging-sw.js
   routes:
     resource:
       path: /api/**
