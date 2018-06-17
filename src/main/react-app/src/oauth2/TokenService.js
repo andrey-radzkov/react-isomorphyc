@@ -6,6 +6,7 @@ import {isClient, isSSR} from "../utils/ssr-util";
 
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
+const VK_TOKEN = "vk_token";
 
 let createTokenRequest = function () {
   return axios.create({
@@ -44,7 +45,7 @@ export const requestVkToken = (code, history) => {
 
 export const authType = () => {
   //tODO: export to const
-  if (getLocalStorage().getItem("vk_token")) {
+  if (getLocalStorage().getItem(VK_TOKEN)) {
     return "VK";
   } else {
     return "internal";
@@ -149,9 +150,14 @@ export const removeRefreshToken = () => {
   getLocalStorage().removeItem(REFRESH_TOKEN);
 };
 
+export const removeVkToken = () => {
+  getLocalStorage().removeItem(VK_TOKEN);
+};
+
 export const removeTokens = () => {
   removeAccessToken();
   removeRefreshToken();
+  removeVkToken();
 };
 
 export const isAccessTokenExpired = token => isTokenExpired(token);
