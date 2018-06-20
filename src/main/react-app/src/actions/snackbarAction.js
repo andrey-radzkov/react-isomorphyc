@@ -3,6 +3,7 @@ import {HIDE_SNACK, SHOW_SNACK} from "../constants/actionTypes";
 let snackbars = [];
 let intervalId = null;
 export const AUTO_CLOSE_INTERVAL = 3000;
+export const ANIMATION_DURATION = 600;
 
 export const showError = (message) => (dispatch) => {
   snackbars.push({message: message, type: "error"});
@@ -17,6 +18,12 @@ export const showError = (message) => (dispatch) => {
 export const hideSnack = () => (dispatch) => {
   snackbars.shift();
   dispatch({type: HIDE_SNACK});
+  if (snackbars.length > 0) {
+    setTimeout(() => {
+      dispatch({type: SHOW_SNACK, snack: snackbars[0]})
+    }, ANIMATION_DURATION);
+    dispatch(startMessagePooling());
+  }
 };
 
 const startMessagePooling = () => (dispatch) => {
@@ -29,6 +36,5 @@ const startMessagePooling = () => (dispatch) => {
     } else {
       dispatch({type: SHOW_SNACK, snack: snackbars[0]});
     }
-    //TODO: connect with autoclose constant
-  }, AUTO_CLOSE_INTERVAL + 1000);
+  }, AUTO_CLOSE_INTERVAL + ANIMATION_DURATION);
 };
