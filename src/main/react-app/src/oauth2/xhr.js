@@ -2,6 +2,7 @@ import {TIMEOUT} from "./Oauth";
 import {getAccessToken, validateAndUpdateTokenIfNecessary} from "./TokenService";
 import axios from "axios";
 import {hideWaiting, showWaiting} from "../actions/componentStateActions";
+import {showError} from "../actions/snackbarAction";
 
 export const securedGet = (url, waitingLayerId) => (dispatch) => {
   return dispatch(request(url,
@@ -25,6 +26,7 @@ const request = (url, config) => (dispatch) => {
   if (config.waitingLayerId) {
     dispatch(showWaiting(config.waitingLayerId));
   }
+  //TODO: return new promise with correct resolve reject
   return validateAndUpdateTokenIfNecessary().then(() => {
     let request = axios.create({
       timeout: TIMEOUT,
@@ -38,9 +40,12 @@ const request = (url, config) => (dispatch) => {
       return response;
     }).catch(error => {
       dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+      //TODO: identyfy error type
+      dispatch(showError("Server request failed"));
       console.debug("server.request.error", error);
     });
   }).catch((params) => {
+    dispatch(showError("Please, log in"));
     console.log("please, log in", params);
   });
 };

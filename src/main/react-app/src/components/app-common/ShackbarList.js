@@ -22,6 +22,10 @@ const styles = theme => ({
     alignItems: 'center',
   },
 
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
+
 });
 
 
@@ -47,39 +51,45 @@ class ShackbarList extends React.Component {
 
   render() {
     const {classes} = this.props;
-//TODO: orofin based on screen size
+//TODO: origin based on screen size
     return (
       <div><Button onClick={this.handleClick}>Open error snackbar</Button>
-        {/*//TODO: jss styling fron theme*/}
-        <Snackbar anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-                  open={this.state.open}
-                  autoHideDuration={3000}
-                  onClose={this.handleClose}
 
-        >
-          <SnackbarContent className={classes.error}
-                           aria-describedby="client-snackbar"
-                           message={
-                             <span id="client-snackbar"
-                                   className={classes.message}>
-                               <ErrorIcon/>Note archived</span>
-                           }
-                           action={[
-                             <IconButton key="close"
-                                         aria-label="Close"
-                                         color="inherit"
-                                         className={classes.close}
-                                         onClick={this.handleClose}>
-                               <CloseIcon/>
-                             </IconButton>
-                           ]}
-          >
+        {this.props.snacks && this.props.snacks.map((snack, index) => {
+          return (
+            <Snackbar key={"shack-" + index} id={"shack-" + index}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                      }}
+                      open={true}
+                      autoHideDuration={3000}
+                      onClose={this.handleClose}
+            >
+              <SnackbarContent className={classes.error}
+                               aria-describedby={"client-snackbar" + index}
+                               message={
+                                 <span id={"client-snackbar" + index}
+                                       className={classes.message}>
+                               <ErrorIcon
+                                 className={classes.icon}/>{snack.message}</span>
+                               }
+                               action={[
+                                 <IconButton key="close"
+                                             aria-label="Close"
+                                             color="inherit"
+                                             className={classes.close}
+                                             onClick={this.handleClose}>
+                                   <CloseIcon/>
+                                 </IconButton>
+                               ]}
+              >
 
-          </SnackbarContent>
-        </Snackbar>
+              </SnackbarContent>
+            </Snackbar>
+          )
+        })}
+
       </div>);
   }
 

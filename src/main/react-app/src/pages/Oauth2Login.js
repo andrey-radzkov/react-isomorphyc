@@ -15,9 +15,10 @@ class Oauth2Login extends React.Component {
     let getParameters = queryString.parse(this.props.location.search);
     const isVk = this.props.location.pathname.indexOf("vk") > 0;
     if (isVk) {
-      requestVkToken(getParameters.code, this.props.history).then(data => {
-        this.props.registerIfNecessary();
-      });
+      this.props.requestVkToken(getParameters.code, this.props.history).then(
+        data => {
+          this.props.registerIfNecessary();
+        });
     } else {
       requestToken(getParameters.code, this.props.history).then(data => {
         this.props.registerIfNecessary();
@@ -37,6 +38,7 @@ Oauth2Login.propTypes = {
   registerIfNecessary: PropTypes.func,
   location: PropTypes.object,
   history: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => {
@@ -44,6 +46,9 @@ const mapDispatchToProps = dispatch => {
     registerIfNecessary: () => {
       dispatch(registerIfNecessary());
     },
+    requestVkToken: (code, history) => {
+      return dispatch(requestVkToken(code, history));
+    }
   };
 };
 const mapStateToProps = (state) => {

@@ -1,8 +1,15 @@
 import jwtDecode from "jwt-decode";
-import {CLIENT_ID, CLIENT_SECRET, TIMEOUT, VK_CLIENT_ID, VK_CLIENT_SECRET} from "./Oauth";
+import {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  TIMEOUT,
+  VK_CLIENT_ID,
+  VK_CLIENT_SECRET
+} from "./Oauth";
 import axios from "axios";
 import {backoff} from "../utils/backoff";
 import {isClient, isSSR} from "../utils/ssr-util";
+import {showError} from "../actions/snackbarAction";
 
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
@@ -18,26 +25,36 @@ let createTokenRequest = function () {
   });
 };
 
-export const requestVkToken = (code, history) => {
+export const requestVkToken = (code, history) => (dispatch) => {
   const params = {
     client_id: VK_CLIENT_ID,
     client_secret: VK_CLIENT_SECRET,
     code: code,
     redirect_uri: process.env.LOGIN_URL_VK,
   };
+  //TODO: return new promise with correct resolve reject
   return axios.get('/vk/access_token', {params: params}).then(response => {
     let vkToken = response.data;
     getLocalStorage().setItem("vk_token", vkToken.access_token);
 
-    return axios.post('/uaa/vk-auth', {token: vkToken.access_token, userId: vkToken.user_id}).then(response => {
+    return axios.post('/uaa/vk-auth',
+      {token: vkToken.access_token, userId: vkToken.user_id}).then(response => {
       let token = response.data;
       setTokens(token.access_token, token.refresh_token);
       history.push(getTargetUrl());
       return response.data;
+    }).catch(error => {
+      if (error) {
+        //TODO: normal message
+        dispatch(showError("Server error"));
+        console.log('//TODO: redirect to error page');
+      }
     });
 
   }).catch(error => {
     if (error) {
+      //TODO: normal message
+      dispatch(showError("Server error"));
       console.log('//TODO: redirect to error page');
     }
   });
@@ -86,8 +103,10 @@ export const redirectToAuthService = () => {
 export const redirectToVkAuthService = () => {
   if (isClient()) {
     rememberTargetUrl(window.location.pathname);
-    window.location.href = "https://oauth.vk.com/authorize?client_id=" + VK_CLIENT_ID + "&display=page&redirect_uri="
-      + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v=" + process.env.VK_API_VERSION;
+    window.location.href = "https://oauth.vk.com/authorize?client_id="
+      + VK_CLIENT_ID + "&display=page&redirect_uri="
+      + process.env.LOGIN_URL_VK + "&scope=status,offline&response_type=code&v="
+      + process.env.VK_API_VERSION;
   }
 };
 export const rememberTargetUrl = (url) => {
@@ -165,7 +184,8 @@ export const isAccessTokenExpired = token => isTokenExpired(token);
 export const isRefreshTokenExpired = token => isTokenExpired(token);
 
 export const isTokenExpired = token => {
-  if (!token || token === null || token === undefined || token === "null" || token === "undefined") {
+  if (!token || token === null || token === undefined || token === "null"
+    || token === "undefined") {
     return true;
   }
   if (isClient()) {
