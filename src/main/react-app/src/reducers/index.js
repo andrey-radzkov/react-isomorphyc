@@ -5,12 +5,14 @@ import {routerReducer} from "react-router-redux";
 import {reducer as reduxFormReducer} from "redux-form";
 import clothesReducer from "./clothesReducer";
 import settingsReducer from "./settingsReducer";
+import snackbarReducer from "./snackbarReducer";
 
 const rootReducer = combineReducers({
   clothesReducer,
   settingsReducer,
   ajaxActionsReducer,
   modalReducer,
+  snackbarReducer,
   routing: routerReducer,
   form: reduxFormReducer
 });

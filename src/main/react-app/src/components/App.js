@@ -1,10 +1,11 @@
 import React from "react";
 import Routes from "../routes";
-import Header from "../components/header/Header";
+import Header from "./header/Header";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import FirebaseMessaging from "../push/FirebaseMessaging";
+import ShackbarList from "./app-common/ShackbarList";
 
 const styles = theme => ({
   root: {
@@ -27,7 +28,7 @@ class App extends React.Component {
 
   render() {
     const {classes} = this.props;
-    return ( <div>
+    return (<div>
       <Header path="curr"/>
       <div className={classes.root} style={{margin: "8px"}}>
         <Grid container spacing={16}>
@@ -38,6 +39,7 @@ class App extends React.Component {
           <Grid item xs={12} lg={4}/>
         </Grid>
       </div>
+      <ShackbarList/>
     </div>);
   }
 }

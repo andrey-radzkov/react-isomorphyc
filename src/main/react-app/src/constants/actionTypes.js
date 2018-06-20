@@ -21,5 +21,7 @@ export const SAVE_SENDERS = 'SAVE_SENDERS';
 export const SELECT_SENDERS = 'SELECT_SENDERS';
 export const REVERT_SENDERS = 'REVERT_SENDERS';
 
+export const SHOW_SNACK = 'SHOW_SNACK';
+
 
 

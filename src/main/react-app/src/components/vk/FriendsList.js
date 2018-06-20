@@ -11,7 +11,7 @@ import List from "@material-ui/core/List/List";
 import withStyles from "@material-ui/core/styles/withStyles";
 import filter from "lodash/filter";
 import Radio from "@material-ui/core/Radio/Radio";
-import {WaitingLayer} from "../WaitingLayer";
+import {WaitingLayer} from "../app-common/WaitingLayer";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 const styles = theme => ({
   viewport: {

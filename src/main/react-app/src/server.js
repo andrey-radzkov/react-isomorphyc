@@ -2,7 +2,7 @@ import React from "react";
 import {render} from "react-dom";
 import {Provider} from "react-redux";
 import {browserHistory} from "react-router";
-import App from "./pages/App";
+import App from "./components/App";
 import StaticRouter from "react-router-dom/StaticRouter";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ClothesList from "../components/button-list/ClothesList";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
-import {WaitingLayer} from "../components/WaitingLayer";
+import {WaitingLayer} from "../components/app-common/WaitingLayer";
 
 class HomePage extends React.Component {
   constructor(props) {

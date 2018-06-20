@@ -9,16 +9,27 @@ import {
   SELECT_SENDERS
 } from "../constants/actionTypes";
 import {securedGet, securedPost} from "../oauth2/xhr";
-import {FULL_PAGE_WAITING_ID, hideWaiting, showWaiting} from "./componentStateActions";
+import {
+  FULL_PAGE_WAITING_ID,
+  hideWaiting,
+  showWaiting
+} from "./componentStateActions";
 import axios from "axios";
 import remove from "lodash/remove";
+
 export const loadSettings = () => (dispatch) => {
   dispatch(showWaiting(FULL_PAGE_WAITING_ID));
   dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/'))
     .then(response => {
       dispatch(hideWaiting(FULL_PAGE_WAITING_ID));
       const settings = response.data;
-      dispatch({type: LOAD_SETTINGS, userSettings: {id: settings.id, type: settings.sender ? 'sender' : 'receiver'}});
+      dispatch({
+        type: LOAD_SETTINGS,
+        userSettings: {
+          id: settings.id,
+          type: settings.sender ? 'sender' : 'receiver'
+        }
+      });
     });
 };
 
@@ -52,14 +63,21 @@ export const selectSenders = (selectionId, alreadySelected) => (dispatch) => {
 };
 
 export const saveSettings = (settings) => (dispatch) => {
-  let settingsToSave = {id: settings.id, receiver: settings.type === 'receiver', sender: settings.type === 'sender'};
-  return dispatch(securedPost(process.env.API_URL + '/resource/save-user-settings/', settingsToSave))
+  let settingsToSave = {
+    id: settings.id,
+    receiver: settings.type === 'receiver',
+    sender: settings.type === 'sender'
+  };
+  return dispatch(
+    securedPost(process.env.API_URL + '/resource/save-user-settings/',
+      settingsToSave))
     .then(response => {
     });
 };
 
 export const saveReceiver = (id) => (dispatch) => {
-  return dispatch(securedPost(process.env.API_URL + '/resource/save-receiver/', {id: id}))
+  return dispatch(
+    securedPost(process.env.API_URL + '/resource/save-receiver/', {id: id}))
     .then(response => {
       dispatch({type: SAVE_RECEIVER, receiver: id});
     });
@@ -70,7 +88,8 @@ export const revertReceiver = () => (dispatch) => {
 };
 
 export const saveSenders = (ids) => (dispatch) => {
-  return dispatch(securedPost(process.env.API_URL + '/resource/save-senders/', {ids: ids}))
+  return dispatch(
+    securedPost(process.env.API_URL + '/resource/save-senders/', {ids: ids}))
     .then(response => {
       dispatch({type: SAVE_SENDERS, senders: ids});
     });

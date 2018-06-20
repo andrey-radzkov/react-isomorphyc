@@ -10,7 +10,7 @@ import fs from "fs";
 import compression from "compression";
 import config from "../webpack/webpack.config.prod";
 import http from "http";
-import App from "../src/pages/App";
+import App from "../src/components/App";
 import StaticRouter from "react-router-dom/StaticRouter";
 import {createStore} from "redux";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";

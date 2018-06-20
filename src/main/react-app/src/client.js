@@ -2,7 +2,7 @@ import React from "react";
 import {hydrate} from "react-dom";
 import {Provider} from "react-redux";
 import {browserHistory} from "react-router";
-import App from "./pages/App";
+import App from "./components/App";
 import {BrowserRouter} from "react-router-dom";
 import configureStore from "./store/configureStore";
 import {isClient} from "./utils/ssr-util";

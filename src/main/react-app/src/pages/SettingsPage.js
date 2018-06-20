@@ -12,11 +12,11 @@ import {
   saveSenders,
   saveSettings
 } from "../actions/settingsActions";
-import {WaitingLayer} from "../components/WaitingLayer";
+import {WaitingLayer} from "../components/app-common/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import Button from "@material-ui/core/Button/Button";
-import {ReduxFormRadioGroup} from "../components/ReduxFormRadioGroup";
+import {ReduxFormRadioGroup} from "../components/redux-form/ReduxFormRadioGroup";
 import Radio from "@material-ui/core/Radio/Radio";
 import {FriendsDialog} from "../components/FriendsDialog";
 
