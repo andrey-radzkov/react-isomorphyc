@@ -16,11 +16,11 @@ class Oauth2Login extends React.Component {
     const isVk = this.props.location.pathname.indexOf("vk") > 0;
     if (isVk) {
       this.props.requestVkToken(getParameters.code, this.props.history).then(
-        data => {
+        () => {
           this.props.registerIfNecessary();
         });
     } else {
-      requestToken(getParameters.code, this.props.history).then(data => {
+      requestToken(getParameters.code, this.props.history).then(() => {
         this.props.registerIfNecessary();
       });
     }

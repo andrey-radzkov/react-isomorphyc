@@ -32,27 +32,33 @@ export const requestVkToken = (code, history) => (dispatch) => {
     code: code,
     redirect_uri: process.env.LOGIN_URL_VK,
   };
-  //TODO: return new promise with correct resolve reject
-  return axios.get('/vk/access_token', {params: params}).then(response => {
-    let vkToken = response.data;
-    getLocalStorage().setItem("vk_token", vkToken.access_token);
+  return new Promise((resolve, reject) => {
+    axios.get('/vk/access_token', {params: params}).then(response => {
+      let vkToken = response.data;
+      getLocalStorage().setItem("vk_token", vkToken.access_token);
 
-    return axios.post('/uaa/vk-auth',
-      {token: vkToken.access_token, userId: vkToken.user_id}).then(response => {
-      let token = response.data;
-      setTokens(token.access_token, token.refresh_token);
-      history.push(getTargetUrl());
-      return response.data;
+      return axios.post('/uaa/vk-auth',
+        {token: vkToken.access_token, userId: vkToken.user_id}).then(
+        response => {
+          let token = response.data;
+          setTokens(token.access_token, token.refresh_token);
+          history.push(getTargetUrl());
+          resolve(response.data);
+        }).catch(error => {
+        if (error) {
+          dispatch(showError("Error " + error.response.status + ". "
+            + error.response.statusText));
+          reject(error);
+        }
+      });
+
     }).catch(error => {
       if (error) {
-        dispatch(showError("Error " + error.response.status + ". " + error.response.statusText));
+        dispatch(showError("Error " + error.response.status + ". "
+          + error.response.statusText));
+        reject(error);
       }
     });
-
-  }).catch(error => {
-    if (error) {
-      dispatch(showError("Error " + error.response.status + ". " + error.response.statusText));
-    }
   });
 };
 
@@ -106,7 +112,7 @@ export const redirectToVkAuthService = () => {
   }
 };
 export const rememberTargetUrl = (url) => {
-  getLocalStorage().targetUrl = url;
+  getLocalStorage().targetUrl = url.replace("/app", "");
 };
 export const getTargetUrl = () => {
   return getLocalStorage().targetUrl;
@@ -123,7 +129,7 @@ export const logout = () => {
   //tODO: location from parameters
   removeTokens();
   if (isClient()) {
-    window.location.href = "/";
+    window.location.href = "/app/";
   }
 };
 

@@ -1,5 +1,8 @@
 import {TIMEOUT} from "./Oauth";
-import {getAccessToken, validateAndUpdateTokenIfNecessary} from "./TokenService";
+import {
+  getAccessToken,
+  validateAndUpdateTokenIfNecessary
+} from "./TokenService";
 import axios from "axios";
 import {hideWaiting, showWaiting} from "../actions/componentStateActions";
 import {showError} from "../actions/snackbarAction";
@@ -26,27 +29,31 @@ const request = (url, config) => (dispatch) => {
   if (config.waitingLayerId) {
     dispatch(showWaiting(config.waitingLayerId));
   }
-  //TODO: return new promise with correct resolve reject
-  return validateAndUpdateTokenIfNecessary().then(() => {
-    let request = axios.create({
-      timeout: TIMEOUT,
-      headers: {
-        ...config.headers,
-        "Authorization": 'Bearer ' + getAccessToken()
-      }
+  return new Promise((resolve, reject) => {
+    validateAndUpdateTokenIfNecessary().then(() => {
+      let request = axios.create({
+        timeout: TIMEOUT,
+        headers: {
+          ...config.headers,
+          "Authorization": 'Bearer ' + getAccessToken()
+        }
+      });
+      return new Promise((resolve, reject) => {
+        request(url, config).then(response => {
+          dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+          resolve(response);
+        }).catch(error => {
+          dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+          //TODO: extract build message
+          dispatch(showError("Error " + error.response.status + ". "
+            + error.response.statusText));
+          reject(error);
+        });
+      });
+    }).catch((params) => {
+      dispatch(showError("Please, log in"));
+      reject(params);
     });
-    return request(url, config).then(response => {
-      dispatch(hideWaitingIfEnabled(config.waitingLayerId));
-      return response;
-    }).catch(error => {
-      dispatch(hideWaitingIfEnabled(config.waitingLayerId));
-      //TODO: identyfy error type
-      dispatch(showError("Server request failed"));
-      console.debug("server.request.error", error);
-    });
-  }).catch((params) => {
-    dispatch(showError("Please, log in"));
-    console.log("please, log in", params);
   });
 };
 
