@@ -25,11 +25,10 @@ export const securedDelete = (url, data, waitingLayerId) => (dispatch) => {
 };
 
 const request = (url, config) => (dispatch) => {
-  //TODO: create growls
   if (config.waitingLayerId) {
     dispatch(showWaiting(config.waitingLayerId));
   }
-  return new Promise((resolve, reject) => {
+  return new Promise((resolveAuth, rejectAuth) => {
     validateAndUpdateTokenIfNecessary().then(() => {
       let request = axios.create({
         timeout: TIMEOUT,
@@ -38,21 +37,19 @@ const request = (url, config) => (dispatch) => {
           "Authorization": 'Bearer ' + getAccessToken()
         }
       });
-      return new Promise((resolve, reject) => {
-        request(url, config).then(response => {
-          dispatch(hideWaitingIfEnabled(config.waitingLayerId));
-          resolve(response);
-        }).catch(error => {
-          dispatch(hideWaitingIfEnabled(config.waitingLayerId));
-          //TODO: extract build message
-          dispatch(showError("Error " + error.response.status + ". "
-            + error.response.statusText));
-          reject(error);
-        });
+      request(url, config).then(response => {
+        dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+        resolveAuth(response);
+      }).catch(error => {
+        dispatch(hideWaitingIfEnabled(config.waitingLayerId));
+        //TODO: extract build message
+        dispatch(showError("Error " + error.response.status + ". "
+          + error.response.statusText));
+        rejectAuth(error);
       });
     }).catch((params) => {
       dispatch(showError("Please, log in"));
-      reject(params);
+      rejectAuth(params);
     });
   });
 };
