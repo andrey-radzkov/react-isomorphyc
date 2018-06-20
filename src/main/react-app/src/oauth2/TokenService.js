@@ -225,7 +225,7 @@ export const validateAndUpdateTokenIfNecessary = () => {
           }
         }
       ).catch(err => {
-        reject();
+        reject(err);
       });
     } else if (
       isAccessTokenExpired(access_token) &&

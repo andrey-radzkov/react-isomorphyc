@@ -4,10 +4,10 @@ import {connect} from "react-redux";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
-import Button from "@material-ui/core/Button/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import SnackbarContent from "@material-ui/core/SnackbarContent/SnackbarContent";
 import ErrorIcon from '@material-ui/icons/Error';
+import {AUTO_CLOSE_INTERVAL, hideSnack} from "../../actions/snackbarAction";
 
 const styles = theme => ({
   close: {
@@ -16,6 +16,7 @@ const styles = theme => ({
   },
   error: {
     backgroundColor: theme.palette.error.dark,
+    marginBottom: theme.spacing.unit * 2,
   },
   message: {
     display: 'flex',
@@ -31,64 +32,49 @@ const styles = theme => ({
 
 class ShackbarList extends React.Component {
   state = {
-    open: false,
+    open: true,
   };
 
   constructor(props) {
     super(props);
   }
 
-  handleClick = () => {
-    this.setState({open: true});
-  };
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({open: false});
-  };
-
   render() {
     const {classes} = this.props;
-//TODO: origin based on screen size
+
     return (
-      <div><Button onClick={this.handleClick}>Open error snackbar</Button>
-
-        {this.props.snacks && this.props.snacks.map((snack, index) => {
-          return (
-            <Snackbar key={"shack-" + index} id={"shack-" + index}
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                      }}
-                      open={true}
-                      autoHideDuration={3000}
-                      onClose={this.handleClose}
-            >
-              <SnackbarContent className={classes.error}
-                               aria-describedby={"client-snackbar" + index}
-                               message={
-                                 <span id={"client-snackbar" + index}
-                                       className={classes.message}>
+      <div>
+        <Snackbar id={"shack-" + this.props.snack.type}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  open={this.props.snack.visible}
+                  autoHideDuration={AUTO_CLOSE_INTERVAL}
+                  onClose={this.props.closeSnackbar}
+        >
+          <SnackbarContent className={classes.error}
+                           aria-describedby={"client-snackbar-"
+                           + this.props.snack}
+                           message={
+                             <span id={"client-snackbar-" + this.props.snack}
+                                   className={classes.message}>
                                <ErrorIcon
-                                 className={classes.icon}/>{snack.message}</span>
-                               }
-                               action={[
-                                 <IconButton key="close"
-                                             aria-label="Close"
-                                             color="inherit"
-                                             className={classes.close}
-                                             onClick={this.handleClose}>
-                                   <CloseIcon/>
-                                 </IconButton>
-                               ]}
-              >
+                                 className={classes.icon}/>{this.props.snack.message}</span>
+                           }
+                           action={[
+                             <IconButton key="close"
+                                         aria-label="Close"
+                                         color="inherit"
+                                         className={classes.close}
+                                         onClick={this.props.closeSnackbar}>
+                               <CloseIcon/>
+                             </IconButton>
+                           ]}
+          >
 
-              </SnackbarContent>
-            </Snackbar>
-          )
-        })}
+          </SnackbarContent>
+        </Snackbar>
 
       </div>);
   }
@@ -96,15 +82,21 @@ class ShackbarList extends React.Component {
 }
 
 ShackbarList.propTypes = {
-  snacks: PropTypes.array,
+  snack: PropTypes.shape({
+    message: PropTypes.string,
+    visible: PropTypes.bool,
+    type: PropTypes.oneOf(['success', 'warning', 'error', 'info'])
+  }),
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    closeSnackbar: () => dispatch(hideSnack()),
+  };
 };
 const mapStateToProps = (state) => {
   return {
-    snacks: state.snackbarReducer.snacks
+    snack: state.snackbarReducer.snack
   };
 };
 

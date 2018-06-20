@@ -1,14 +1,15 @@
-import {SHOW_SNACK} from "../constants/actionTypes";
+import {HIDE_SNACK, SHOW_SNACK} from "../constants/actionTypes";
 
 const initialState = {
-  snacks: []
+  snack: {visible: false}
 };
 
 const snackbarReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_SNACK:
-
-      return {...state, snacks: [...state.snacks, action.snack]};
+      return {...state, snack: {...action.snack, visible: true}};
+    case HIDE_SNACK:
+      return {...state, snack: {...state.snack, visible: false}};
     default:
       return state;
   }
