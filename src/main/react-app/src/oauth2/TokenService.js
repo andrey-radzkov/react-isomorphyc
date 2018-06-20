@@ -45,17 +45,13 @@ export const requestVkToken = (code, history) => (dispatch) => {
       return response.data;
     }).catch(error => {
       if (error) {
-        //TODO: normal message
-        dispatch(showError("Server error"));
-        console.log('//TODO: redirect to error page');
+        dispatch(showError("Error " + error.response.status + ". " + error.response.statusText));
       }
     });
 
   }).catch(error => {
     if (error) {
-      //TODO: normal message
-      dispatch(showError("Server error"));
-      console.log('//TODO: redirect to error page');
+      dispatch(showError("Error " + error.response.status + ". " + error.response.statusText));
     }
   });
 };
