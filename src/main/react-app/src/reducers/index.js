@@ -3,7 +3,7 @@ import ajaxActionsReducer from "./ajaxActionsReducer";
 import modalReducer from "./modalReducer";
 import {routerReducer} from "react-router-redux";
 import {reducer as reduxFormReducer} from "redux-form";
-import clothesReducer from "./clothesReducer";
+import clothesReducer from "../clothes-service/clothesReducer";
 import settingsReducer from "./settingsReducer";
 import snackbarReducer from "./snackbarReducer";
 

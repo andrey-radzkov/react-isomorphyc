@@ -10,6 +10,7 @@ import axios from "axios";
 import {backoff} from "../utils/backoff";
 import {isClient, isSSR} from "../utils/ssr-util";
 import {httpError} from "../actions/snackbarAction";
+import {securedGet} from "./xhr";
 
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
@@ -257,4 +258,9 @@ export const refreshToken = (refresh_token) => {
     }).catch(error => {
       console.log(error);
     });
+};
+
+export const registerIfNecessary = () => (dispatch) => {
+  dispatch(
+    securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
 };

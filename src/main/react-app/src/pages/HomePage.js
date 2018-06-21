@@ -1,7 +1,7 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {reduxForm} from "redux-form";
-import {addClothes, deleteClothes, loadClothesTypesWithCount, putClothesToBasket} from "../actions/clothesActions";
+import {addClothes, deleteClothes, loadClothesTypesWithCount, putClothesToBasket} from "../clothes-service/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ClothesList from "../components/button-list/ClothesList";

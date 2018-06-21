@@ -4,10 +4,6 @@ import {
   securedPost,
   securedPut
 } from "../oauth2/xhr";
-import {
-  LOAD_BASKET,
-  LOAD_CLOTHES_TYPES_WITH_COUNT
-} from "../constants/actionTypes";
 import map from "lodash/map";
 import countBy from "lodash/countBy";
 import uniqBy from "lodash/uniqBy";
@@ -15,7 +11,8 @@ import findIndex from "lodash/findIndex";
 import orderBy from "lodash/orderBy";
 
 import {typeLocalization} from "../constants/clothesTypesLocalization";
-import {FULL_PAGE_WAITING_ID} from "./componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
+import {LOAD_BASKET, LOAD_CLOTHES_TYPES_WITH_COUNT} from "./clothesActionTypes";
 
 export const putClothesToBasket = (values) => (dispatch) => {
   return dispatch(
@@ -53,11 +50,6 @@ export const addClothes = (values) => (dispatch) => {
   });
 };
 
-export const registerIfNecessary = () => (dispatch) => {
-  dispatch(
-    securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
-};
-
 export const loadClothesTypesWithCount = () => (dispatch) => {
   return dispatch(
     securedGet(process.env.API_URL + '/resource/all-types-with-count/',
@@ -69,7 +61,6 @@ export const loadClothesTypesWithCount = () => (dispatch) => {
 };
 //TODO: delete
 export const mapClothesWithLocalization = (clothes) => {
-  //TODO: move logic to ocmplonent
   const countByType = countBy(clothes, "type.name");
   return orderBy(map(uniqBy(clothes, "type.name"), (item) => {
     const typeVal = item.type.name;
@@ -102,7 +93,6 @@ const changeClothesCount = function (values, dispatch, changeCount) {
   let indexToReduce = findIndex(values.clothesTypes, (item) => {
     return item.name === values.type.name;
   });
-  //TODO: catch error
   let newValues = JSON.parse(JSON.stringify(values));
   changeCount(newValues.clothesTypes[indexToReduce]);
   return dispatch({

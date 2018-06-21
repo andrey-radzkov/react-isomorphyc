@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
-import {requestToken, requestVkToken} from "../oauth2/TokenService";
-import {registerIfNecessary} from "../actions/clothesActions";
+import {
+  registerIfNecessary,
+  requestToken,
+  requestVkToken
+} from "../oauth2/TokenService";
 import {connect} from "react-redux";
 
 class Oauth2Login extends React.Component {
