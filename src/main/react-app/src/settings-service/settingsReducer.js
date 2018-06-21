@@ -8,7 +8,8 @@ import {
   SAVE_SETTINGS,
   SELECT_RECEIVER,
   SELECT_SENDERS
-} from "../constants/actionTypes";
+} from "./settingsActionTypes";
+
 const initialState = {
   userSettings: {},
   friends: [],

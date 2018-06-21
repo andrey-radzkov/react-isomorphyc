@@ -7,9 +7,9 @@ import {
   SAVE_SENDERS,
   SELECT_RECEIVER,
   SELECT_SENDERS
-} from "../constants/actionTypes";
+} from "./settingsActionTypes";
 import {securedGet, securedPost} from "../oauth2/xhr";
-import {FULL_PAGE_WAITING_ID} from "./componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import axios from "axios";
 import remove from "lodash/remove";
 

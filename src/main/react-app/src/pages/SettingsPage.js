@@ -11,7 +11,7 @@ import {
   saveReceiver,
   saveSenders,
   saveSettings
-} from "../actions/settingsActions";
+} from "../settings-service/settingsActions";
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
 import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
