@@ -17,6 +17,11 @@ export const showError = (message) => (dispatch) => {
   }
 };
 
+export const httpError = (status, statusText) => {
+  return showError("Error " + status + ". "
+    + statusText);
+};
+
 
 export const hideSnack = () => (dispatch) => {
   snackbars.shift();

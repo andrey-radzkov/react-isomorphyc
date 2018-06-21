@@ -5,7 +5,7 @@ import {
 } from "./TokenService";
 import axios from "axios";
 import {hideWaiting, showWaiting} from "../actions/componentStateActions";
-import {showError} from "../actions/snackbarAction";
+import {httpError, showError} from "../actions/snackbarAction";
 
 export const securedGet = (url, waitingLayerId) => (dispatch) => {
   return dispatch(request(url,
@@ -42,9 +42,7 @@ const request = (url, config) => (dispatch) => {
         resolveAuth(response);
       }).catch(error => {
         dispatch(hideWaitingIfEnabled(config.waitingLayerId));
-        //TODO: extract build message
-        dispatch(showError("Error " + error.response.status + ". "
-          + error.response.statusText));
+        dispatch(httpError(error.response.status, error.response.statusText));
         rejectAuth(error);
       });
     }).catch((error) => {

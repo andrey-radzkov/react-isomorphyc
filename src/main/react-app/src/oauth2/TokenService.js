@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import {backoff} from "../utils/backoff";
 import {isClient, isSSR} from "../utils/ssr-util";
-import {showError} from "../actions/snackbarAction";
+import {httpError} from "../actions/snackbarAction";
 
 const ACCESS_TOKEN = "access_token";
 const REFRESH_TOKEN = "refresh_token";
@@ -46,16 +46,14 @@ export const requestVkToken = (code, history) => (dispatch) => {
           resolve(response.data);
         }).catch(error => {
         if (error) {
-          dispatch(showError("Error " + error.response.status + ". "
-            + error.response.statusText));
+          dispatch(httpError(error.response.status, error.response.statusText));
           reject(error);
         }
       });
 
     }).catch(error => {
       if (error) {
-        dispatch(showError("Error " + error.response.status + ". "
-          + error.response.statusText));
+        dispatch(httpError(error.response.status, error.response.statusText));
         reject(error);
       }
     });
