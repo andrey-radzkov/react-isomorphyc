@@ -149,6 +149,8 @@ SettingsPage.propTypes = {
   invalid: PropTypes.bool,
   showWaiting: PropTypes.bool,
   type: PropTypes.string,
+  senders: PropTypes.array,
+  receiver: PropTypes.number,
 
 };
 

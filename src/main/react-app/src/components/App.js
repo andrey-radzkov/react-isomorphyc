@@ -3,14 +3,14 @@ import Routes from "../routes";
 import Header from "./header/Header";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {withStyles} from "@material-ui/core/";
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import ShackbarList from "./snackbar/ShackbarList";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    margin: "8px", //TODO: get from theme
+    margin: theme.spacing.unit,
   },
 
   align: {
@@ -30,7 +30,7 @@ class App extends React.Component {
     const {classes} = this.props;
     return (<div>
       <Header path="curr"/>
-      <div className={classes.root} style={{margin: "8px"}}>
+      <div className={classes.root}>
         <Grid container spacing={16}>
           <Grid item xs={12} lg={4}/>
           <Grid item xs={12} lg={4} className={classes.align}>
@@ -51,4 +51,4 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 
 };
-export default withStyles(styles)(App);
+export default withStyles(styles, {withTheme: true})(App);

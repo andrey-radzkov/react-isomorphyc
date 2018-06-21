@@ -45,7 +45,7 @@ class FriendsList extends React.Component {
             <ListItem key={friend.uid} dense button
                       onClick={() => {
                         this.props.multipleSelect ?
-                          this.props.selectSenders(vkId, this.props.senders) : this.props.selectReceiver(vkId)
+                          this.props.selectSenders(vkId, this.props.senders) : this.props.selectReceiver(vkId);
                       }
                       }>
               <ListItemAvatar>

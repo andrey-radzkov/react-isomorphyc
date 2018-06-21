@@ -39,6 +39,7 @@ Oauth2Login.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object,
   dispatch: PropTypes.func,
+  requestVkToken: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => {

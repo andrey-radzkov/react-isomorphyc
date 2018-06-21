@@ -11,13 +11,13 @@ import {AUTO_CLOSE_INTERVAL, hideSnack} from "../../actions/snackbarAction";
 import {styles} from "./SnackbarListStyles";
 
 class ShackbarList extends React.Component {
-  state = {
-    open: true,
-  };
-
   constructor(props) {
     super(props);
   }
+
+  state = {
+    open: true,
+  };
 
   render() {
     const {classes} = this.props;
@@ -51,9 +51,7 @@ class ShackbarList extends React.Component {
                                <CloseIcon/>
                              </IconButton>
                            ]}
-          >
-
-          </SnackbarContent>
+          />
         </Snackbar>
 
       </div>);
@@ -65,8 +63,11 @@ ShackbarList.propTypes = {
   snack: PropTypes.shape({
     message: PropTypes.string,
     visible: PropTypes.bool,
-    type: PropTypes.oneOf(['success', 'warning', 'error', 'info'])
+    type: PropTypes.oneOf(['success', 'warning', 'error', 'info']),
   }),
+  classes: PropTypes.object.isRequired,
+  closeSnackbar: PropTypes.func.isRequired,
+
 };
 
 const mapDispatchToProps = dispatch => {
@@ -85,6 +86,6 @@ ShackbarList = connect(
   mapDispatchToProps
 )(ShackbarList);
 
-export default withStyles(styles)(ShackbarList)
+export default withStyles(styles)(ShackbarList);
 
 

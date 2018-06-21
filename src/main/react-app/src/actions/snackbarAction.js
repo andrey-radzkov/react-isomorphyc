@@ -1,4 +1,5 @@
 import {HIDE_SNACK, SHOW_SNACK} from "../constants/actionTypes";
+
 let snackbars = [];
 let intervalId = null;
 export const AUTO_CLOSE_INTERVAL = 3000;
@@ -27,7 +28,7 @@ export const hideSnack = () => (dispatch) => {
   dispatch({type: HIDE_SNACK});
   if (snackbars.length > 0) {
     setTimeout(() => {
-      dispatch({type: SHOW_SNACK, snack: snackbars[0]})
+      dispatch({type: SHOW_SNACK, snack: snackbars[0]});
     }, ANIMATION_DURATION);
     dispatch(startMessagePooling());
   }
