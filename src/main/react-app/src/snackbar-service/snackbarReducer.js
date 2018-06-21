@@ -1,4 +1,4 @@
-import {HIDE_SNACK, SHOW_SNACK} from "../constants/actionTypes";
+import {HIDE_SNACK, SHOW_SNACK} from "./snackbarActionTypes";
 
 const initialState = {
   snack: {visible: false}

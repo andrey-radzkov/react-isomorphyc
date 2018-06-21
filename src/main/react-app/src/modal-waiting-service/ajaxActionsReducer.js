@@ -1,4 +1,4 @@
-import {HIDE_WAITING, SHOW_WAITING} from "../constants/actionTypes";
+import {HIDE_WAITING, SHOW_WAITING} from "./actionTypes";
 
 
 const ajaxActionsReducer = (state = {}, action) => {

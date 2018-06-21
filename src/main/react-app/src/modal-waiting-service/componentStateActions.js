@@ -3,7 +3,7 @@ import {
   HIDE_WAITING,
   OPEN_MODAL,
   SHOW_WAITING
-} from "../constants/actionTypes";
+} from "./actionTypes";
 
 export const FULL_PAGE_WAITING_ID = "full-page-waiting";
 

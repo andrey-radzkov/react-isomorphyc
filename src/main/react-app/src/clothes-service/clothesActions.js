@@ -11,7 +11,7 @@ import findIndex from "lodash/findIndex";
 import orderBy from "lodash/orderBy";
 
 import {typeLocalization} from "../constants/clothesTypesLocalization";
-import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
 import {LOAD_BASKET, LOAD_CLOTHES_TYPES_WITH_COUNT} from "./clothesActionTypes";
 
 export const putClothesToBasket = (values) => (dispatch) => {

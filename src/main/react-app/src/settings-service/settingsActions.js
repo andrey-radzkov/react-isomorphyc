@@ -9,7 +9,7 @@ import {
   SELECT_SENDERS
 } from "./settingsActionTypes";
 import {securedGet, securedPost} from "../oauth2/xhr";
-import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
 import axios from "axios";
 import remove from "lodash/remove";
 

@@ -4,8 +4,5 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const SHOW_WAITING = 'SHOW_WAITING';
 export const HIDE_WAITING = 'HIDE_WAITING';
 
-export const SHOW_SNACK = 'SHOW_SNACK';
-export const HIDE_SNACK = 'HIDE_SNACK';
-
 
 

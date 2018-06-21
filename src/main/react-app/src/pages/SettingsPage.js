@@ -13,7 +13,7 @@ import {
   saveSettings
 } from "../settings-service/settingsActions";
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
-import {FULL_PAGE_WAITING_ID} from "../actions/componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
 import FirebaseMessaging from "../push/FirebaseMessaging";
 import Button from "@material-ui/core/Button/Button";
 import {ReduxFormRadioGroup} from "../components/redux-form/ReduxFormRadioGroup";

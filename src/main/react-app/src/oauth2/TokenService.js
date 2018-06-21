@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import {backoff} from "../utils/backoff";
 import {isClient, isSSR} from "../utils/ssr-util";
-import {httpError} from "../actions/snackbarAction";
+import {httpError} from "../snackbar-service/snackbarAction";
 import {securedGet} from "./xhr";
 
 const ACCESS_TOKEN = "access_token";
