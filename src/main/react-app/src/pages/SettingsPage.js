@@ -30,11 +30,12 @@ class SettingsPage extends React.Component {
     this.firebaseMessaging = new FirebaseMessaging();
     this.state = {
       open: false,
+      showContent: false,
     };
   }
 
   componentDidMount() {
-    this.props.loadSettings();
+    this.props.loadSettings().then(() => this.setState({showContent: true}));
   }
 
   handleClose = () => {
@@ -68,7 +69,8 @@ class SettingsPage extends React.Component {
 
   render() {
     let SelectButton = ({text}) => (
-      <Button variant="raised" color="secondary" onClick={() => this.setState({open: true})}>
+      <Button variant="raised" color="secondary"
+              onClick={() => this.setState({open: true})}>
         {text}
       </Button>
     );
@@ -84,7 +86,7 @@ class SettingsPage extends React.Component {
         />
         <h1>Настройки</h1>
         {/*TODO: extract to component*/}
-        {!this.props.showWaiting &&
+        {this.state.showContent &&
         <div>
           <h3>Я хочу:</h3>
           {/*TODO: handle no options*/}
@@ -94,14 +96,19 @@ class SettingsPage extends React.Component {
             <Field name="type" submitOnChange={handleSubmit((values) => {
               this.subscribe(values.type);
               this.props.saveSettings(values);
-            })} component={ReduxFormRadioGroup} style={{flexDirection: "row", marginLeft: 16}}>
-              <FormControlLabel value="sender" control={<Radio/>} label="Отправлять"/>
-              <FormControlLabel value="receiver" control={<Radio/>} label="Получать"/>
+            })} component={ReduxFormRadioGroup}
+                   style={{flexDirection: "row", marginLeft: 16}}>
+              <FormControlLabel value="sender" control={<Radio/>}
+                                label="Отправлять"/>
+              <FormControlLabel value="receiver" control={<Radio/>}
+                                label="Получать"/>
             </Field>
 
 
           </form>
-          <div style={{margin: "8px"}}>уведомления о том, что чистые вещи заканчиваются и пора стирать</div>
+          <div style={{margin: "8px"}}>уведомления о том, что чистые вещи
+            заканчиваются и пора стирать
+          </div>
           {this.props.type === 'sender' &&
           <SelectButton text="Выбрать получателя"/>
           }
@@ -112,7 +119,8 @@ class SettingsPage extends React.Component {
                          handleOk={this.handleOK}
                          handleCancel={this.handleClose}
                          multipleSelect={this.props.type === 'receiver'}
-                         title={"Выберите " + (this.props.type === 'sender' ? 'получателя' : "отправителей")}
+                         title={"Выберите " + (this.props.type === 'sender'
+                           ? 'получателя' : "отправителей")}
           />
 
         </div>

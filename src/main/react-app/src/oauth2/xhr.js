@@ -47,9 +47,10 @@ const request = (url, config) => (dispatch) => {
           + error.response.statusText));
         rejectAuth(error);
       });
-    }).catch((params) => {
+    }).catch((error) => {
+      dispatch(hideWaitingIfEnabled(config.waitingLayerId));
       dispatch(showError("Please, log in"));
-      rejectAuth(params);
+      rejectAuth(error);
     });
   });
 };

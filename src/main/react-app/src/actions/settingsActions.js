@@ -9,19 +9,14 @@ import {
   SELECT_SENDERS
 } from "../constants/actionTypes";
 import {securedGet, securedPost} from "../oauth2/xhr";
-import {
-  FULL_PAGE_WAITING_ID,
-  hideWaiting,
-  showWaiting
-} from "./componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "./componentStateActions";
 import axios from "axios";
 import remove from "lodash/remove";
 
 export const loadSettings = () => (dispatch) => {
-  dispatch(showWaiting(FULL_PAGE_WAITING_ID));
-  dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/'))
+ return dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/',
+    FULL_PAGE_WAITING_ID))
     .then(response => {
-      dispatch(hideWaiting(FULL_PAGE_WAITING_ID));
       const settings = response.data;
       dispatch({
         type: LOAD_SETTINGS,

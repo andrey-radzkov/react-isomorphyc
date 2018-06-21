@@ -1,5 +1,13 @@
-import {securedDelete, securedGet, securedPost, securedPut} from "../oauth2/xhr";
-import {LOAD_BASKET, LOAD_CLOTHES_TYPES_WITH_COUNT} from "../constants/actionTypes";
+import {
+  securedDelete,
+  securedGet,
+  securedPost,
+  securedPut
+} from "../oauth2/xhr";
+import {
+  LOAD_BASKET,
+  LOAD_CLOTHES_TYPES_WITH_COUNT
+} from "../constants/actionTypes";
 import map from "lodash/map";
 import countBy from "lodash/countBy";
 import uniqBy from "lodash/uniqBy";
@@ -7,11 +15,12 @@ import findIndex from "lodash/findIndex";
 import orderBy from "lodash/orderBy";
 
 import {typeLocalization} from "../constants/clothesTypesLocalization";
-import {FULL_PAGE_WAITING_ID, hideWaiting, showWaiting} from "./componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "./componentStateActions";
 
 export const putClothesToBasket = (values) => (dispatch) => {
   return dispatch(
-    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/', {name: values.type.name})).then(res => {
+    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/',
+      {name: values.type.name})).then(res => {
     return changeClothesCount(values, dispatch, (type) => {
       type.cleanItemCount--;
     });
@@ -21,7 +30,8 @@ export const putClothesToBasket = (values) => (dispatch) => {
 export const deleteClothes = (values) => (dispatch) => {
   //tODO: wait and animation here, delete only dirty
   return dispatch(
-    securedDelete(process.env.API_URL + '/resource/delete-clothes/', {name: values.type.name})).then(res => {
+    securedDelete(process.env.API_URL + '/resource/delete-clothes/',
+      {name: values.type.name})).then(res => {
     if (res.status === 200) {
       return changeClothesCount(values, dispatch, (type) => {
         type.cleanItemCount--;
@@ -34,7 +44,8 @@ export const deleteClothes = (values) => (dispatch) => {
 export const addClothes = (values) => (dispatch) => {
   //tODO: wait and animation here
   return dispatch(
-    securedPost(process.env.API_URL + '/resource/add-clothes/', {name: values.type.name})).then(res => {
+    securedPost(process.env.API_URL + '/resource/add-clothes/',
+      {name: values.type.name})).then(res => {
     return changeClothesCount(values, dispatch, (type) => {
       type.cleanItemCount++;
       type.allItemCount++;
@@ -43,15 +54,17 @@ export const addClothes = (values) => (dispatch) => {
 };
 
 export const registerIfNecessary = () => (dispatch) => {
-  dispatch(securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
+  dispatch(
+    securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
 };
 
 export const loadClothesTypesWithCount = () => (dispatch) => {
-  dispatch(showWaiting(FULL_PAGE_WAITING_ID));
-  return dispatch(securedGet(process.env.API_URL + '/resource/all-types-with-count/'))
+  return dispatch(
+    securedGet(process.env.API_URL + '/resource/all-types-with-count/',
+      FULL_PAGE_WAITING_ID))
     .then(response => {
-      dispatch(hideWaiting(FULL_PAGE_WAITING_ID));
-      return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: response.data});
+      return dispatch(
+        {type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: response.data});
     });
 };
 //TODO: delete
@@ -70,14 +83,16 @@ export const mapClothesWithLocalization = (clothes) => {
 };
 
 export const loadBasket = () => (dispatch) => {
-  dispatch(securedGet(process.env.API_URL + '/resource/my-basket/')).then(response => {
-    dispatch({type: LOAD_BASKET, basket: response.data || {}});
-  });
+  dispatch(securedGet(process.env.API_URL + '/resource/my-basket/')).then(
+    response => {
+      dispatch({type: LOAD_BASKET, basket: response.data || {}});
+    });
 };
 
 export const washClothes = (type) => (dispatch) => {
   dispatch(
-    securedPost(process.env.API_URL + '/resource/wash-clothes-in-basket/', {name: type})).then(
+    securedPost(process.env.API_URL + '/resource/wash-clothes-in-basket/',
+      {name: type})).then(
     response => {
       dispatch(loadBasket());
     });
@@ -90,5 +105,8 @@ const changeClothesCount = function (values, dispatch, changeCount) {
   //TODO: catch error
   let newValues = JSON.parse(JSON.stringify(values));
   changeCount(newValues.clothesTypes[indexToReduce]);
-  return dispatch({type: LOAD_CLOTHES_TYPES_WITH_COUNT, clothesTypes: newValues.clothesTypes});
+  return dispatch({
+    type: LOAD_CLOTHES_TYPES_WITH_COUNT,
+    clothesTypes: newValues.clothesTypes
+  });
 };
