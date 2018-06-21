@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import withStyles from "@material-ui/core/styles/withStyles";
 import SnackbarContent from "@material-ui/core/SnackbarContent/SnackbarContent";
 import ErrorIcon from '@material-ui/icons/Error';
-import {AUTO_CLOSE_INTERVAL, hideSnack} from "../../snackbar-service/snackbarAction";
+import {AUTO_CLOSE_INTERVAL, hideSnack} from "../../services/snackbar-service/snackbarAction";
 import {styles} from "./SnackbarListStyles";
 
 class ShackbarList extends React.Component {

@@ -1,4 +1,4 @@
-import {TIMEOUT} from "./Oauth";
+import {TIMEOUT} from "./OauthConstants";
 import {
   getAccessToken,
   validateAndUpdateTokenIfNecessary

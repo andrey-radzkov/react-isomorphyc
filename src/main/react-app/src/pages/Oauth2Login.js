@@ -5,7 +5,7 @@ import {
   registerIfNecessary,
   requestToken,
   requestVkToken
-} from "../oauth2/TokenService";
+} from "../services/oauth2/TokenService";
 import {connect} from "react-redux";
 
 class Oauth2Login extends React.Component {

@@ -1,6 +1,6 @@
 import * as firebase from "firebase/app";
 import React from "react";
-import {isClient} from "../utils/ssr-util";
+import {isClient} from "../../utils/ssr-util";
 import {securedPut} from "../oauth2/xhr";
 
 require("firebase/messaging");

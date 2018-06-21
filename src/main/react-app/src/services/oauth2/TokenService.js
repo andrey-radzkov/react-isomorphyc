@@ -5,10 +5,10 @@ import {
   TIMEOUT,
   VK_CLIENT_ID,
   VK_CLIENT_SECRET
-} from "./Oauth";
+} from "./OauthConstants";
 import axios from "axios";
-import {backoff} from "../utils/backoff";
-import {isClient, isSSR} from "../utils/ssr-util";
+import {backoff} from "../../utils/backoff";
+import {isClient, isSSR} from "../../utils/ssr-util";
 import {httpError} from "../snackbar-service/snackbarAction";
 import {securedGet} from "./xhr";
 

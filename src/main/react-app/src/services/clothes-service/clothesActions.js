@@ -10,7 +10,7 @@ import uniqBy from "lodash/uniqBy";
 import findIndex from "lodash/findIndex";
 import orderBy from "lodash/orderBy";
 
-import {typeLocalization} from "../constants/clothesTypesLocalization";
+import {typeLocalization} from "../../constants/clothesTypesLocalization";
 import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
 import {LOAD_BASKET, LOAD_CLOTHES_TYPES_WITH_COUNT} from "./clothesActionTypes";
 

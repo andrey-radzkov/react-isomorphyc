@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {loadBasket, mapClothesWithLocalization, washClothes} from "../clothes-service/clothesActions";
+import {loadBasket, mapClothesWithLocalization, washClothes} from "../services/clothes-service/clothesActions";
 import {Helmet} from "react-helmet";
 import {reduxForm} from "redux-form";
 import List from "@material-ui/core/List";

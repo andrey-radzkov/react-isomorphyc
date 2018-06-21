@@ -4,7 +4,6 @@ import amber from "@material-ui/core/colors/amber";
 import red from "@material-ui/core/colors/red";
 import createPalette from "@material-ui/core/styles/createPalette";
 
-//TODO: my theme
 export const muiTheme = createMuiTheme({
   palette: createPalette({
     primary: teal,

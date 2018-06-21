@@ -4,7 +4,7 @@ import Header from "./header/Header";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/";
-import FirebaseMessaging from "../push/FirebaseMessaging";
+import FirebaseMessaging from "../services/push-notification/FirebaseMessaging";
 import ShackbarList from "./snackbar/ShackbarList";
 
 const styles = theme => ({

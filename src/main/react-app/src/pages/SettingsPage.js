@@ -11,10 +11,10 @@ import {
   saveReceiver,
   saveSenders,
   saveSettings
-} from "../settings-service/settingsActions";
+} from "../services/settings-service/settingsActions";
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
-import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
-import FirebaseMessaging from "../push/FirebaseMessaging";
+import {FULL_PAGE_WAITING_ID} from "../services/modal-waiting-service/componentStateActions";
+import FirebaseMessaging from "../services/push-notification/FirebaseMessaging";
 import Button from "@material-ui/core/Button/Button";
 import {ReduxFormRadioGroup} from "../components/redux-form/ReduxFormRadioGroup";
 import Radio from "@material-ui/core/Radio/Radio";
@@ -74,7 +74,7 @@ class SettingsPage extends React.Component {
         {text}
       </Button>
     );
-    const {handleSubmit, pristine, reset, submitting} = this.props;
+    const {handleSubmit} = this.props;
     return (
       <div className="text-center">
 

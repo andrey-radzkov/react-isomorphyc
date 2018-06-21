@@ -1,11 +1,11 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {reduxForm} from "redux-form";
-import {addClothes, deleteClothes, loadClothesTypesWithCount, putClothesToBasket} from "../clothes-service/clothesActions";
+import {addClothes, deleteClothes, loadClothesTypesWithCount, putClothesToBasket} from "../services/clothes-service/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ClothesList from "../components/button-list/ClothesList";
-import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
+import {FULL_PAGE_WAITING_ID} from "../services/modal-waiting-service/componentStateActions";
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
 
 class HomePage extends React.Component {
