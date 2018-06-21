@@ -8,27 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import SnackbarContent from "@material-ui/core/SnackbarContent/SnackbarContent";
 import ErrorIcon from '@material-ui/icons/Error';
 import {AUTO_CLOSE_INTERVAL, hideSnack} from "../../actions/snackbarAction";
-
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
-  },
-  error: {
-    backgroundColor: theme.palette.error.dark,
-    marginBottom: theme.spacing.unit * 2,
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-
-  icon: {
-    marginRight: theme.spacing.unit,
-  },
-
-});
-
+import {styles} from "./SnackbarListStyles";
 
 class ShackbarList extends React.Component {
   state = {

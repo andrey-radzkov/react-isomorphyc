@@ -1,5 +1,4 @@
 import {HIDE_SNACK, SHOW_SNACK} from "../constants/actionTypes";
-//TODO: refactor
 let snackbars = [];
 let intervalId = null;
 export const AUTO_CLOSE_INTERVAL = 3000;
