@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
   mapDispatchToProps
 )
 @withStyles(styles, {withTheme: true})
-class FriendsList extends React.Component {
+export default class FriendsList extends React.Component {
   static propTypes = {
     loadFriends: PropTypes.func,
     selectReceiver: PropTypes.func,

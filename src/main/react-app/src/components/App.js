@@ -18,7 +18,14 @@ const styles = theme => ({
   },
 });
 
-class App extends React.Component {
+@withStyles(styles, {withTheme: true})
+export default class App extends React.Component {
+  static propTypes = {
+    children: PropTypes.element,
+    location: PropTypes.object,
+    classes: PropTypes.object.isRequired,
+
+  };
 
   constructor(props) {
     super(props);
@@ -43,12 +50,3 @@ class App extends React.Component {
     </div>);
   }
 }
-
-
-App.propTypes = {
-  children: PropTypes.element,
-  location: PropTypes.object,
-  classes: PropTypes.object.isRequired,
-
-};
-export default withStyles(styles, {withTheme: true})(App);

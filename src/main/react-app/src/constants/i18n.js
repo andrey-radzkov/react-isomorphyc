@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import i18next from "i18next/i18next";
 const i18n = i18next.init({
   lng: "ru",
   resources: {

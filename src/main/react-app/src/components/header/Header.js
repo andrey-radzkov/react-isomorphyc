@@ -27,9 +27,13 @@ const styles = {
   },
 };
 
+@withStyles(styles)
+export default class Header extends React.Component {
+  static propTypes = {
+    path: PropTypes.string,
+    classes: PropTypes.object.isRequired,
+  };
 
-class Header extends React.Component {
-//tODO: migrate to reactstrap
   constructor(props) {
     super(props);
     this.state = {
@@ -68,14 +72,6 @@ class Header extends React.Component {
           </Toolbar>
         </AppBar>
       </div>
-
     );
   }
 }
-
-Header.propTypes = {
-  path: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Header);
