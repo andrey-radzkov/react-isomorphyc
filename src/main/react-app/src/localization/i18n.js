@@ -1,5 +1,7 @@
 import i18next from "i18next/i18next";
 import LngDetector from 'i18next-browser-languagedetector';
+import en from "./en.js"
+import ru from "./ru.js"
 
 const detection = {
   order: ['querystring', 'navigator', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
@@ -12,14 +14,10 @@ const i18n = i18next
     detection: detection,
     resources: {
       en: {
-        translation: {
-          loginH1: "Please, Log In"
-        }
+        translation: en
       },
       ru: {
-        translation: {
-          loginH1: "Пожалуйста, войдите"
-        }
+        translation: ru
       }
     }
   });

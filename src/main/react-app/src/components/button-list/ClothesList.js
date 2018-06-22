@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import {typeLocalization} from "../../constants/clothesTypesLocalization";
+import i18n from "../../localization/i18n";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -42,7 +42,7 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
                   }
                   title={
                     <div className={classes.title}>
-                      <b>{typeLocalization[type.name]}</b>:
+                      <b>{i18n.t(type.name)}</b>:
                       чистых {type.cleanItemCount} шт
                     </div>}
                   subheader={<div>Всего в наличии: {type.allItemCount} шт</div>}

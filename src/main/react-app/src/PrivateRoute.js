@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {Route} from "react-router-dom";
 import {isAuthed, redirectToAuthService, redirectToVkAuthService} from "./services/oauth2/TokenService";
 import Button from "@material-ui/core/Button";
-import i18n from "./constants/i18n";
+import i18n from "./localization/i18n";
 
 export const PrivateRoute = ({component: Component, ...rest}) => {
   let authed = isAuthed();

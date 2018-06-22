@@ -9,8 +9,8 @@ import countBy from "lodash/countBy";
 import uniqBy from "lodash/uniqBy";
 import findIndex from "lodash/findIndex";
 import orderBy from "lodash/orderBy";
+import i18n from "../../localization/i18n";
 
-import {typeLocalization} from "../../constants/clothesTypesLocalization";
 import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
 import {LOAD_BASKET, LOAD_CLOTHES_TYPES_WITH_COUNT} from "./clothesActionTypes";
 
@@ -67,7 +67,7 @@ export const mapClothesWithLocalization = (clothes) => {
     return {
       id: item.type.id,
       type: typeVal,
-      text: typeLocalization[typeVal] + " (" + countByType[typeVal] + ")",
+      text: i18n.t(typeVal) + " (" + countByType[typeVal] + ")",
       imgSrc: item.type.imgSrc
     };
   }), item => item.type);
