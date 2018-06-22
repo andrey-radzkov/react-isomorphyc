@@ -10,7 +10,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import Autorenew from "@material-ui/icons/Autorenew";
+// import Autorenew from "@material-ui/icons/Autorenew";
 import Button from "@material-ui/core/Button";
 
 class BasketPage extends React.Component {
@@ -51,7 +51,8 @@ class BasketPage extends React.Component {
                     <Button aria-label="Delete" onClick={this.props.handleSubmit((values) => {
                       this.props.washClothes(item.type);
                     })}>Постирать
-                      <Autorenew />
+                      React.createElement(require("@material-ui/icons/Autorenew"))
+                      {/*<Autorenew />*/}
                     </Button >
                   </ListItemSecondaryAction>
                 </ListItem>);
