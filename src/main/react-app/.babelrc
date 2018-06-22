@@ -8,12 +8,18 @@
   "env": {
     "development": {
       "presets": [
+      ],
+      "plugins": [
+        "transform-decorators-legacy",
+        "transform-class-properties"
       ]
     },
     "production": {
       "plugins": [
         "transform-react-constant-elements",
-        "transform-react-remove-prop-types"
+        "transform-react-remove-prop-types",
+        "transform-decorators-legacy",
+        "transform-class-properties"
       ]
     }
   }

@@ -7,13 +7,40 @@ import CloseIcon from '@material-ui/icons/Close';
 import withStyles from "@material-ui/core/styles/withStyles";
 import SnackbarContent from "@material-ui/core/SnackbarContent/SnackbarContent";
 import ErrorIcon from '@material-ui/icons/Error';
-import {AUTO_CLOSE_INTERVAL, hideSnack} from "../../services/snackbar-service/snackbarAction";
+import {
+  AUTO_CLOSE_INTERVAL,
+  hideSnack
+} from "../../services/snackbar-service/snackbarAction";
 import {styles} from "./SnackbarListStyles";
 
-class ShackbarList extends React.Component {
+
+const mapDispatchToProps = dispatch => {
+  return {
+    closeSnackbar: () => dispatch(hideSnack()),
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    snack: state.snackbarReducer.snack
+  };
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+@withStyles(styles)
+export default class ShackbarList extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  static propTypes = {
+    snack: PropTypes.shape({
+      message: PropTypes.string,
+      visible: PropTypes.bool,
+      type: PropTypes.oneOf(['success', 'warning', 'error', 'info']),
+    }),
+    classes: PropTypes.object.isRequired,
+    closeSnackbar: PropTypes.func.isRequired,
+  };
 
   state = {
     open: true,
@@ -58,34 +85,3 @@ class ShackbarList extends React.Component {
   }
 
 }
-
-ShackbarList.propTypes = {
-  snack: PropTypes.shape({
-    message: PropTypes.string,
-    visible: PropTypes.bool,
-    type: PropTypes.oneOf(['success', 'warning', 'error', 'info']),
-  }),
-  classes: PropTypes.object.isRequired,
-  closeSnackbar: PropTypes.func.isRequired,
-
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    closeSnackbar: () => dispatch(hideSnack()),
-  };
-};
-const mapStateToProps = (state) => {
-  return {
-    snack: state.snackbarReducer.snack
-  };
-};
-
-ShackbarList = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShackbarList);
-
-export default withStyles(styles)(ShackbarList);
-
-
