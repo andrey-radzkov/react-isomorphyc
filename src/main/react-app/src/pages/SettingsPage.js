@@ -21,9 +21,55 @@ import Radio from "@material-ui/core/Radio/Radio";
 import {FriendsDialog} from "../components/FriendsDialog";
 
 const selector = formValueSelector('settingsForm');
+const mapDispatchToProps = dispatch => {
+  return {
+    loadSettings: () => dispatch(loadSettings()),
+    saveSettings: (values) => dispatch(saveSettings(values)),
+    saveReceiver: (id) => dispatch(saveReceiver(id)),
+    revertReceiver: () => dispatch(revertReceiver()),
+    saveSenders: (ids) => dispatch(saveSenders(ids)),
+    revertSenders: () => dispatch(revertSenders()),
+  };
+};
 
+const mapStateToProps = (state) => {
+  return {
+    type: selector(state, 'type'),
+    initialValues: state.settingsReducer.userSettings,
+    receiver: state.settingsReducer.receiver,
+    senders: state.settingsReducer.senders,
+    showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
 
-class SettingsPage extends React.Component {
+  };
+};
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
+@reduxForm({
+  form: 'settingsForm',
+  enableReinitialize: true,
+})
+export default class SettingsPage extends React.Component {
+  static propTypes = {
+    pristine: PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired,
+    reset: PropTypes.func,
+    loadSettings: PropTypes.func,
+    saveSettings: PropTypes.func,
+    saveReceiver: PropTypes.func,
+    revertReceiver: PropTypes.func,
+    saveSenders: PropTypes.func,
+    revertSenders: PropTypes.func,
+    dispatch: PropTypes.func,
+    submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
+    showWaiting: PropTypes.bool,
+    type: PropTypes.string,
+    senders: PropTypes.array,
+    receiver: PropTypes.number,
+
+  };
 
   constructor(props) {
     super(props);
@@ -133,57 +179,3 @@ class SettingsPage extends React.Component {
   }
 
 }
-
-SettingsPage.propTypes = {
-  pristine: PropTypes.bool,
-  handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func,
-  loadSettings: PropTypes.func,
-  saveSettings: PropTypes.func,
-  saveReceiver: PropTypes.func,
-  revertReceiver: PropTypes.func,
-  saveSenders: PropTypes.func,
-  revertSenders: PropTypes.func,
-  dispatch: PropTypes.func,
-  submitting: PropTypes.bool,
-  invalid: PropTypes.bool,
-  showWaiting: PropTypes.bool,
-  type: PropTypes.string,
-  senders: PropTypes.array,
-  receiver: PropTypes.number,
-
-};
-
-SettingsPage = reduxForm({
-  form: 'settingsForm',
-  enableReinitialize: true,
-})(SettingsPage);
-
-const mapDispatchToProps = dispatch => {
-  return {
-    loadSettings: () => dispatch(loadSettings()),
-    saveSettings: (values) => dispatch(saveSettings(values)),
-    saveReceiver: (id) => dispatch(saveReceiver(id)),
-    revertReceiver: () => dispatch(revertReceiver()),
-    saveSenders: (ids) => dispatch(saveSenders(ids)),
-    revertSenders: () => dispatch(revertSenders()),
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    type: selector(state, 'type'),
-    initialValues: state.settingsReducer.userSettings,
-    receiver: state.settingsReducer.receiver,
-    senders: state.settingsReducer.senders,
-    showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
-
-  };
-};
-
-SettingsPage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SettingsPage);
-
-export default SettingsPage;

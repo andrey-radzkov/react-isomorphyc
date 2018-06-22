@@ -28,9 +28,6 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps, mapDispatchToProps)
 @withStyles(styles)
 export default class ShackbarList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   static propTypes = {
     snack: PropTypes.shape({
@@ -41,6 +38,10 @@ export default class ShackbarList extends React.Component {
     classes: PropTypes.object.isRequired,
     closeSnackbar: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+  }
 
   state = {
     open: true,

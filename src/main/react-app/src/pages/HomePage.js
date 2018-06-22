@@ -1,14 +1,54 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {reduxForm} from "redux-form";
-import {addClothes, deleteClothes, loadClothesTypesWithCount, putClothesToBasket} from "../services/clothes-service/clothesActions";
+import {
+  addClothes,
+  deleteClothes,
+  loadClothesTypesWithCount,
+  putClothesToBasket
+} from "../services/clothes-service/clothesActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ClothesList from "../components/button-list/ClothesList";
 import {FULL_PAGE_WAITING_ID} from "../services/modal-waiting-service/componentStateActions";
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
 
-class HomePage extends React.Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    putClothesToBasket: (values) => dispatch(putClothesToBasket(values)),
+    addClothes: (values) => dispatch(addClothes(values)),
+    deleteClothes: (values) => dispatch(deleteClothes(values)),
+    loadClothesTypesWithCount: () => dispatch(loadClothesTypesWithCount()),
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    clothesTypes: state.clothesReducer.clothesTypes,
+    showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
+  };
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+@reduxForm({
+  form: 'putClothes',
+  enableReinitialize: true,
+})
+export default class HomePage extends React.Component {
+
+  static propTypes = {
+    loadClothesTypesWithCount: PropTypes.func.isRequired,
+    putClothesToBasket: PropTypes.func.isRequired,
+    addClothes: PropTypes.func.isRequired,
+    deleteClothes: PropTypes.func.isRequired,
+    pristine: PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired,
+    reset: PropTypes.func,
+    submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
+    showWaiting: PropTypes.bool,
+    clothesTypes: PropTypes.array,
+  };
+
   constructor(props) {
     super(props);
     this.state = {editMode: false};
@@ -40,7 +80,10 @@ class HomePage extends React.Component {
       <div className="text-center">
         <Helmet title="Home page"
                 meta={[
-                  {"name": "description", "content": "Персональный помощник в стирке"},
+                  {
+                    "name": "description",
+                    "content": "Персональный помощник в стирке"
+                  },
                   {"name": "keywords", "content": "Грязные носки"},
                 ]}
         />
@@ -61,44 +104,3 @@ class HomePage extends React.Component {
     );
   }
 }
-
-HomePage.propTypes = {
-  loadClothesTypesWithCount: PropTypes.func.isRequired,
-  putClothesToBasket: PropTypes.func.isRequired,
-  addClothes: PropTypes.func.isRequired,
-  deleteClothes: PropTypes.func.isRequired,
-  pristine: PropTypes.bool,
-  handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func,
-  submitting: PropTypes.bool,
-  invalid: PropTypes.bool,
-  showWaiting: PropTypes.bool,
-  clothesTypes: PropTypes.array,
-};
-
-HomePage = reduxForm({
-  form: 'putClothes',
-  enableReinitialize: true,
-
-})(HomePage);
-
-const mapDispatchToProps = dispatch => {
-  return {
-    putClothesToBasket: (values) => dispatch(putClothesToBasket(values)),
-    addClothes: (values) => dispatch(addClothes(values)),
-    deleteClothes: (values) => dispatch(deleteClothes(values)),
-    loadClothesTypesWithCount: () => dispatch(loadClothesTypesWithCount()),
-  };
-};
-const mapStateToProps = (state) => {
-  return {
-    clothesTypes: state.clothesReducer.clothesTypes,
-    showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
-  };
-};
-
-HomePage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage);
-export default HomePage;

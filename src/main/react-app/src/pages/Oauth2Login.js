@@ -8,7 +8,31 @@ import {
 } from "../services/oauth2/TokenService";
 import {connect} from "react-redux";
 
-class Oauth2Login extends React.Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    registerIfNecessary: () => {
+      dispatch(registerIfNecessary());
+    },
+    requestVkToken: (code, history) => {
+      return dispatch(requestVkToken(code, history));
+    }
+  };
+};
+const mapStateToProps = (state) => {
+  return {};
+};
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
+export default class Oauth2Login extends React.Component {
+  static   propTypes = {
+    registerIfNecessary: PropTypes.func,
+    location: PropTypes.object,
+    history: PropTypes.object,
+    dispatch: PropTypes.func,
+    requestVkToken: PropTypes.func,
+  };
 
   constructor(props) {
     super(props);
@@ -36,32 +60,3 @@ class Oauth2Login extends React.Component {
   }
 
 }
-
-Oauth2Login.propTypes = {
-  registerIfNecessary: PropTypes.func,
-  location: PropTypes.object,
-  history: PropTypes.object,
-  dispatch: PropTypes.func,
-  requestVkToken: PropTypes.func,
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    registerIfNecessary: () => {
-      dispatch(registerIfNecessary());
-    },
-    requestVkToken: (code, history) => {
-      return dispatch(requestVkToken(code, history));
-    }
-  };
-};
-const mapStateToProps = (state) => {
-  return {};
-};
-
-Oauth2Login = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Oauth2Login);
-
-export default Oauth2Login;
