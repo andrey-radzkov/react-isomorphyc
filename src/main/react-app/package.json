@@ -47,6 +47,7 @@
     "axios": "0.18.0",
     "firebase": "4.8.2",
     "react-helmet": "5.2.0",
+    "i18next": "11.3.3",
     "query-string": "5.0.1"
   },
   "devDependencies": {
