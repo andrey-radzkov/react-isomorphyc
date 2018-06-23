@@ -27,13 +27,13 @@ const mapStateToProps = (state) => {
     showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
   };
 };
-// TODO: pure component
+// TODO: migrate all to pure component
 @connect(mapStateToProps, mapDispatchToProps)
 @reduxForm({
   form: 'putClothes',
   enableReinitialize: true,
 })
-export default class HomePage extends React.Component {
+export default class HomePage extends React.PureComponent {
 
   static propTypes = {
     loadClothesTypesWithCount: PropTypes.func.isRequired,
