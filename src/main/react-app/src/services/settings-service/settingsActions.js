@@ -72,7 +72,7 @@ export const saveSettings = (settings) => (dispatch) => {
 
 export const saveReceiver = (id) => (dispatch) => {
   const params = new URLSearchParams();
-  params.append('receiverId', id);
+  params.append('receiverUsername', id);
   return dispatch(
     securedPost(process.env.API_URL + '/resource/save-receiver/', params))
     .then(response => {
@@ -86,7 +86,7 @@ export const revertReceiver = () => (dispatch) => {
 
 export const saveSenders = (ids) => (dispatch) => {
   const params = new URLSearchParams();
-  params.append('senderIds', ids);
+  params.append('senderUsernames', ids);
   return dispatch(
     securedPost(process.env.API_URL + '/resource/save-senders/', params))
     .then(response => {
