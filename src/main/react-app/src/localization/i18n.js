@@ -1,7 +1,7 @@
 import i18next from "i18next/i18next";
 import LngDetector from 'i18next-browser-languagedetector';
-import en from "./en.js"
-import ru from "./ru.js"
+import en from "./en"
+import ru from "./ru"
 
 const detection = {
   order: ['querystring', 'navigator', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],

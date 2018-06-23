@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
     showWaiting: state.ajaxActionsReducer[FULL_PAGE_WAITING_ID]
   };
 };
-
+// TODO: pure component
 @connect(mapStateToProps, mapDispatchToProps)
 @reduxForm({
   form: 'putClothes',

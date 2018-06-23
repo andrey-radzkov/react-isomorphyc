@@ -1,11 +1,5 @@
 import jwtDecode from "jwt-decode";
-import {
-  CLIENT_ID,
-  CLIENT_SECRET,
-  TIMEOUT,
-  VK_CLIENT_ID,
-  VK_CLIENT_SECRET
-} from "./OauthConstants";
+import {CLIENT_ID, CLIENT_SECRET, TIMEOUT, VK_CLIENT_ID, VK_CLIENT_SECRET} from "./OauthConstants";
 import axios from "axios";
 import {backoff} from "../../utils/backoff";
 import {isClient, isSSR} from "../../utils/ssr-util";
@@ -43,7 +37,8 @@ export const requestVkToken = (code, history) => (dispatch) => {
         response => {
           let token = response.data;
           setTokens(token.access_token, token.refresh_token);
-          history.push(getTargetUrl());
+          //TODO: normal fix of actions order
+          setTimeout(() => history.push(getTargetUrl()), 1000);
           resolve(response.data);
         }).catch(error => {
         if (error) {
@@ -84,7 +79,8 @@ export const requestToken = (code, history) => {
   return tokenRequest.post('/uaa/oauth/token', searchParams).then(response => {
     let token = response.data;
     setTokens(token.access_token, token.refresh_token);
-    history.push(getTargetUrl());
+    //TODO: normal fix of actions order
+    setTimeout(() => history.push(getTargetUrl()), 1000);
     return response.data;
   }).catch(error => {
     if (error) {

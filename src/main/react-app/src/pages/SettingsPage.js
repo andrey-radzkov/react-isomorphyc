@@ -67,7 +67,7 @@ export default class SettingsPage extends React.Component {
     showWaiting: PropTypes.bool,
     type: PropTypes.string,
     senders: PropTypes.array,
-    receiver: PropTypes.number,
+    receiver: PropTypes.string,
 
   };
 

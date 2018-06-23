@@ -80,6 +80,7 @@ export default class FriendsList extends React.Component {
         {this.props.friends && filter(this.props.friends,
           friend => friend.first_name !== 'DELETED').map(friend => {
           const friendFullName = friend.first_name + " " + friend.last_name;
+          //TODO: support other social networks
           const vkId = "vk_" + friend.uid;
           return (
             <ListItem key={friend.uid} dense button

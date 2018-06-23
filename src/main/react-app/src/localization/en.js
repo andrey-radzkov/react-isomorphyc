@@ -5,4 +5,4 @@ export default {
   trousers: "Trousers",
   underwear: "Underwear",
   others: "Others",
-}
+};

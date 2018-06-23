@@ -14,7 +14,7 @@ import axios from "axios";
 import remove from "lodash/remove";
 
 export const loadSettings = () => (dispatch) => {
- return dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/',
+  return dispatch(securedGet(process.env.API_URL + '/resource/get-user-settings/',
     FULL_PAGE_WAITING_ID))
     .then(response => {
       const settings = response.data;
@@ -71,8 +71,10 @@ export const saveSettings = (settings) => (dispatch) => {
 };
 
 export const saveReceiver = (id) => (dispatch) => {
+  const params = new URLSearchParams();
+  params.append('receiverId', id);
   return dispatch(
-    securedPost(process.env.API_URL + '/resource/save-receiver/', {id: id}))
+    securedPost(process.env.API_URL + '/resource/save-receiver/', params))
     .then(response => {
       dispatch({type: SAVE_RECEIVER, receiver: id});
     });
@@ -83,8 +85,10 @@ export const revertReceiver = () => (dispatch) => {
 };
 
 export const saveSenders = (ids) => (dispatch) => {
+  const params = new URLSearchParams();
+  params.append('senderIds', ids);
   return dispatch(
-    securedPost(process.env.API_URL + '/resource/save-senders/', {ids: ids}))
+    securedPost(process.env.API_URL + '/resource/save-senders/', params))
     .then(response => {
       dispatch({type: SAVE_SENDERS, senders: ids});
     });
