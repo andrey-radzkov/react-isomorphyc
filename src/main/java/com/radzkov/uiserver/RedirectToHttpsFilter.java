@@ -31,13 +31,12 @@ public class RedirectToHttpsFilter implements Filter {
             ServletRequest request,
             ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        if (BooleanUtils.isTrue(useHttps)) {
-            HttpServletRequest req = (HttpServletRequest) request;
-            HttpServletResponse res = (HttpServletResponse) response;
-            String url = req.getRequestURL().toString();
-            if (url.contains("http://")) {
-                res.sendRedirect(url.replace("http://", "https://"));
-            }
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        String url = req.getRequestURL().toString();
+        if (BooleanUtils.isTrue(useHttps) && url.contains("http://")) {
+            res.sendRedirect(url.replace("http://", "https://"));
         } else {
             chain.doFilter(request, response);
         }
