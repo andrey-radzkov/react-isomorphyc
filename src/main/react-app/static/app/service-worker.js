@@ -1,4 +1,4 @@
-const OFFLINE_URL = 'offline-page.html';
+const OFFLINE_URL = '/app/offline-page.html';
 //TODO: copy images
 //TODO: prod urls
 self.addEventListener('install', function (event) {
@@ -6,7 +6,7 @@ self.addEventListener('install', function (event) {
     //TODO: production mode
     caches.open('mysite-dynamic').then(function (cache) {
       return cache.addAll([
-        '/',
+        '/app/',
         OFFLINE_URL,
         '/app/favicon.ico',
         '/app/manifest.json',

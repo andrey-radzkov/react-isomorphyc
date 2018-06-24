@@ -37,7 +37,7 @@ const ClothesList = ({clothesTypesWithCount, onPutSubmit, onAddSubmit, onDeleteS
                   avatar={
                     <Avatar className={classes.bigAvatar}>
                       <img src={process.env.API_URL + "/resource" + type.imgSrc}
-                           width="60px" height="60px"/>
+                           width="60px" height="60px" alt={i18n.t(type.name)}/>
                     </Avatar>
                   }
                   title={
