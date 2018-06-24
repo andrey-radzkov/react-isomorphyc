@@ -1,5 +1,4 @@
 import React from "react";
-import {render} from "react-dom";
 import {Provider} from "react-redux";
 import {browserHistory} from "react-router";
 import App from "./components/App";
@@ -11,9 +10,28 @@ import {createGenerateClassName, MuiThemeProvider} from "@material-ui/core/style
 import {muiTheme} from "./theme";
 import {SheetsRegistry} from "react-jss/lib/jss";
 import JssProvider from "react-jss/lib/JssProvider";
+import withStyles from "@material-ui/core/styles/withStyles";
+
 const sheetsRegistry = new SheetsRegistry();
 const generateClassName = createGenerateClassName();
-class ServerSideRender extends React.Component {
+
+const styles = ({
+  root: {
+    minWidth: "230px",
+    margin: "0 auto",
+    background: "#fafafa",
+  },
+});
+
+@withStyles(styles)
+export default class ServerSideRender extends React.Component {
+  static propTypes = {
+    location: PropTypes.string,
+    store: PropTypes.object,
+    script: PropTypes.string,
+    classes: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.context = {store: {}};
@@ -21,6 +39,7 @@ class ServerSideRender extends React.Component {
 
 
   render() {
+    const {classes} = this.props;
     const content = ReactDOMServer.renderToString(<Provider store={this.props.store}>
       <StaticRouter location={this.props.location} context={this.context} basename={"app"}>
         <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
@@ -56,7 +75,7 @@ class ServerSideRender extends React.Component {
 
 
       </head>
-      <body>
+      <body className={classes.root}>
       <div id="app" dangerouslySetInnerHTML={{__html: content}}/>
       <noscript>
         <div className="container"><h2>Please, enable javascript for this application</h2></div>
@@ -67,12 +86,3 @@ class ServerSideRender extends React.Component {
     );
   }
 }
-
-ServerSideRender.propTypes = {
-  location: PropTypes.string,
-  store: PropTypes.object,
-  script: PropTypes.string,
-};
-
-export default ServerSideRender;
-

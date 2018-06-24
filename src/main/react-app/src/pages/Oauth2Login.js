@@ -41,13 +41,13 @@ export default class Oauth2Login extends React.Component {
       this.props.requestVkToken(getParameters.code).then(
         (targetUrl) => {
           this.props.registerIfNecessary().then(() => {
-            this.props.history.push(targetUrl)
+            this.props.history.push(targetUrl);
           });
         });
     } else {
       requestToken(getParameters.code).then(() => {
         this.props.registerIfNecessary().then(() => {
-          this.props.history.push(targetUrl)
+          this.props.history.push(targetUrl);
         });
       });
     }
