@@ -14,7 +14,7 @@ import {LeftMenu} from "./LeftMenu";
 const iconStyles = {
   cursor: "pointer",
 };
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
@@ -25,9 +25,16 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+  appBarLink: {
+    color: theme.palette.primary.contrastText,
+    textDecoration: "none",
+    '&:hover': {
+      color: theme.palette.primary.contrastText
+    }
+  }
+});
 
-@withStyles(styles)
+@withStyles(styles, {withTheme: true})
 export default class Header extends React.Component {
   static propTypes = {
     path: PropTypes.string,
@@ -61,7 +68,7 @@ export default class Header extends React.Component {
             </IconButton>
             <Typography variant="title" color="inherit"
                         className={classes.flex}>
-              <Link to="/" className="app-bar-link">Время стирки</Link>
+              <Link to="/" className={classes.appBarLink}>Время стирки</Link>
             </Typography>
             {getAccessToken() !== null && (
               <ExitToApp style={iconStyles} onClick={logout}/>)}

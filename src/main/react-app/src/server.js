@@ -10,26 +10,15 @@ import {createGenerateClassName, MuiThemeProvider} from "@material-ui/core/style
 import {muiTheme} from "./theme";
 import {SheetsRegistry} from "react-jss/lib/jss";
 import JssProvider from "react-jss/lib/JssProvider";
-import withStyles from "@material-ui/core/styles/withStyles";
 
 const sheetsRegistry = new SheetsRegistry();
 const generateClassName = createGenerateClassName();
 
-const styles = theme => ({
-  root: {
-    minWidth: "230px",
-    margin: "0 auto",
-    background: "#fafafa",
-  },
-});
-
-@withStyles(styles, {withTheme: true})
 export default class ServerSideRender extends React.Component {
   static propTypes = {
     location: PropTypes.string,
     store: PropTypes.object,
     script: PropTypes.string,
-    classes: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -39,7 +28,6 @@ export default class ServerSideRender extends React.Component {
 
 
   render() {
-    const {classes} = this.props;
     const content = ReactDOMServer.renderToString(<Provider store={this.props.store}>
       <StaticRouter location={this.props.location} context={this.context} basename={"app"}>
         <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
@@ -68,6 +56,15 @@ export default class ServerSideRender extends React.Component {
         <meta charSet="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#009688"/>
+        <style dangerouslySetInnerHTML={{
+          __html: " body {\n" +
+          "          min-width: 230px;\n" +
+          "          margin: 0 auto;\n" +
+          "          background: #fafafa;\n" +
+          "        }"
+        }}>
+
+        </style>
         <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}}/>
         {helmet.meta.toComponent()}
 
@@ -75,7 +72,7 @@ export default class ServerSideRender extends React.Component {
 
 
       </head>
-      <body className={classes.root}>
+      <body>
       <div id="app" dangerouslySetInnerHTML={{__html: content}}/>
       <noscript>
         <div className="container"><h2>Please, enable javascript for this application</h2></div>
