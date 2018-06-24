@@ -33,3 +33,4 @@ zuul:
 spring:
     profiles:
         active: ${activeProfile}
+use-https: false

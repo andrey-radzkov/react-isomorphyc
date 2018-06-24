@@ -9,3 +9,4 @@ zuul:
       path: /uaa/**
       sensitiveHeaders:
       url: https://backend-for-react-authserver.herokuapp.com/uaa
+use-https: true
