@@ -7,19 +7,13 @@ body {
 }
 
 h1 {
-  margin-top: 0px;
+  margin-top: 24px;
   font-size: 34px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: normal;
 }
 
-@media screen and (min-width: 960px) {
-  h1 {
-    margin-top: 15px;
-  }
-}
-
-//TODO: to header.scss
+//TODO: to header.jss
 a.app-bar-link {
   color: #fff;
   text-decoration: none;

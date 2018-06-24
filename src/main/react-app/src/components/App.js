@@ -10,16 +10,15 @@ import ShackbarList from "./snackbar/ShackbarList";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    margin: theme.spacing.unit,
-  },
-
-  align: {
     textAlign: "center",
   },
+  column: {
+    margin: theme.spacing.unit,
+  }
 });
 
 @withStyles(styles, {withTheme: true})
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   static propTypes = {
     children: PropTypes.element,
     location: PropTypes.object,
@@ -37,13 +36,14 @@ export default class App extends React.Component {
     const {classes} = this.props;
     return (<div>
       <Header path="curr"/>
-      <div className={classes.root}>
-        <Grid container spacing={16}>
-          <Grid item xs={12} lg={4}/>
-          <Grid item xs={12} lg={4} className={classes.align}>
+      <div>
+        <Grid container
+              direction="row"
+              justify="center"
+              alignItems="center" className={classes.root}>
+          <Grid item xs={12} sm={6} md={4} lg={4} className={classes.column}>
             <Routes/>
           </Grid>
-          <Grid item xs={12} lg={4}/>
         </Grid>
       </div>
       <ShackbarList/>

@@ -15,7 +15,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const sheetsRegistry = new SheetsRegistry();
 const generateClassName = createGenerateClassName();
 
-const styles = ({
+const styles = theme => ({
   root: {
     minWidth: "230px",
     margin: "0 auto",
@@ -23,7 +23,7 @@ const styles = ({
   },
 });
 
-@withStyles(styles)
+@withStyles(styles, {withTheme: true})
 export default class ServerSideRender extends React.Component {
   static propTypes = {
     location: PropTypes.string,
