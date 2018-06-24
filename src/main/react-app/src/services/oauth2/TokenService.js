@@ -20,7 +20,7 @@ let createTokenRequest = function () {
   });
 };
 
-export const requestVkToken = (code, history) => (dispatch) => {
+export const requestVkToken = (code) => (dispatch) => {
   const params = {
     client_id: VK_CLIENT_ID,
     client_secret: VK_CLIENT_SECRET,
@@ -37,9 +37,7 @@ export const requestVkToken = (code, history) => (dispatch) => {
         response => {
           let token = response.data;
           setTokens(token.access_token, token.refresh_token);
-          //TODO: normal fix of actions order
-          setTimeout(() => history.push(getTargetUrl()), 1000);
-          resolve(response.data);
+          resolve(getTargetUrl());
         }).catch(error => {
         if (error) {
           dispatch(httpError(error.response.status, error.response.statusText));
@@ -65,7 +63,7 @@ export const authType = () => {
   }
 };
 
-export const requestToken = (code, history) => {
+export const requestToken = (code) => {
 
   let tokenRequest = createTokenRequest();
 
@@ -79,9 +77,7 @@ export const requestToken = (code, history) => {
   return tokenRequest.post('/uaa/oauth/token', searchParams).then(response => {
     let token = response.data;
     setTokens(token.access_token, token.refresh_token);
-    //TODO: normal fix of actions order
-    setTimeout(() => history.push(getTargetUrl()), 1000);
-    return response.data;
+    return getTargetUrl();
   }).catch(error => {
     if (error) {
       console.log('//TODO: redirect to error page');
@@ -106,10 +102,10 @@ export const redirectToVkAuthService = () => {
       + process.env.VK_API_VERSION;
   }
 };
-export const rememberTargetUrl = (url) => {
+const rememberTargetUrl = (url) => {
   getLocalStorage().targetUrl = url.replace("/app", "");
 };
-export const getTargetUrl = () => {
+const getTargetUrl = () => {
   return getLocalStorage().targetUrl;
 };
 export const isAuthed = () => {
@@ -257,6 +253,5 @@ export const refreshToken = (refresh_token) => {
 };
 
 export const registerIfNecessary = () => (dispatch) => {
-  dispatch(
-    securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
+  return dispatch(securedGet(process.env.API_URL + '/resource/register-if-necessary/'));
 };
