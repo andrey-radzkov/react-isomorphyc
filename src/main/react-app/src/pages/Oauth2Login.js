@@ -55,7 +55,9 @@ export default class Oauth2Login extends React.Component {
 
   render() {
     return (
-      <div/>
+      <div>
+        <h3>Секундочку, авторизация в процессе...</h3>
+      </div>
     );
   }
 
