@@ -56,15 +56,21 @@ export default class ServerSideRender extends React.Component {
         <meta charSet="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="theme-color" content="#009688"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
         <style dangerouslySetInnerHTML={{
           __html: " body {\n" +
           "          min-width: 230px;\n" +
           "          margin: 0 auto;\n" +
-          "          background: #fafafa;\n" +
-          "        }"
-        }}>
+          "          background: #fafafa;  font-family: \"Roboto\", sans-serif;" +
+          "        }\n" +
+          " h1 {\n" +
+          "  margin-top: 24px;\n" +
+          "  font-size: 34px;\n" +
+          "  font-family: \"Roboto\", sans-serif;\n" +
+          "  font-weight: normal;\n" +
+          "}"
+        }}/>
 
-        </style>
         <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}}/>
         {helmet.meta.toComponent()}
 
