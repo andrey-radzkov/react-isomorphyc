@@ -78,7 +78,7 @@ export default class HomePage extends React.PureComponent {
     return (
       // TODO: move from home page
       <div className="text-center">
-        <Helmet title="Home page"
+        <Helmet title="Время стирки - Онлайн помошник"
                 meta={[
                   {
                     "name": "description",
