@@ -19,7 +19,7 @@ let createTokenRequest = function () {
     }
   });
 };
-
+//TODO: request implicit token
 export const requestVkToken = (code) => (dispatch) => {
   const params = {
     client_id: VK_CLIENT_ID,
@@ -105,7 +105,7 @@ export const redirectToVkAuthService = () => {
 const rememberTargetUrl = (url) => {
   getLocalStorage().targetUrl = url.replace("/app", "");
 };
-const getTargetUrl = () => {
+export const getTargetUrl = () => {
   return getLocalStorage().targetUrl;
 };
 export const isAuthed = () => {

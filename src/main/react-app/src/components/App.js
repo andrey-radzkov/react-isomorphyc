@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 @withStyles(styles, {withTheme: true})
-export default class App extends React.PureComponent {
+export default class App extends React.Component {
   static propTypes = {
     children: PropTypes.element,
     location: PropTypes.object,

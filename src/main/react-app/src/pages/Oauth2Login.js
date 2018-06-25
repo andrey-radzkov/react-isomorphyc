@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
-import {registerIfNecessary, requestToken, requestVkToken} from "../services/oauth2/TokenService";
+import {getTargetUrl, registerIfNecessary, requestToken, requestVkToken} from "../services/oauth2/TokenService";
 import {connect} from "react-redux";
 
 const mapDispatchToProps = dispatch => {
@@ -47,7 +47,7 @@ export default class Oauth2Login extends React.Component {
     } else {
       requestToken(getParameters.code).then(() => {
         this.props.registerIfNecessary().then(() => {
-          this.props.history.push(targetUrl);
+          this.props.history.push(getTargetUrl());
         });
       });
     }
