@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Home from "@material-ui/icons/Home";
 import Basket from "@material-ui/icons/ShoppingBasket";
-import {LinkMenuItem} from "./LinkMenuItem";
+import LinkMenuItem from "./LinkMenuItem";
 import Settings from "@material-ui/icons/Settings";
 export const LeftMenu = ({open, onClose, onOpen}) => (
 
