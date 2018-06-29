@@ -2,12 +2,14 @@ import {securedGet, securedPut} from "../oauth2/xhr";
 
 import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActions";
 import {LOAD_TYPES} from "./clothesActionTypes";
+import {showSuccess} from "../snackbar-service/snackbarAction";
 
 export const addQuickNote = (values) => (dispatch) => {
   return dispatch(
-    securedPut(process.env.API_URL + '/resource/put-clothes-to-basket/',
+    securedPut(process.env.API_URL + '/resource/add-notification/',
       {name: values.type.name})).then(res => {
-    ///tODO show messgae
+    //TODO: localiяation
+    dispatch(showSuccess("Мы уведомим!"));
   });
 };
 

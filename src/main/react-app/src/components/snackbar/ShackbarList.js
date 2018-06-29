@@ -61,7 +61,7 @@ export default class ShackbarList extends React.Component {
                   autoHideDuration={AUTO_CLOSE_INTERVAL}
                   onClose={this.props.closeSnackbar}
         >
-          <SnackbarContent className={classes.error}
+          <SnackbarContent className={classes[this.props.snack.type]}
                            aria-describedby={"client-snackbar-"
                            + this.props.snack}
                            message={

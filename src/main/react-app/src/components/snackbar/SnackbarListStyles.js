@@ -1,3 +1,5 @@
+import teal from '@material-ui/core/colors/teal';
+
 export const styles = theme => ({
   close: {
     width: theme.spacing.unit * 4,
@@ -5,6 +7,12 @@ export const styles = theme => ({
   },
   error: {
     backgroundColor: theme.palette.error.dark,
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing.unit * 2,
+    },
+  },
+  success: {
+    backgroundColor: teal[700],
     [theme.breakpoints.up('md')]: {
       marginBottom: theme.spacing.unit * 2,
     },

@@ -6,10 +6,18 @@ export const AUTO_CLOSE_INTERVAL = 3000;
 export const ANIMATION_DURATION = 600;
 
 /**
- * This methos displays shackbars one by one.
+ * This methods displays shackbars one by one.
  * */
 export const showError = (message) => (dispatch) => {
   snackbars.push({message: message, type: "error"});
+  if (snackbars.length > 1 && intervalId == null) {
+    dispatch(startMessagePooling());
+  } else {
+    dispatch({type: SHOW_SNACK, snack: snackbars[0]});
+  }
+};
+export const showSuccess = (message) => (dispatch) => {
+  snackbars.push({message: message, type: "success"});
   if (snackbars.length > 1 && intervalId == null) {
     dispatch(startMessagePooling());
   } else {
