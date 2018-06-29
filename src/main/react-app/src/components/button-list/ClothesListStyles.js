@@ -4,11 +4,12 @@ export const styles = theme => ({
     height: 60,
   },
 
+  listItem: {
+    justifyContent: "space-around"
+  },
+
   buttonList: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
-    marginLeft: 0,
-    marginRight: 0,
+    margin: 0,
   },
   cardHeader: {
     padding: theme.spacing.unit,
