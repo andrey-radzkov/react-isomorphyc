@@ -3,12 +3,7 @@ export const styles = theme => ({
     width: 60,
     height: 60,
   },
-  card: {
-    textAlign: "left",
-  },
-  redCard: {
-    background: "#fff0f0",
-  },
+
   buttonList: {
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
@@ -16,27 +11,10 @@ export const styles = theme => ({
     marginRight: 0,
   },
   cardHeader: {
-    paddingBottom: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
   title: {
     fontSize: "17px"
   },
-  buttonPosition: {
-    position: "fixed",
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-  },
-  putClothesBtn: {
-    margin: "auto",
-  },
-  addClothesBtn: {
-    marginLeft: "auto",
-  },
-  deleteClothesBtn: {
-    marginLeft: theme.spacing.unit,
-    minWidth: "30px",
-  },
-  icon: {
-    marginLeft: theme.spacing.unit,
-  }
+
 });

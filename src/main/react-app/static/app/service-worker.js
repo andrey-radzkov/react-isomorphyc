@@ -7,6 +7,8 @@ self.addEventListener('install', function (event) {
     caches.open('mysite-dynamic').then(function (cache) {
       return cache.addAll([
         '/app/',
+        '/app/*.js',
+        '/app/*.css',
         OFFLINE_URL,
         '/app/favicon.ico',
         '/app/manifest.json',
@@ -17,7 +19,7 @@ self.addEventListener('install', function (event) {
 self.addEventListener('fetch', event => {
     if (event.request.mode === 'navigate' ||
       (event.request.method === 'GET' &&
-      event.request.headers.get('accept').includes('text/html'))) {
+        event.request.headers.get('accept').includes('text/html'))) {
       event.respondWith(
         fetch(event.request).catch(error => {
           console.log('Fetch failed; returning offline page instead.', error);

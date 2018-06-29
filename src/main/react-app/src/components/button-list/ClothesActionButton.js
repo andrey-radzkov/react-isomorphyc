@@ -2,18 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 
-export const ClothesActionButton = ({clothesTypesWithCount, onSubmit, handleSubmit, disabled, className, type, color, children}) => {
+export const ClothesActionButton = ({clothesTypesWithCount, onSubmit, handleSubmit, disabled, type, children}) => {
 
   return (
     <Button type="submit"
-            color={color}
+            color="primary"
             variant="raised"
-            className={className}
             disabled={disabled}
             onClick={handleSubmit(values =>
               onSubmit({
                 "type": {"name": type.name},
-                "clothesTypes": clothesTypesWithCount
               })
             )}
     > {children}</Button>
@@ -21,12 +19,9 @@ export const ClothesActionButton = ({clothesTypesWithCount, onSubmit, handleSubm
 };
 
 ClothesActionButton.propTypes = {
-  clothesTypesWithCount: PropTypes.array,
   disabled: PropTypes.bool,
   type: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func,
-  className: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array, PropTypes.string]),
 };
