@@ -7,8 +7,9 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import ScriptExtHtmlWebpackPlugin from "script-ext-html-webpack-plugin";
-
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 import path from "path";
+
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
   'process.env.PORT': JSON.stringify('3000'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
@@ -35,6 +36,7 @@ export default {
   },
   plugins: [
     // Hash the files using MD5 so that their names change when the content changes.
+    new CleanWebpackPlugin(['../../resources/static/app'], {allowExternal: true}),
     new WebpackMd5Hash(),
     new webpack.LoaderOptionsPlugin({
       debug: false
