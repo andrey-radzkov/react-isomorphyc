@@ -4,11 +4,11 @@ import {FULL_PAGE_WAITING_ID} from "../modal-waiting-service/componentStateActio
 import {LOAD_TYPES} from "./clothesActionTypes";
 import {showSuccess} from "../snackbar-service/snackbarAction";
 
-export const addQuickNote = (values) => (dispatch) => {
+export const addQuickNote = (type, receiver) => (dispatch) => {
   return dispatch(
     securedPut(process.env.API_URL + '/resource/add-notification/',
-      {name: values.type.name})).then(res => {
-    //TODO: localiяation
+      {type: type.name, receiver: receiver})).then(res => {
+    //TODO: localization
     dispatch(showSuccess("Мы уведомим!"));
   });
 };

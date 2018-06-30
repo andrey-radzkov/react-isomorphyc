@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import i18n from "../../localization/i18n";
 import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
-import {styles} from "./ClothesListStyles";
-import {ClothesActionButton} from "./ClothesActionButton";
+import {styles} from "./TasksListStyles";
+import {SendActionButton} from "./SendActionButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Divider from "@material-ui/core/Divider/Divider";
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 
-const QuickTasksList = ({actionTypes, handleSubmit, disabled, classes, onPutSubmit}) => {
+const QuickTasksList = ({actionTypes, disabled, classes, onClick}) => {
   return (<List component="nav">
     {actionTypes && actionTypes.map(type => {
         return (
@@ -22,14 +22,12 @@ const QuickTasksList = ({actionTypes, handleSubmit, disabled, classes, onPutSubm
                        width="50px" height="50px" alt={i18n.t(type.name)}/>
                 </Avatar>
                 <div>
-                  <ClothesActionButton className={classes.putClothesBtn}
-                                       disabled={false}
-                                       handleSubmit={handleSubmit}
-                                       onSubmit={onPutSubmit} type={type}
-                                       clothesTypesWithCount={actionTypes}
+                  <SendActionButton className={classes.putClothesBtn}
+                                    disabled={false}
+                                    onClick={() => onClick(type)}
                   >
                     Закончились {i18n.t(type.name)}
-                  </ClothesActionButton>
+                  </SendActionButton>
                 </div>
               </ListItem>
               <Divider/>
@@ -47,8 +45,7 @@ const QuickTasksList = ({actionTypes, handleSubmit, disabled, classes, onPutSubm
 QuickTasksList.propTypes = {
   actionTypes: PropTypes.array,
   disabled: PropTypes.bool,
-  handleSubmit: PropTypes.func.isRequired,
-  onPutSubmit: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 

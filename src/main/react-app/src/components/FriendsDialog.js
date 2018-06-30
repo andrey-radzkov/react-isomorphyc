@@ -7,33 +7,45 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
 
-export const FriendsDialog = ({title, handleOk, handleCancel, multipleSelect, ...other}) => (
-  <Dialog
-    maxWidth="xs"
-    fullWidth={true}
-    aria-labelledby="confirmation-dialog-title"
-    {...other}
-  >
-    <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
-    <DialogContent>
-      <FriendsList multipleSelect={multipleSelect}/>
-    </DialogContent>
-    <DialogActions>
-      <Button color="primary" onClick={handleCancel}>
-        Отмена
-      </Button>
-      <Button color="primary" onClick={handleOk}>
-        Выбрать
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
+export default class FriendsDialog extends React.PureComponent {
+  static propTypes = {
+    title: PropTypes.string,
+    handleCancel: PropTypes.func,
+    handleOk: PropTypes.func,
+  };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: null,
+    };
 
-FriendsDialog.propTypes = {
-  title: PropTypes.string,
-  handleCancel: PropTypes.func,
-  multipleSelect: PropTypes.bool,
-  handleOk: PropTypes.func,
-};
+  }
 
+  render() {
+    return (
+      <Dialog
+        maxWidth="xs"
+        fullWidth={true}
+        aria-labelledby="confirmation-dialog-title"
+        open={this.props.open}
+      >
+        <DialogTitle id="confirmation-dialog-title">{this.props.title}</DialogTitle>
+        <DialogContent>
+          <FriendsList onSelect={(id) => this.setState({id: id})} receiver={this.state.id}/>
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary" onClick={this.props.handleCancel}>
+            Отмена
+          </Button>
+          <Button color="primary" disabled={this.state.id === null} onClick={() => {
+            this.props.handleOk(this.state.id);
+            this.setState({id: null})
+          }}>
+            Отправить
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+}
