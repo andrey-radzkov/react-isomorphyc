@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addQuickNote: (type, receiver) => dispatch(addQuickNote(type, receiver)),
     loadNoteTypes: () => dispatch(loadNoteTypes()),
-    dispatch: () => dispatch,
+    dispatch: (func) => dispatch(func),
   };
 };
 const mapStateToProps = (state) => {
@@ -32,6 +32,7 @@ export default class HomePage extends React.PureComponent {
     addQuickNote: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     reset: PropTypes.func,
+    dispatch: PropTypes.func,
     invalid: PropTypes.bool,
     showWaiting: PropTypes.bool,
     clothesTypes: PropTypes.array,
