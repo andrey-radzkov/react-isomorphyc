@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 // TODO: migrate all to pure component
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class HomePage extends React.PureComponent {
+export default class HomePage extends React.Component {
 
   static propTypes = {
     loadNoteTypes: PropTypes.func.isRequired,
