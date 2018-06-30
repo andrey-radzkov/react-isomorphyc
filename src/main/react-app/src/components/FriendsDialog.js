@@ -12,6 +12,7 @@ export default class FriendsDialog extends React.PureComponent {
     title: PropTypes.string,
     handleCancel: PropTypes.func,
     handleOk: PropTypes.func,
+    open: PropTypes.bool,
   };
 
   constructor(props) {
@@ -40,7 +41,7 @@ export default class FriendsDialog extends React.PureComponent {
           </Button>
           <Button color="primary" disabled={this.state.id === null} onClick={() => {
             this.props.handleOk(this.state.id);
-            this.setState({id: null})
+            this.setState({id: null});
           }}>
             Отправить
           </Button>

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction/ListItemSecondaryAction";
 import {connect} from "react-redux";
-import {loadFriends, selectReceiver,} from "../../services/settings-service/settingsActions";
+import {loadFriends} from "../../services/settings-service/settingsActions";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import List from "@material-ui/core/List/List";
 import withStyles from "@material-ui/core/styles/withStyles";
