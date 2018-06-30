@@ -4,9 +4,15 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PropTypes from "prop-types";
 import ListItem from "@material-ui/core/ListItem";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-export const LinkMenuItem = ({onClick, leftIcon, to, primaryText}) => (
-  <Link to={to} className="menu-item-link">
+const styles = theme => ({
+  menuItemLink: {
+    textDecoration: "none",
+  },
+});
+const LinkMenuItem = ({onClick, leftIcon, to, primaryText, classes}) => (
+  <Link to={to} className={classes.menuItemLink}>
     <ListItem button onClick={onClick}>
       <ListItemIcon>{leftIcon}</ListItemIcon>
       <ListItemText inset primary={primaryText}/>
@@ -19,4 +25,7 @@ LinkMenuItem.propTypes = {
   leftIcon: PropTypes.object,
   to: PropTypes.string,
   primaryText: PropTypes.string,
+  classes: PropTypes.object.isRequired,
 };
+
+export default withStyles(styles, {withTheme: true})(LinkMenuItem);
