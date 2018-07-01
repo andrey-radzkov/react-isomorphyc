@@ -5,7 +5,7 @@ export const styles = theme => ({
   },
 
   listItem: {
-    justifyContent: "space-around"
+    justifyContent: "space-between"
   },
 
   buttonList: {

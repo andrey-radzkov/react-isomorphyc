@@ -45,6 +45,9 @@ export default class FirebaseMessaging extends React.Component {
       }).catch((err) => {
         // TODO: alert
       });
+      this.getMessaging().onTokenRefresh().then(token => {
+        alert("token refreshed " + token);
+      });
     }).catch((err) => {
       // TODO: dialog that subscription is necessary
     });
