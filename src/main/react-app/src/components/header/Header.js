@@ -66,9 +66,9 @@ export default class Header extends React.Component {
             {getAccessToken() !== null && (
               <ExitToApp style={iconStyles} onClick={logout}/>)}
             {/*TODO: logo*/}
-            <LeftMenu open={this.state.left}
-                      onClose={this.toggleDrawer('left', false)}
-                      onOpen={this.toggleDrawer('left', true)}/>
+            {/*<LeftMenu open={this.state.left}*/}
+                      {/*onClose={this.toggleDrawer('left', false)}*/}
+                      {/*onOpen={this.toggleDrawer('left', true)}/>*/}
           </Toolbar>
         </AppBar>
       </div>
