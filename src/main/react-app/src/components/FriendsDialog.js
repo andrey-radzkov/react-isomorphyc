@@ -32,7 +32,7 @@ export default class FriendsDialog extends React.PureComponent {
         open={this.props.open}
       >
         <DialogTitle id="confirmation-dialog-title">{this.props.title}</DialogTitle>
-        <DialogContent>
+        <DialogContent style={{overflow:"hidden"}}>
           <FriendsList onSelect={(id) => this.setState({id: id})} receiver={this.state.id}/>
         </DialogContent>
         <DialogActions>

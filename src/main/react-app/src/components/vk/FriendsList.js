@@ -12,7 +12,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import filter from "lodash/filter";
 import Radio from "@material-ui/core/Radio/Radio";
 import {WaitingLayer} from "../app-common/WaitingLayer";
-import {List as VirtualList} from 'react-virtualized';
+import {AutoSizer, List as VirtualList} from 'react-virtualized';
 
 const styles = theme => ({
   viewport: {
@@ -112,14 +112,17 @@ export default class FriendsList extends React.Component {
       }
       {friends &&
       <List className={classes.viewport}>
-        <VirtualList
-          // autoHeight={true}
-          width={280}
-          height={300}
-          rowCount={friends.length}
-          rowHeight={60}
-          rowRenderer={rowRenderer}
-        />
+        <AutoSizer>
+          {({height, width}) => (
+
+            <VirtualList
+              height={height}
+              width={width}
+              rowCount={friends.length}
+              rowHeight={60}
+              rowRenderer={rowRenderer}
+            />)}
+        </AutoSizer>
 
       </List>
 

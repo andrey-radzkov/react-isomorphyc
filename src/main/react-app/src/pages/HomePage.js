@@ -85,7 +85,7 @@ export default class HomePage extends React.Component {
         />
         <h1>Мои вещи:</h1>
         <FriendsDialog open={this.state.open}
-                       handleOk={(receiver)=>this.handleOK(receiver)}
+                       handleOk={(receiver) => this.handleOK(receiver)}
                        handleCancel={this.handleClose}
                        title={"Выберите получателя"}
         />
