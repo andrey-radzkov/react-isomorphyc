@@ -6,12 +6,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Slide from "@material-ui/core/Slide/Slide";
 
 const Transition = (props) => {
   return <Slide direction="left" {...props} />;
 };
 
+@withMobileDialog()
 export default class FriendsDialog extends React.PureComponent {
   static propTypes = {
     title: PropTypes.string,
@@ -26,10 +28,10 @@ export default class FriendsDialog extends React.PureComponent {
     this.state = {
       id: null,
     };
-
   }
 
   render() {
+    const {fullScreen} = this.props;
     return (
       <Dialog
         maxWidth="xs"
