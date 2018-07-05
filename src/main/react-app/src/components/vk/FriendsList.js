@@ -16,8 +16,7 @@ import {AutoSizer, List as VirtualList} from 'react-virtualized';
 
 const styles = theme => ({
   viewport: {
-    minHeight: 200,
-    height: '100%',
+    height: "calc(100vh - 210px)",
   },
 });
 const mapDispatchToProps = dispatch => {
@@ -31,6 +30,7 @@ const mapStateToProps = (state) => {
     friends: state.settingsReducer.friends,
   };
 };
+
 
 @connect(
   mapStateToProps,
@@ -63,7 +63,18 @@ export default class FriendsList extends React.Component {
     const friends = filter(this.props.friends, friend => friend.first_name !== 'DELETED');
     const receiver = this.props.receiver;
     const onSelect = this.props.onSelect;
+//TODO: refactor
+    const VirtualListComponent = (height, width) => {
+      return (
 
+        <VirtualList
+          height={height}
+          width={width}
+          rowCount={friends.length}
+          rowHeight={60}
+          rowRenderer={rowRenderer}
+        />);
+    };
     function rowRenderer({
                            key,         // Unique key within array of rows
                            index,       // Index of row within collection
@@ -112,16 +123,10 @@ export default class FriendsList extends React.Component {
       }
       {friends &&
       <List className={classes.viewport}>
-        <AutoSizer>
-          {({height, width}) => (
-
-            <VirtualList
-              height={height}
-              width={width}
-              rowCount={friends.length}
-              rowHeight={60}
-              rowRenderer={rowRenderer}
-            />)}
+        <AutoSizer onResize={({height, width}) => VirtualListComponent(height, width)}>
+          {({height, width}) =>
+            VirtualListComponent(height, width)
+          }
         </AutoSizer>
 
       </List>

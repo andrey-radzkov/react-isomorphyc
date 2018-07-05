@@ -6,6 +6,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
+import Slide from "@material-ui/core/Slide/Slide";
+
+const Transition = (props) => {
+  return <Slide direction="left" {...props} />;
+};
 
 export default class FriendsDialog extends React.PureComponent {
   static propTypes = {
@@ -13,6 +18,7 @@ export default class FriendsDialog extends React.PureComponent {
     handleCancel: PropTypes.func,
     handleOk: PropTypes.func,
     open: PropTypes.bool,
+    fullScreen: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -28,11 +34,12 @@ export default class FriendsDialog extends React.PureComponent {
       <Dialog
         maxWidth="xs"
         fullWidth={true}
+        TransitionComponent={fullScreen ? Transition : undefined}
         aria-labelledby="confirmation-dialog-title"
         open={this.props.open}
       >
         <DialogTitle id="confirmation-dialog-title">{this.props.title}</DialogTitle>
-        <DialogContent style={{overflow:"hidden"}}>
+        <DialogContent style={{overflow: "hidden"}}>
           <FriendsList onSelect={(id) => this.setState({id: id})} receiver={this.state.id}/>
         </DialogContent>
         <DialogActions>
