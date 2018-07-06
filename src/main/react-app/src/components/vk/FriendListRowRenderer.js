@@ -22,9 +22,6 @@ export const friendsListRowRenderer = (friends, onSelect, receiver) =>
 
     return (
       <div style={style} key={friend.uid}>
-        {/*{isScrolling*/}
-          {/*? '...'*/}
-          {/*:*/}
           <ListItem id={"friend-" + vkId} dense button
                     onClick={() => {
                       onSelect(vkId);
@@ -44,7 +41,6 @@ export const friendsListRowRenderer = (friends, onSelect, receiver) =>
               />
             </ListItemSecondaryAction>
           </ListItem>
-        {/*}*/}
       </div>
     );
   };
