@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import connect from "react-redux/lib/connect/connect";
 import {loadFriends} from "../../services/settings-service/settingsActions";
 import List from "@material-ui/core/List/List";
 import withStyles from "@material-ui/core/styles/withStyles";

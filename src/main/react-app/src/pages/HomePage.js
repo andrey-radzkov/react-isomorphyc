@@ -1,14 +1,14 @@
 import React from "react";
 import Helmet from "react-helmet";
 import {addQuickNote, loadNoteTypes} from "../services/clothes-service/clothesActions";
-import {connect} from "react-redux";
+import connect from "react-redux/lib/connect/connect";
 import PropTypes from "prop-types";
 import QuickTasksList from "../components/button-list/QuickTasksList";
 import {FULL_PAGE_WAITING_ID} from "../services/modal-waiting-service/componentStateActions";
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
 import FirebaseMessaging from "../services/push-notification/FirebaseMessaging";
 import FriendsDialog from "../components/FriendsDialog";
-import {reduxForm} from "redux-form";
+import reduxForm from "redux-form/lib/reduxForm";
 
 const mapDispatchToProps = dispatch => {
   return {

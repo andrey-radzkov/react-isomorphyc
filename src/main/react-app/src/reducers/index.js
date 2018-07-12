@@ -1,8 +1,9 @@
-import {combineReducers} from "redux";
+import combineReducers from "redux/lib/combineReducers";
 import ajaxActionsReducer from "../services/modal-waiting-service/ajaxActionsReducer";
 import modalReducer from "../services/modal-waiting-service/modalReducer";
+//TODO: try to change this import
 import {routerReducer} from "react-router-redux";
-import {reducer as reduxFormReducer} from "redux-form";
+import reduxFormReducer from "redux-form/lib/reducer";
 import clothesReducer from "../services/clothes-service/clothesReducer";
 import settingsReducer from "../services/settings-service/settingsReducer";
 import snackbarReducer from "../services/snackbar-service/snackbarReducer";

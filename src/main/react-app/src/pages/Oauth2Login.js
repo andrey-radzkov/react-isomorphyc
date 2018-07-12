@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
 import {getTargetUrl, registerIfNecessary, requestToken, requestVkToken} from "../services/oauth2/TokenService";
-import {connect} from "react-redux";
+import connect from "react-redux/lib/connect/connect";
 
 const mapDispatchToProps = dispatch => {
   return {

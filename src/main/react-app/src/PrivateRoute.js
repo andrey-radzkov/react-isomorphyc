@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {Route} from "react-router-dom";
+import Route from "react-router-dom/Route";
 import {isAuthed, redirectToAuthService, redirectToVkAuthService} from "./services/oauth2/TokenService";
 import Button from "@material-ui/core/Button";
 import i18n from "./localization/i18n";
