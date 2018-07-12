@@ -1,5 +1,5 @@
 import React from "react";
-import {List} from 'react-virtualized/dist/commonjs/List/List';
+import List from 'react-virtualized/dist/commonjs/List/List';
 
 export const VirtualList = (height, width, rows, rowRenderer) => {
 

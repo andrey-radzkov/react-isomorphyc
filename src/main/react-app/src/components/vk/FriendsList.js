@@ -6,7 +6,7 @@ import List from "@material-ui/core/List/List";
 import withStyles from "@material-ui/core/styles/withStyles";
 import filter from "lodash/_arrayFilter";
 import {WaitingLayer} from "../app-common/WaitingLayer";
-import {AutoSizer} from 'react-virtualized/dist/commonjs/AutoSizer/AutoSizer';
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer/AutoSizer';
 import {VirtualList} from "../app-common/VirtualList";
 import {FriendsListRowRenderer} from "./FriendListRowRenderer";
 
