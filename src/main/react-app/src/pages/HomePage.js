@@ -8,6 +8,7 @@ import {FULL_PAGE_WAITING_ID} from "../services/modal-waiting-service/componentS
 import {WaitingLayer} from "../components/app-common/WaitingLayer";
 import FirebaseMessaging from "../services/push-notification/FirebaseMessaging";
 import FriendsDialog from "../components/FriendsDialog";
+import {reduxForm} from "redux-form";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -24,7 +25,10 @@ const mapStateToProps = (state) => {
 };
 // TODO: migrate all to pure component
 @connect(mapStateToProps, mapDispatchToProps)
-
+@reduxForm({
+  form: 'addNotification',
+  enableReinitialize: true,
+})
 export default class HomePage extends React.Component {
 
   static propTypes = {

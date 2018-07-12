@@ -4,11 +4,11 @@ import {connect} from "react-redux";
 import {loadFriends} from "../../services/settings-service/settingsActions";
 import List from "@material-ui/core/List/List";
 import withStyles from "@material-ui/core/styles/withStyles";
-import filter from "lodash/filter";
+import filter from "lodash/_arrayFilter";
 import {WaitingLayer} from "../app-common/WaitingLayer";
-import {AutoSizer} from 'react-virtualized';
+import {AutoSizer} from 'react-virtualized/dist/commonjs/AutoSizer/AutoSizer';
 import {VirtualList} from "../app-common/VirtualList";
-import {friendsListRowRenderer} from "./FriendListRowRenderer";
+import {FriendsListRowRenderer} from "./FriendListRowRenderer";
 
 const styles = theme => ({
   viewport: {
@@ -70,9 +70,9 @@ export default class FriendsList extends React.Component {
         <List className={classes.viewport}>
           <AutoSizer
             onResize={({height, width}) =>
-              VirtualList(height, width, friends, friendsListRowRenderer(friends, this.props.onSelect, this.props.receiver))}>
+              VirtualList(height, width, friends, FriendsListRowRenderer(friends, this.props.onSelect, this.props.receiver))}>
             {({height, width}) =>
-              VirtualList(height, width, friends, friendsListRowRenderer(friends, this.props.onSelect, this.props.receiver))
+              VirtualList(height, width, friends, FriendsListRowRenderer(friends, this.props.onSelect, this.props.receiver))
             }
           </AutoSizer>
         </List>

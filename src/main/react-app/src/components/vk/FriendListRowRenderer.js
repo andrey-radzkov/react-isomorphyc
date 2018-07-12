@@ -6,8 +6,8 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction/L
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import Radio from "@material-ui/core/Radio/Radio";
 
-
-export const friendsListRowRenderer = (friends, onSelect, receiver) =>
+//TODOL refactor
+export const FriendsListRowRenderer = (friends, onSelect, receiver) =>
   ({
      key,         // Unique key within array of rows
      index,       // Index of row within collection
@@ -22,25 +22,25 @@ export const friendsListRowRenderer = (friends, onSelect, receiver) =>
 
     return (
       <div style={style} key={friend.uid}>
-          <ListItem id={"friend-" + vkId} dense button
-                    onClick={() => {
-                      onSelect(vkId);
-                    }}>
-            <ListItemAvatar>
-              <Avatar alt={friendFullName} src={friend.photo_50}/>
-            </ListItemAvatar>
-            <ListItemText primary={friendFullName}/>
-            <ListItemSecondaryAction>
-              <Radio
-                name="friend"
-                value={vkId}
-                onChange={() => {
-                  onSelect(vkId);
-                }}
-                checked={receiver === vkId}
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
+        <ListItem id={"friend-" + vkId} dense button
+                  onClick={() => {
+                    onSelect(vkId);
+                  }}>
+          <ListItemAvatar>
+            <Avatar alt={friendFullName} src={friend.photo_50}/>
+          </ListItemAvatar>
+          <ListItemText primary={friendFullName}/>
+          <ListItemSecondaryAction>
+            <Radio
+              name="friend"
+              value={vkId}
+              onChange={() => {
+                onSelect(vkId);
+              }}
+              checked={receiver === vkId}
+            />
+          </ListItemSecondaryAction>
+        </ListItem>
       </div>
     );
   };

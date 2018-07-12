@@ -3,7 +3,7 @@ import {
   getAccessToken,
   validateAndUpdateTokenIfNecessary
 } from "./TokenService";
-import axios from "axios";
+import axios from "axios/lib/axios";
 import {hideWaiting, showWaiting} from "../modal-waiting-service/componentStateActions";
 import {httpError, showError} from "../snackbar-service/snackbarAction";
 

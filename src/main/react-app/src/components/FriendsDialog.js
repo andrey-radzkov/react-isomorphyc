@@ -5,13 +5,9 @@ import Button from "@material-ui/core/Button/Button";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@material-ui/core/Dialog/Dialog";
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Slide from "@material-ui/core/Slide/Slide";
-
-const Transition = (props) => {
-  return <Slide direction="left" {...props} />;
-};
 
 @withMobileDialog()
 export default class FriendsDialog extends React.PureComponent {
@@ -31,6 +27,9 @@ export default class FriendsDialog extends React.PureComponent {
   }
 
   render() {
+    const Transition = (props) => {
+      return <Slide direction="left" {...props} />;
+    };
     const {fullScreen} = this.props;
     return (
       <Dialog

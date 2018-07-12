@@ -1,5 +1,5 @@
-import {LOAD_FRIENDS, SELECT_RECEIVER,} from "./settingsActionTypes";
-import axios from "axios";
+import {LOAD_FRIENDS} from "./settingsActionTypes";
+import axios from "axios/lib/axios";
 
 
 export const loadFriends = () => (dispatch) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import PropTypes from "prop-types";
 
 export const ReduxFormCheckbox = ({input, submitOnChange}) => (

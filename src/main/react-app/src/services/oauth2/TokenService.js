@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import {CLIENT_ID, CLIENT_SECRET, TIMEOUT, VK_CLIENT_ID, VK_CLIENT_SECRET} from "./OauthConstants";
-import axios from "axios";
+import axios from "axios/lib/axios";
 import {backoff} from "../../utils/backoff";
 import {isClient, isSSR} from "../../utils/ssr-util";
 import {httpError} from "../snackbar-service/snackbarAction";
