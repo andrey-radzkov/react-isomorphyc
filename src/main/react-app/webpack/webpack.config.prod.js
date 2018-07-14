@@ -27,8 +27,10 @@ export default {
     extensions: ['.js', '.jsx', '.json']
   },
   devtool: 'source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
-  entry: path.resolve(__dirname, '../src/client.js'),
+  entry: path.resolve(__dirname, '../src/client'),
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
+  mode: 'production',
+
   output: {
     path: path.resolve(__dirname, '../../resources/static/app'),
     publicPath: '/app/',
@@ -46,7 +48,7 @@ export default {
     new webpack.DefinePlugin(GLOBALS),
 
     // Generate an external css file with a hash in the filename
-    new ExtractTextPlugin('[name].[contenthash].css'),
+    new ExtractTextPlugin('[name].[md5:contenthash:hex:20].css'),
 
     // Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
     new HtmlWebpackPlugin({
@@ -71,26 +73,10 @@ export default {
 
     // Optimize the order that items are bundled. This assures the hash is deterministic.
     new webpack.optimize.OccurrenceOrderPlugin(),
-    // Minify JS
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
-      sourceMap: true,
-      compress: {
-        warnings: false, // Suppress uglification warnings
-        pure_getters: true,
-        unsafe: true,
-        unsafe_comps: true,
-        screw_ie8: true
-      },
-      output: {
-        comments: false,
-      },
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new CopyWebpackPlugin([
       {from: './static/app', to: './'},
       {from: './static/firebase-messaging-sw.js', to: '../'},
-      {from: './src/styles/fonts', to: 'fonts/bootstrap'},
     ]),
     new CompressionPlugin({
       asset: "[path].gz[query]",
@@ -100,45 +86,95 @@ export default {
     }),
   ],
   module: {
-    loaders: [
-      {test: /\.jsx?$/, exclude: /node_modules/, loader: ['babel-loader']},
-      {test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?name=[name].[ext]'},
+    rules: [
+      {test: /\.jsx?$/, exclude: /node_modules/, use: ['babel-loader']},
+      {
+        test: /\.eot(\?v=\d+.\d+.\d+)?$/, use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[ext]'
+            }
+          }
+        ]
+      },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=[name].[ext]'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              mimetype: 'application/font-woff',
+              name: '[name].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/octet-stream&name=[name].[ext]'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              mimetype: 'application/octet-stream',
+              name: '[name].[ext]'
+            }
+          }
+        ]
       },
-      {test: /\.svg(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml&name=[name].[ext]'},
-      {test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]'},
-      {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
       {
-        test: /(\.css|\.scss)$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
+        test: /\.svg(\?v=\d+.\d+.\d+)?$/, use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              mimetype: 'image/svg+xml',
+              name: '[name].[ext]'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|ico)$/i, use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
+            }
+          }
+        ]
+      },
+      {
+        test: /(\.css|\.scss|\.sass)$/,
+        use: ExtractTextPlugin.extract({
           use: [
             {
               loader: 'css-loader',
               options: {
-// If you are having trouble with urls not resolving add this setting.
-// See https://github.com/webpack-contrib/css-loader#url
-                url: false,
                 minimize: true,
                 sourceMap: true
               }
-            },
-            {
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('autoprefixer')
+                ],
+                sourceMap: true
+              }
+            }, {
               loader: 'sass-loader',
               options: {
+                includePaths: [path.resolve(__dirname, 'src', 'scss')],
                 sourceMap: true
               }
             }
           ]
         })
       },
-      {test: /\.json$/, loader: "json"}
+      // {test: /\.json$/, loader: "json"}
     ]
   }
 };
