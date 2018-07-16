@@ -17,7 +17,7 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 const compiler = webpack(config);
 const app = new Express();
 const port = process.env.PORT || 3000;
-
+import {muiTheme} from "../src/theme";
 let initialState = {};
 const store = createStore(rootReducer, initialState);
 
@@ -38,7 +38,7 @@ app.get('*', (req, res) => {
   let html = ReactDOMServer.renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={context}>
-        <MuiThemeProvider>
+        <MuiThemeProvider theme={muiTheme}>
           <App/>
         </MuiThemeProvider>
       </StaticRouter>

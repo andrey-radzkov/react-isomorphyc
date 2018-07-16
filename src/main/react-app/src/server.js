@@ -1,5 +1,5 @@
 import React from "react";
-import {Provider} from "react-redux";
+import Provider from "react-redux/lib/components/Provider";
 import App from "./components/App";
 import StaticRouter from "react-router-dom/StaticRouter";
 import PropTypes from "prop-types";
