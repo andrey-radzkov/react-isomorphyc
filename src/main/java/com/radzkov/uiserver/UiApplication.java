@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @SpringBootApplication
-@EnableZuulProxy
+//@EnableZuulProxy
 @Controller
 public class UiApplication {
 
