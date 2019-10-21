@@ -30,6 +30,7 @@ buildscript {
 release {
     failOnCommitNeeded = false
     failOnUnversionedFiles = false
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
 }
 
 dependencies {
