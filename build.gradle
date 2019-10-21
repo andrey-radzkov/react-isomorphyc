@@ -27,7 +27,10 @@ buildscript {
         classpath 'net.researchgate:gradle-release:2.6.0'
     }
 }
-
+release {
+    failOnCommitNeeded = false
+    failOnUnversionedFiles = false
+}
 
 dependencies {
     compile "org.springframework.cloud:spring-cloud-dependencies:Camden.SR5"
